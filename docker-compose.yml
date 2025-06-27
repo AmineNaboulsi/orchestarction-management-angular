@@ -1,0 +1,10 @@
+version: '3.8'
+
+services:
+  openapi-generator:
+    image: openapitools/openapi-generator-cli
+    container_name: openapi-angular-generator
+    volumes:
+      - C:/Users/Amine/Downloads/orchestarction-management-angular:/local
+    working_dir: /local
+    command: generate -i http://host.docker.internal:8095/v3/api-docs -g typescript-angular -o /local/src/app/api-client
