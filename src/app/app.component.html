@@ -1,5 +1,60 @@
-<main class="main">
-    {{ titlePage }} lol
-</main>
-<router-outlet></router-outlet>
+<!-- Top Navigation Bar -->
+<nav class="sticky top-0 z-20 w-full bg-white shadow-md border-t border-gray-200 px-4 py-3">
+  <div class="flex items-center justify-between">
+    <!-- Left side: Menu and Logo -->
+    <div class="flex items-center space-x-4">
+      <!-- Menu Button -->
+      <button class="p-2 rounded-md hover:bg-gray-100">
+        <svg class="w-6 h-6 text-[#16374A]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </button>
+      
+      <div class="flex items-center space-x-3">
+        <div class="flex items-center">
+             <div class="flex items-center space-x-3">
+                <div class="flex items-center">
+                <img src="dashy-logo.png" alt="{{ titlePage }}" class="max-h-12" />
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
     
+    <!-- Right side: Language and User -->
+    <div class="flex items-center space-x-4">
+      <!-- Language Selector -->
+      <div class="relative">
+        <select class="appearance-none bg-transparent border-none text-sm text-gray-600 pr-6 focus:outline-none cursor-pointer"
+                [(ngModel)]="selectedLanguage"
+                (change)="onLanguageChange(selectedLanguage)">
+          <option value="Français">Français</option>
+          <option value="English">English</option>
+          <option value="العربية">العربية</option>
+        </select>
+        <svg class="absolute right-0 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" 
+             fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+        </svg>
+      </div>
+      
+      <!-- User Profile -->
+      <div class="flex items-center space-x-2">
+        <div class="w-8 h-8 bg-teal-600 rounded-full flex items-center justify-center">
+          <span class="text-white font-semibold text-sm">{{ currentUser.initials }}</span>
+        </div>
+        <span class="text-sm text-gray-700">{{ currentUser.name }}</span>
+        <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+        </svg>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- Main Content -->
+<main class="main">
+    <div class="h-fit px-2 pt-2">
+        <router-outlet></router-outlet>
+    </div>
+</main>
