@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { PagedRequestTaskFilterDto, PagedResultTaskDto, TaskBpmApiService, TaskFilterDto } from '../../api-client';
-import { DatePipe, NgFor, NgIf } from '@angular/common';
+import { DatePipe, NgClass, NgFor, NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-tickets',
-  imports: [NgFor, NgIf, FormsModule, DatePipe],
+  imports: [NgFor, NgIf, FormsModule, DatePipe, NgClass],
   providers: [TaskBpmApiService],
   templateUrl: './tickets.component.html',
   styleUrls: ['./tickets.component.css']
@@ -19,7 +19,7 @@ export class TicketsComponent implements OnInit {
   pageSize = 10;
   sortOrder = 'ASC';
   
-  showFilters = false;
+  showFilters = true;
   filter: TaskFilterDto = {};
   
   groupIdsString = '';
@@ -41,8 +41,9 @@ export class TicketsComponent implements OnInit {
       page: this.currentPage,
       filter: {
         ...this.filter,
-        groupIds: groupIds
-      }
+        groupIds: groupIds 
+      },
+
     };
     
      this.ticketsApi.searchTasks("", "", searchRequest).subscribe({
@@ -86,7 +87,7 @@ export class TicketsComponent implements OnInit {
   }
 
   applyFilters() {
-    this.currentPage = 0; // Reset to first page when applying filters
+    this.currentPage = 0; 
     this.loadTasks();
   }
 
@@ -135,4 +136,27 @@ export class TicketsComponent implements OnInit {
     this.currentPage = 0;
     this.loadTasks();
   }
+
+  viewTask(TaskID :string){
+    //
+  }
+
+  getPriorityClass(priority: number | undefined): string {
+    if (!priority) return 'bg-gray-100 text-gray-800';
+    
+    if (priority >= 80) return 'bg-red-100 text-red-800';
+    if (priority >= 50) return 'bg-orange-100 text-orange-800';
+    if (priority >= 25) return 'bg-yellow-100 text-yellow-800';
+    return 'bg-blue-100 text-blue-800';
+  }
+
+  getPriorityLabel(priority: number | undefined): string {
+    if (!priority) return 'Non défini';
+    
+    if (priority >= 80) return `Haute (${priority})`;
+    if (priority >= 50) return `Moyenne (${priority})`;
+    if (priority >= 25) return `Basse (${priority})`;
+    return `Très basse (${priority})`;
+  }
+
 }

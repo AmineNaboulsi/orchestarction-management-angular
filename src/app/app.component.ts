@@ -1,3 +1,4 @@
+import { NgIf } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
@@ -10,22 +11,34 @@ import { RouterOutlet } from '@angular/router';
 })
 export class AppComponent {
 
-   titlePage = 'Dashy';
+  titlePage = 'Dashy';
+  sidebarOpen = true;
+  activePage = 'dashboard';
+  selectedLanguage = 'Français';
   
-  // User info - you can replace with actual user data
+  
+  // User info
   currentUser = {
     name: 'mvp',
     initials: 'M'
   };
   
-  // Language selection
-  selectedLanguage = 'Français';
-  
+  toggleSidebar() {
+    this.sidebarOpen = !this.sidebarOpen;
+  }
+
+  setActivePage(page: string) {
+    this.activePage = page;
+    if (window.innerWidth < 1024) {
+      this.sidebarOpen = false;
+    }
+  }
+
   // Navigation items
   navItems = [
-    { name: 'Produits', active: true },
-    { name: 'Tickets', active: false },
-    { name: 'Utilisateurs', active: false }
+    { name: 'Home', active: true },
+    { name: 'Process', active: false },
+    { name: 'Tickets', active: false }
   ];
   
   onLanguageChange(language: string) {
@@ -36,5 +49,4 @@ export class AppComponent {
     this.navItems.forEach(navItem => navItem.active = false);
     item.active = true;
   }
-
 }

@@ -195,88 +195,97 @@
     </div>
   </div>
 
-  <!-- Controls Section -->
-  <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 mb-6">
-    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-      <div class="flex flex-wrap gap-6 items-center">
-        <div class="flex items-center gap-2">
-          <label for="pageSize" class="text-sm font-medium text-gray-600 whitespace-nowrap">Items per page:</label>
-          <select 
-            id="pageSize" 
-            [(ngModel)]="pageSize" 
-            (change)="changePageSize()" 
-            class="px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-teal-500">
-            <option value="5">5</option>
-            <option value="10">10</option>
-            <option value="20">20</option>
-            <option value="50">50</option>
-          </select>
-        </div>
-        <div class="flex items-center gap-2">
-          <label for="sortOrder" class="text-sm font-medium text-gray-600 whitespace-nowrap">Sort:</label>
-          <select 
-            id="sortOrder" 
-            [(ngModel)]="sortOrder" 
-            (change)="changeSortOrder()" 
-            class="px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-teal-500">
-            <option value="ASC">Ascending</option>
-            <option value="DESC">Descending</option>
-          </select>
-        </div>
-      </div>
-      
-      <div class="text-sm text-gray-600 font-medium" *ngIf="tasks">
-        Showing {{ tasks.entities?.length || 0 }} of {{ getTotalElements() }} tasks
-      </div>
-    </div>
-  </div>
-
-
-
   <!-- Tasks List -->
   <div *ngIf="!loading">
     <div *ngIf="tasks?.entities && tasks?.entities?.length; else noTasks" class="space-y-4">
-      <div class="bg-white border border-gray-200 rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow duration-200" 
-           *ngFor="let task of tasks?.entities">
-        <!-- Task Header -->
-        <div class="flex flex-col sm:flex-row justify-between items-start mb-4 gap-3">
-          <h4 class="text-lg font-semibold text-gray-800">
-            {{ task?.TaskInfo?.name || 'Unnamed Task' }}
-          </h4>
-          <span class="inline-block bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs font-mono">
-            ID: {{ task.TaskID }}
-          </span>
-        </div>
-        
-        <!-- Task Details -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 mb-4 text-sm">
-          <div *ngIf="task?.TaskInfo?.assignee" class="text-gray-600">
-            <span class="font-medium text-gray-800">Assignee:</span> 
-            {{ task.TaskInfo?.assignee }}
-          </div>
-          <div *ngIf="task?.TaskInfo?.createTime" class="text-gray-600">
-            <span class="font-medium text-gray-800">Created:</span> 
-            {{ task.TaskInfo?.createTime | date:'medium' }}
-          </div>
-          <div *ngIf="task?.TaskInfo?.processDefinitionId" class="text-gray-600">
-            <span class="font-medium text-gray-800">Process:</span> 
-            {{ task.TaskInfo?.processDefinitionId }}
-          </div>
-        </div>
-        
-        <!-- Task Actions -->
-        <div class="flex justify-end">
-          <button 
-            class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 disabled:opacity-60 disabled:cursor-not-allowed"
-            (click)="completeTask(task.TaskID)"
-            [disabled]="loading">
-            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-            </svg>
-            Complete Task
-          </button>
-        </div>
-      </div>
+      <div class="overflow-x-auto bg-white shadow-sm rounded-lg">
+      <table class="min-w-full divide-y divide-gray-200 p-4">
+        <thead class="bg-gray-50">
+          <tr>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              ID du Ticket
+            </th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Créé le
+            </th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Affecté à
+            </th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Catégorie
+            </th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Priorité
+            </th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Statut
+            </th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Action
+            </th>
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200" *ngFor="let task of tasks?.entities; let i = index">
+          <tr class="hover:bg-gray-50">
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+              {{ task.TaskID }}
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+              <div class="flex flex-col space-y-1">
+                <div class="flex items-center rounded-full px-3 py-1 bg-gray-100">
+                  <svg class="w-4 h-4 mr-2 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                  </svg>
+                  <span class="text-sm font-medium  text-gray-700">{{ task?.TaskInfo?.createTime | date:'yyyy-MM-dd HH:mm:ss' }}</span>
+                </div>
+              </div>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+              {{ task?.TaskInfo?.assignee }}
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+              {{ task?.TaskInfo?.category }}
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              <span class="inline-flex px-3 py-1 text-xs font-semibold rounded-full"
+                    [ngClass]="getPriorityClass(task?.TaskInfo?.priority)">
+                {{ getPriorityLabel(task?.TaskInfo?.priority) }}
+              </span>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+              <span class="inline-flex px-2 py-1 text-xs font-medium rounded-full"
+                    [ngClass]="{
+                      'bg-green-100 text-green-800': task?.TaskInfo?.assignee,
+                      'bg-gray-100 text-gray-800': !task?.TaskInfo?.assignee
+                    }">
+                {{ task?.TaskInfo?.assignee ? 'Assigné' : 'Non assigné' }}
+              </span>
+            </td>        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+              <div class="flex space-x-2">
+                <!-- View Button -->
+                <button class="text-blue-600 hover:text-blue-900 p-2 rounded-full hover:bg-blue-50 transition-colors"
+                        (click)="viewTask(task.TaskID || '')"
+                        title="Voir">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                  </svg>
+                </button>
+                <!-- Complete Task Button -->
+                <button class="text-green-600 hover:text-green-900 p-2 rounded-full hover:bg-green-50 transition-colors"
+                        (click)="completeTask(task.TaskID)"
+                        title="Compléter">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                  </svg>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
     </div>
 
     <!-- No Tasks Template -->
@@ -297,23 +306,50 @@
     </ng-template>
   </div>
 
-    <!-- Loading Indicator -->
+  <!-- Loading Indicator -->
   <div *ngIf="loading" class="text-center py-12">
     <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-teal-600"></div>
     <p class="mt-2 text-gray-600">Loading tasks...</p>
   </div>
-  
-  <!-- Pagination -->
-  <div  class="mt-8 flex justify-center">
-    <div class="flex items-center gap-4">
+  <!-- Controls Section -->
+  <div class="bg-transparent p-4 mb-6">
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+      <div class="text-sm text-gray-600 font-medium" *ngIf="tasks">
+        Showing {{ tasks.entities?.length || 0 }} of {{ getTotalElements() }} tasks
+      </div>
+
+      <div class="flex flex-wrap gap-6 items-center">
+        <div class="flex items-center gap-2">
+          <label for="pageSize" class="text-sm font-medium text-gray-600 whitespace-nowrap">Items per page:</label>
+          <select 
+            id="pageSize" 
+            [(ngModel)]="pageSize" 
+            (change)="changePageSize()" 
+            class="px-4 py-2 border border-gray-500 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-teal-500">
+            <option value="10">10</option>
+            <option value="20">20</option>
+            <option value="50">50</option>
+          </select>
+        </div>
+        <div class="flex items-center gap-2">
+          <label for="sortOrder" class="text-sm font-medium text-gray-600 whitespace-nowrap">Sort:</label>
+          <select 
+            id="sortOrder" 
+            [(ngModel)]="sortOrder" 
+            (change)="changeSortOrder()" 
+            class="px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-teal-500">
+            <option value="ASC">Ascending</option>
+            <option value="DESC">Descending</option>
+          </select>
+        </div>
+        <div class="flex items-center gap-4">
       <button 
-        class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 disabled:opacity-60 disabled:cursor-not-allowed"
+        class=" text-gray-700 bg-white"
         (click)="previousPage()" 
         [disabled]="currentPage === 0">
         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
         </svg>
-        Previous
       </button>
       
       <span class="px-4 py-2 text-sm font-medium text-gray-600">
@@ -321,14 +357,17 @@
       </span>
       
       <button 
-        class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 disabled:opacity-60 disabled:cursor-not-allowed"
+        class="font-medium text-gray-700"
         (click)="nextPage()" 
         [disabled]="currentPage >= getTotalPages() - 1">
-        Next
         <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7"></path>
         </svg>
       </button>
+      </div>
+      </div>
+      
+      
     </div>
   </div>
 </div>
