@@ -4,31 +4,35 @@ import { DatePipe, NgFor, NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { BreadcrumbNavigationComponent } from '../../../shared/component/breadcrumb-navigation/breadcrumb-navigation.component';
+import { PaginationComponent } from '../../../shared/component/pagination/pagination.component';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-process-page',
-  imports: [NgFor, NgIf, FormsModule, DatePipe,BreadcrumbNavigationComponent],
+  imports: [NgFor, NgIf, FormsModule, 
+    DatePipe,BreadcrumbNavigationComponent,
+    PaginationComponent],
   templateUrl: './process-page.component.html',
   styleUrl: './process-page.component.css'
 })
 export class ProcessPageComponent {
- processes:PagedResultProcessDto| undefined;
+  processes:PagedResultProcessDto| undefined;
   loading = false;
   error = '';
-
   totalElements = 0;
   currentPage = 0;
   pageSize = 10;
   sortOrder = 'ASC';
-  
   showFilters = false;
   filter: ProcessFilterDto = {};
+  
   constructor(private processService: ProcessBpmApiService, private router :Router) {}
+  ngOnInit(): void { this.loadProcesses(); }
 
-  ngOnInit(): void {
-    this.loadProcesses();
-  }
-
+  /**
+   * Load all Process instances current runing 
+   * 
+   */
   loadProcesses(){
     this.loading = true;
     this.error = "";
@@ -41,7 +45,6 @@ export class ProcessPageComponent {
     this.processService.listProcessInstances("","",filterPayload).subscribe({
       next: (response: any) => {
         this.processes = response.body;
-        this.totalElements = response.totalElements || 0;
         this.loading = false;
       },
       error: (err) => {
@@ -52,6 +55,11 @@ export class ProcessPageComponent {
     });
   }
 
+  /**
+   * Cancel process by Id
+   * 
+   * @param processInstanceId process Id
+   */
   cancelProcess(processInstanceId: string) {
     if (confirm('Are you sure you want to cancel this process?')) {
       this.loading = true;
@@ -68,15 +76,25 @@ export class ProcessPageComponent {
     }
   }
 
+  /**
+   * 
+   */
   toggleFilters() {
     this.showFilters = !this.showFilters;
   }
 
+  /**
+   * 
+   */
   clearFilters() {
     this.filter = {};
     this.currentPage = 0;
   }
   
+  /**
+   * 
+   * @param processInstanceId 
+   */
   viewDetails(processInstanceId: string){
     if(processInstanceId){
       this.router.navigate([
@@ -84,46 +102,35 @@ export class ProcessPageComponent {
     ]);
     }
   }
+
+  /**
+   * 
+   */
   runProcess(){
     this.router.navigate([
       '/process/run'
     ]);
   }
 
+  /**
+   * 
+   */
   applyFilters() {
     this.currentPage = 0; 
     this.loadProcesses();
   }
 
-  changePageSize() {
-    this.currentPage = 0;
+  /**
+   * 
+   * @param event 
+   */
+  onPagination(event: PageEvent) {
+    this.currentPage = event.pageIndex;
+    this.pageSize = event.pageSize;
     this.loadProcesses();
   }
 
-  changeSortOrder() {
-    this.loadProcesses();
+   getTotalElements(): number {
+    return this.processes?.totalElements || 0;
   }
-
-  previousPage() {
-    if (this.currentPage > 0) {
-      this.currentPage--;
-      this.loadProcesses();
-    }
-  }
-
-  nextPage() {
-    if (this.currentPage < this.getTotalPages() - 1) {
-      this.currentPage++;
-      this.loadProcesses();
-    }
-  }
-
-  getTotalPages(): number {
-    return Math.ceil(this.totalElements / this.pageSize);
-  }
-
-  getTotalElements(): number {
-    return this.totalElements;
-  }
-
 }
