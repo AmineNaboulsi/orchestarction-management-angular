@@ -195,7 +195,6 @@
     </div>
   </div>
 
-  <!-- Tasks List -->
   <div *ngIf="!loading">
     <div *ngIf="tasks?.entities && tasks?.entities?.length; else noTasks" class="space-y-4">
       <div class="overflow-x-auto bg-white shadow-sm rounded-lg">
@@ -306,12 +305,10 @@
     </ng-template>
   </div>
 
-  <!-- Loading Indicator -->
   <div *ngIf="loading" class="text-center py-12">
     <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-teal-600"></div>
     <p class="mt-2 text-gray-600">Loading tasks...</p>
   </div>
-  <!-- Controls Section -->
   <div class="bg-transparent p-4 mb-6">
     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
       <div class="text-sm text-gray-600 font-medium" *ngIf="tasks">
