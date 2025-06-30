@@ -1,12 +1,12 @@
 import { Routes } from '@angular/router';
-import { TicketsComponent } from './pages/tickets/tickets.component';
-import { HomeComponent } from './pages/home/home.component';
-import { ProcessesComponent } from './pages/processes/processes.component';
-import { TicketViewComponent } from './pages/ticket-view/ticket-view.component';
+import { TicketsComponentPage } from './features/tasks-management/tickets-page/tickets.component';
+import { TicketViewComponent } from './features/tasks-management/ticket-view/ticket-view.component';
+import { ProcessPageComponent } from './features/process-management/process-page/process-page.component';
+import { HomeComponent } from './features/dashboard/home/home.component';
 
 export const routes: Routes = [
-    { path: 'tickets', component: TicketsComponent },
-    { path: 'tickets/:id', component: TicketViewComponent },
-    { path: 'process', component: ProcessesComponent },
+    { path: 'tickets', component: TicketsComponentPage },
+    { path: 'tickets/view/:id', component: TicketViewComponent },
+    { path: 'process', component: ProcessPageComponent },
     { path: '', component: HomeComponent },
 ];
