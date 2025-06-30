@@ -1,16 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { PagedRequestTaskFilterDto, PagedResultTaskDto, TaskBpmApiService, TaskFilterDto } from '../../api-client';
+import { PagedRequestTaskFilterDto, PagedResultTaskDto, TaskBpmApiService, TaskFilterDto } from '../../../services/generated/api-client';
 import { DatePipe, NgClass, NgFor, NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-tickets',
+  selector: 'app-tickets-page',
   imports: [NgFor, NgIf, FormsModule, DatePipe, NgClass],
   providers: [TaskBpmApiService],
-  templateUrl: './tickets.component.html',
-  styleUrls: ['./tickets.component.css']
+  templateUrl: './tickets-page.component.html',
+  styleUrls: ['./tickets-page.component.css']
 })
-export class TicketsComponent implements OnInit {
+export class TicketsComponentPage implements OnInit {
   tasks: PagedResultTaskDto | undefined;
   loading = false;
   error = '';
@@ -24,7 +25,7 @@ export class TicketsComponent implements OnInit {
   
   groupIdsString = '';
 
-  constructor(private ticketsApi: TaskBpmApiService) {}
+  constructor(private ticketsApi: TaskBpmApiService, private router: Router) {}
 
   ngOnInit() {
     this.loadTasks();
@@ -47,11 +48,11 @@ export class TicketsComponent implements OnInit {
     };
     
      this.ticketsApi.searchTasks("", "", searchRequest).subscribe({
-      next: (response) => {
+      next: (response :any) => {
         this.tasks = response.body;
         this.loading = false;
       },
-      error: (err) => {
+      error: (err :any) => {
         console.error('Error loading tasks', err);
         this.error = 'Failed to load tasks. Please try again.';
         this.loading = false;
@@ -71,11 +72,12 @@ export class TicketsComponent implements OnInit {
     this.ticketsApi.completeTask("", "", taskId, {
       Variables: {}
     }).subscribe({
-      next: (response) => { //Who cares 
+      next: (response :any) => {
         alert('Task completed successfully!');
+        console.log(response)
         this.loadTasks();
       },
-      error: (err) => {
+      error: (err :any) => {
         console.error('Error completing task', err);
         alert('Failed to complete task. Please try again.');
       }
@@ -137,8 +139,10 @@ export class TicketsComponent implements OnInit {
     this.loadTasks();
   }
 
-  viewTask(TaskID :string){
-    //
+  viewTask(taskId :string){
+    if (taskId) {
+      this.router.navigate(['/tickets/view', taskId]);
+    }
   }
 
   getPriorityClass(priority: number | undefined): string {

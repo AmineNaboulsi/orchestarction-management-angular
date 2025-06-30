@@ -1,17 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { PagedRequestProcessFilterDto, PagedResultProcessDto, ProcessBpmApiService, ProcessDto, ProcessFilterDto } from '../../api-client';
+import { PagedRequestProcessFilterDto, PagedResultProcessDto, ProcessBpmApiService, ProcessDto, ProcessFilterDto } from '../../../services/generated/api-client';
 import { DatePipe, NgFor, NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-processes',
+  selector: 'app-process-page',
   imports: [NgFor, NgIf, FormsModule, DatePipe],
-  standalone: true,
-  templateUrl: './processes.component.html',
-  styleUrl: './processes.component.css'
+  templateUrl: './process-page.component.html',
+  styleUrl: './process-page.component.css'
 })
-export class ProcessesComponent implements OnInit{
-  processes:PagedResultProcessDto| undefined;
+export class ProcessPageComponent {
+ processes:PagedResultProcessDto| undefined;
   loading = false;
   error = '';
 

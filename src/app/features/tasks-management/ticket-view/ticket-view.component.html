@@ -1,0 +1,121 @@
+<div class="p-6">
+     <div class="flex justify-between items-center mb-6">
+        <nav class="flex items-center space-x-2 text-sm text-gray-600 mb-6">
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
+          </svg>
+          <span class="font-medium text-gray-800">Tasks</span>
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+          </svg>
+          <span>Task Management</span>
+        </nav>
+        <button 
+        (click)="goBack()" 
+          class="text-[#00908E] inline-flex items-center px-4 py-0.5 border border-gray-300 rounded-2xl shadow-sm text-sm font-semibold bg-[#F8F8F8] hover:bg-gray-50 hover:scale-105 transition-all">
+        Liste des tickets
+      </button>
+     </div>
+  
+  <div *ngIf="taskId" class="space-y-4 flex justify-between">
+    <div *ngIf="task">
+      <div class="bg-white rounded-xlp-8">
+        <div class="flex justify-between items-center mb-8 pb-4 border-b border-gray-200">
+          <h3 class="text-2xl font-semibold text-gray-800">{{ task.TaskInfo?.name || 'Untitled Task' }}</h3>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+          <div *ngIf="task.TaskID" class="flex flex-col">
+            <label class="text-sm font-medium text-gray-500 mb-1">Task ID:</label>
+            <span class="text-gray-900 font-mono text-sm">{{ task.TaskID }}</span>
+          </div>
+
+          <div *ngIf="task.TaskInfo?.assignee" class="flex flex-col">
+            <label class="text-sm font-medium text-gray-500 mb-1">Assignee:</label>
+            <span class="text-gray-900">{{ task.TaskInfo?.assignee }}</span>
+          </div>
+
+          <div *ngIf="task.TaskInfo?.owner" class="flex flex-col">
+            <label class="text-sm font-medium text-gray-500 mb-1">Owner:</label>
+            <span class="text-gray-900">{{ task.TaskInfo?.owner }}</span>
+          </div>
+
+          <div *ngIf="task.TaskInfo?.priority" class="flex flex-col">
+            <label class="text-sm font-medium text-gray-500 mb-1">Priority:</label>
+            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium w-fit"
+                  >
+              {{ task.TaskInfo?.priority }}
+            </span>
+          </div>
+
+          <div *ngIf="task.TaskInfo?.createTime" class="flex flex-col">
+            <label class="text-sm font-medium text-gray-500 mb-1">Created:</label>
+            <span class="text-gray-900">{{ task.TaskInfo?.createTime | date:'medium' }}</span>
+          </div>
+
+          <div *ngIf="task.TaskInfo?.dueDate" class="flex flex-col">
+            <label class="text-sm font-medium text-gray-500 mb-1">Due Date:</label>
+            <span class="text-gray-900">{{ task.TaskInfo?.dueDate | date:'medium' }}</span>
+          </div>
+
+          <div *ngIf="task.TaskInfo?.processInstanceId" class="flex flex-col">
+            <label class="text-sm font-medium text-gray-500 mb-1">Process Instance ID:</label>
+            <span class="text-gray-900 font-mono text-sm">{{ task.TaskInfo?.processInstanceId }}</span>
+          </div>
+
+          <div *ngIf="task.TaskInfo?.processDefinitionId" class="flex flex-col">
+            <label class="text-sm font-medium text-gray-500 mb-1">Process Definition ID:</label>
+            <span class="text-gray-900 font-mono text-sm">{{ task.TaskInfo?.processDefinitionId }}</span>
+          </div>
+
+          <div *ngIf="task.TaskInfo?.executionId" class="flex flex-col">
+            <label class="text-sm font-medium text-gray-500 mb-1">Execution ID:</label>
+            <span class="text-gray-900 font-mono text-sm">{{ task.TaskInfo?.executionId }}</span>
+          </div>
+
+          <div *ngIf="task.TaskInfo?.taskDefinitionKey" class="flex flex-col">
+            <label class="text-sm font-medium text-gray-500 mb-1">Task Definition Key:</label>
+            <span class="text-gray-900 font-mono text-sm">{{ task.TaskInfo?.taskDefinitionKey }}</span>
+          </div>
+
+          <div *ngIf="task.TaskInfo?.category" class="flex flex-col">
+            <label class="text-sm font-medium text-gray-500 mb-1">Category:</label>
+            <span class="text-gray-900">{{ task.TaskInfo?.category }}</span>
+          </div>
+
+          <div *ngIf="task.TaskInfo?.parentTaskId" class="flex flex-col">
+            <label class="text-sm font-medium text-gray-500 mb-1">Parent Task ID:</label>
+            <span class="text-gray-900 font-mono text-sm">{{ task.TaskInfo?.parentTaskId }}</span>
+          </div>
+
+          <div *ngIf="task.TaskInfo?.tenantId" class="flex flex-col">
+            <label class="text-sm font-medium text-gray-500 mb-1">Tenant ID:</label>
+            <span class="text-gray-900 font-mono text-sm">{{ task.TaskInfo?.tenantId }}</span>
+          </div>
+
+          <div *ngIf="task.TaskInfo?.processBusinessKey" class="flex flex-col">
+            <label class="text-sm font-medium text-gray-500 mb-1">Process Business Key:</label>
+            <span class="text-gray-900 font-mono text-sm">{{ task.TaskInfo?.processBusinessKey }}</span>
+          </div>
+        </div>
+
+        <div *ngIf="task.TaskInfo?.description" class="mb-8">
+          <label class="text-sm font-medium text-gray-500 block mb-2">Description:</label>
+          <div class="bg-gray-50 p-4 rounded-lg text-gray-900">{{ task.TaskInfo?.description }}</div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="taskId && !task" class="flex items-center justify-center p-8">
+      <div class="flex items-center space-x-3">
+        <div class="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600"></div>
+        <span class="text-gray-600">Loading task details...</span>
+      </div>
+    </div>
+
+    <div *ngIf="taskId && !task" class="bg-red-50 border border-red-200 text-red-700 p-4 rounded-lg">
+      Failed to load task details. Please try again.
+    </div>
+  </div>
+  
+</div>
