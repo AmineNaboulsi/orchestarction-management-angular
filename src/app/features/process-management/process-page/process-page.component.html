@@ -1,27 +1,33 @@
 <div class="p-6">
   <!-- Breadcrumb Navigation -->
-  <nav class="flex items-center space-x-2 text-sm text-gray-600 mb-6">
-    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-      <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
-    </svg>
-    <span class="font-medium text-gray-800">Processes</span>
-    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-    </svg>
-    <span>Process Management</span>
-  </nav>
+  <app-breadcrumb-navigation
+      [items]="[
+        { label: 'Process', url: '/process', icon: 'home' },
+        { label: 'Process Management' }
+      ]">
+   </app-breadcrumb-navigation>
 
   <!-- Header Section -->
   <div class="flex justify-between items-center mb-6">
     <h1 class="text-2xl font-semibold text-gray-900">Process Management</h1>
     <div class="flex items-center space-x-3">
       <button
-        class="inline-flex items-center px-4 py-1 border border-gray-300 rounded-2xl shadow-sm text-sm font-medium text-[#094259] bg-[#F8F8F8] hover:bg-gray-50 hover:scale-105 transition-all"
+        class="inline-flex items-center px-4 py-1 border border-gray-300 rounded-2xl shadow-sm text-sm font-medium text-[#094259] bg-[#F8F8F8] hover:bg-gray-50 hover:scale-105 transition-all cursor-pointer"
         (click)="toggleFilters()">
         <svg class="w-4 h-4 mr-2" fill="#094259" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path>
         </svg>
         {{ showFilters ? 'Hide Filters' : 'Show Filters' }}
+      </button>
+      <!-- -->
+      <button 
+        class="inline-flex items-center px-4 py-1 border border-gray-300 rounded-2xl shadow-sm text-sm font-medium text-[#00908E] bg-[#F8F8F8] hover:bg-gray-50 hover:scale-105 transition-all cursor-pointer"
+        (click)="runProcess()"
+      >
+        <svg class="w-4 h-4 mr-2 text-[#00908E]" fill="#00908E" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v18l15-9z"></path>
+        </svg>
+        Run
       </button>
     </div>
   </div>
@@ -180,7 +186,7 @@
         
         <tbody class="bg-white divide-y divide-gray-200" *ngFor="let process of processes?.entities; let i = index">
           <tr class="hover:bg-gray-50">
-            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 hover:underline font-semibold cursor-pointer">
               {{ process?.ProcessID }}
             </td>
             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
@@ -189,7 +195,7 @@
                   <svg class="w-4 h-4 mr-2 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                   </svg>
-                  <span class="text-sm font-medium  text-gray-700">{{ (process?.ProcessInfo?.startTime| date:'yyyy-MM-dd HH:mm:ss')|| "no Date availible" }}</span>
+                  <span class="text-sm font-medium  text-gray-700">{{ (process?.ProcessInfo?.startTime| date:'yyyy-MM-dd HH:mm:ss')|| "no date available" }}</span>
                 </div>
               </div>
             </td>

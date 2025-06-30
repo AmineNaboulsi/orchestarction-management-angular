@@ -1,15 +1,11 @@
 <div class="p-6">
   <!-- Breadcrumb Navigation -->
-  <nav class="flex items-center space-x-2 text-sm text-gray-600 mb-6">
-    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-      <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
-    </svg>
-    <span class="font-medium text-gray-800">Tasks</span>
-    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-    </svg>
-    <span>Task Management</span>
-  </nav>
+   <app-breadcrumb-navigation
+      [items]="[
+        { label: 'Tasks', url: '/tasks', icon: 'home' },
+        { label: 'Task Management' }
+      ]">
+   </app-breadcrumb-navigation>
 
   <!-- Header Section -->
   <div class="flex justify-between items-center mb-6">
@@ -23,6 +19,16 @@
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path>
         </svg>
         {{ showFilters ? 'Hide Filters' : 'Show Filters' }}
+      </button>
+      <!-- -->
+     <button 
+        class="inline-flex items-center px-4 py-1 border border-gray-300 rounded-2xl shadow-sm text-sm font-medium text-[#00908E] bg-[#F8F8F8] hover:bg-gray-50 hover:scale-105 transition-all cursor-pointer"
+        (click)="createNewTask()"
+      >
+        <svg class="w-4 h-4 mr-2 text-[#00908E]" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+        </svg>
+        Create new task
       </button>
     </div>
   </div>
@@ -226,7 +232,8 @@
         </thead>
         <tbody class="bg-white divide-y divide-gray-200" *ngFor="let task of tasks?.entities; let i = index">
           <tr class="hover:bg-gray-50">
-            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 hover:underline cursor-pointer font-semibold"
+            (click)="editTask(task?.TaskID || '')">
               {{ task.TaskID }}
             </td>
             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
@@ -287,7 +294,6 @@
 
     </div>
 
-    <!-- No Tasks Template -->
     <ng-template #noTasks>
       <div class="text-center py-12 bg-white rounded-lg border border-gray-200">
         <div class="text-gray-400 mb-4">
@@ -305,9 +311,27 @@
     </ng-template>
   </div>
 
-  <div *ngIf="loading" class="text-center py-12">
-    <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-teal-600"></div>
-    <p class="mt-2 text-gray-600">Loading tasks...</p>
+  <div *ngIf="loading && !error" class="flex items-center justify-center p-8" aria-live="polite">
+    <svg
+      class="animate-spin h-5 w-5 text-gray-700"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <line x1="12" y1="2" x2="12" y2="6"></line>
+      <line x1="12" y1="18" x2="12" y2="22"></line>
+      <line x1="4.93" y1="4.93" x2="7.76" y2="7.76"></line>
+      <line x1="16.24" y1="16.24" x2="19.07" y2="19.07"></line>
+      <line x1="2" y1="12" x2="6" y2="12"></line>
+      <line x1="18" y1="12" x2="22" y2="12"></line>
+      <line x1="4.93" y1="19.07" x2="7.76" y2="16.24"></line>
+      <line x1="16.24" y1="7.76" x2="19.07" y2="4.93"></line>
+    </svg>
+    <span class="ml-3 text-gray-600">Loading ...</span>
   </div>
   <div class="bg-transparent p-4 mb-6">
     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">

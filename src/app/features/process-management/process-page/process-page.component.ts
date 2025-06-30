@@ -2,10 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { PagedRequestProcessFilterDto, PagedResultProcessDto, ProcessBpmApiService, ProcessDto, ProcessFilterDto } from '../../../services/generated/api-client';
 import { DatePipe, NgFor, NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+import { BreadcrumbNavigationComponent } from '../../../shared/component/breadcrumb-navigation/breadcrumb-navigation.component';
 
 @Component({
   selector: 'app-process-page',
-  imports: [NgFor, NgIf, FormsModule, DatePipe],
+  imports: [NgFor, NgIf, FormsModule, DatePipe,BreadcrumbNavigationComponent],
   templateUrl: './process-page.component.html',
   styleUrl: './process-page.component.css'
 })
@@ -21,7 +23,7 @@ export class ProcessPageComponent {
   
   showFilters = false;
   filter: ProcessFilterDto = {};
-  constructor(private processService: ProcessBpmApiService) {}
+  constructor(private processService: ProcessBpmApiService, private router :Router) {}
 
   ngOnInit(): void {
     this.loadProcesses();
@@ -76,7 +78,16 @@ export class ProcessPageComponent {
   }
   
   viewDetails(processInstanceId: string){
-
+    if(processInstanceId){
+      this.router.navigate([
+      'processes/view', processInstanceId
+    ]);
+    }
+  }
+  runProcess(){
+    this.router.navigate([
+      '/process/run'
+    ]);
   }
 
   applyFilters() {

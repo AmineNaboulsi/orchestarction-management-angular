@@ -10,13 +10,13 @@ import { FormsModule } from '@angular/forms';
 export class HeaderComponent {
 
   titlePage = 'Dashy';
-  sidebarOpen = true;
+  sidebarOpen = false;
   activePage = 'dashboard';
   selectedLanguage = 'Français';
   
   currentUser = {
-    name: 'mvp',
-    initials: 'M'
+    name: 'Amine',
+    initials: 'A'
   };
   
   toggleSidebar() {
