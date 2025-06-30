@@ -3,10 +3,11 @@ import { PagedRequestTaskFilterDto, PagedResultTaskDto, TaskBpmApiService, TaskF
 import { DatePipe, NgClass, NgFor, NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { BreadcrumbNavigationComponent } from '../../../shared/component/breadcrumb-navigation/breadcrumb-navigation.component';
 
 @Component({
   selector: 'app-tickets-page',
-  imports: [NgFor, NgIf, FormsModule, DatePipe, NgClass],
+  imports: [NgFor, NgIf, FormsModule, DatePipe, NgClass, BreadcrumbNavigationComponent],
   providers: [TaskBpmApiService],
   templateUrl: './tickets-page.component.html',
   styleUrls: ['./tickets-page.component.css']
@@ -141,7 +142,7 @@ export class TicketsComponentPage implements OnInit {
 
   viewTask(taskId :string){
     if (taskId) {
-      this.router.navigate(['/tickets/view', taskId]);
+      this.router.navigate(['/tasks/view', taskId]);
     }
   }
 
@@ -163,4 +164,15 @@ export class TicketsComponentPage implements OnInit {
     return `Très basse (${priority})`;
   }
 
+  createNewTask(){
+    this.router.navigate([
+      '/tasks/create'
+    ])
+  }
+
+  editTask(taskId :string){
+    if (taskId) {
+      this.router.navigate(['/tasks/edit', taskId]);
+    }
+  }
 }
