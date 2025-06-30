@@ -253,58 +253,12 @@
     <p class="mt-2 text-gray-600">Loading processes...</p>
   </div>
 
-  <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 mb-6">
-    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-      <div class="text-sm text-gray-600 font-medium" *ngIf="processes">
-        Showing {{ processes.entities?.length || 0 }} of {{ getTotalElements() }} processes
-      </div>
+  <app-pagination
+      [totalItems]="totalElements"
+      [totalElements]="getTotalElements()"
+      [pageSize]="pageSize"
+      [pageSizeOptions]="[10, 20, 50]"
+      (pageChange)="onPagination($event)">
+  </app-pagination>
 
-      <div class="flex flex-wrap gap-6 items-center">
-        <div class="flex items-center gap-2">
-          <label for="pageSize" class="text-sm font-medium text-gray-600 whitespace-nowrap">Items per page:</label>
-          <select
-            id="pageSize"
-            [(ngModel)]="pageSize"
-            (change)="changePageSize()"
-            class="px-4 py-2 border border-gray-500 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-teal-500">
-            <option value="10">10</option>
-            <option value="20">20</option>
-            <option value="50">50</option>
-          </select>
-        </div>
-        <div class="flex items-center gap-2">
-          <label for="sortOrder" class="text-sm font-medium text-gray-600 whitespace-nowrap">Sort:</label>
-          <select
-            id="sortOrder"
-            [(ngModel)]="sortOrder"
-            (change)="changeSortOrder()"
-            class="px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-teal-500">
-            <option value="ASC">Ascending</option>
-            <option value="DESC">Descending</option>
-          </select>
-        </div>
-        <div class="flex items-center gap-4">
-          <button
-            class="text-gray-700 bg-white"
-            (click)="previousPage()"
-            [disabled]="currentPage === 0">
-            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-            </svg>
-          </button>
-          <span class="px-4 py-2 text-sm font-medium text-gray-600">
-            Page {{ currentPage + 1 }} of {{ getTotalPages() }}
-          </span>
-          <button
-            class="font-medium text-gray-700"
-            (click)="nextPage()"
-            [disabled]="currentPage >= getTotalPages() - 1">
-            <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7"></path>
-            </svg>
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
 </div>
