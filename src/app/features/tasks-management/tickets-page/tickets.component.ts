@@ -8,6 +8,8 @@ import { PaginationComponent } from "../../../shared/component/pagination/pagina
 import { PageEvent } from '@angular/material/paginator';
 import { TaskTableComponent } from "../../../components/task/task-table/task-table.component";
 import { SimpleLoadingMiniComponent } from "../../../shared/component/loading/simple-loading-mini/simple-loading-mini.component";
+import { TaskFilterFormComponent } from "../../../components/task/task-filter-form/task-filter-form.component";
+import { ButtonShowHideFilterComponent } from "../../../shared/component/filter/button-show-hide-filter/button-show-hide-filter.component";
 
 @Component({
   selector: 'app-tickets-page',
@@ -16,7 +18,9 @@ import { SimpleLoadingMiniComponent } from "../../../shared/component/loading/si
     BreadcrumbNavigationComponent,
     PaginationComponent,
     TaskTableComponent,
-    SimpleLoadingMiniComponent
+    SimpleLoadingMiniComponent,
+    TaskFilterFormComponent,
+    ButtonShowHideFilterComponent
 ],
   providers: [TaskBpmApiService],
   templateUrl: './tickets-page.component.html',
@@ -77,8 +81,8 @@ export class TicketsComponentPage implements OnInit {
   /**
    * 
    */
-  toggleFilters() {
-    this.showFilters = !this.showFilters;
+  toggleFilters(newFilterState: boolean) {
+    this.showFilters = newFilterState;
   }
 
   /**
