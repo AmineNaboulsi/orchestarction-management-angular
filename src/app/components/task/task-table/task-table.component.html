@@ -1,0 +1,86 @@
+<table class="w-full divide-y divide-gray-200 p-4">
+        <thead class="bg-gray-50">
+          <tr>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              ID du Ticket
+            </th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Créé le
+            </th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Affecté à
+            </th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Catégorie
+            </th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Priorité
+            </th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Statut
+            </th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Action
+            </th>
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200" *ngFor="let task of tasks?.entities; let i = index">
+          <tr class="hover:bg-gray-50">
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 hover:underline cursor-pointer font-semibold"
+            (click)="editTask(task?.TaskID || '')">
+              {{ task.TaskID }}
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+              <div class="flex flex-col space-y-1">
+                <div class="flex items-center rounded-full px-3 py-1 bg-gray-100">
+                  <svg class="w-4 h-4 mr-2 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                  </svg>
+                  <span class="text-sm font-medium  text-gray-700">{{ task?.TaskInfo?.createTime | date:'yyyy-MM-dd HH:mm:ss' }}</span>
+                </div>
+              </div>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+              {{ task?.TaskInfo?.assignee }}
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+              {{ task?.TaskInfo?.category }}
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              <span class="inline-flex px-3 py-1 text-xs font-semibold rounded-full"
+                    [ngClass]="getPriorityClass(task?.TaskInfo?.priority)">
+                {{ getPriorityLabel(task?.TaskInfo?.priority) }}
+              </span>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+              <span class="inline-flex px-2 py-1 text-xs font-medium rounded-full"
+                    [ngClass]="{
+                      'bg-green-100 text-green-800': task?.TaskInfo?.assignee,
+                      'bg-gray-100 text-gray-800': !task?.TaskInfo?.assignee
+                    }">
+                {{ task?.TaskInfo?.assignee ? 'Assigné' : 'Non assigné' }}
+              </span>
+            </td>        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+              <div class="flex space-x-2">
+                <!-- View Button -->
+                <button class="text-blue-600 hover:text-blue-900 p-2 rounded-full hover:bg-blue-50 transition-colors"
+                        (click)="viewTask(task.TaskID || '')"
+                        title="Voir">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                  </svg>
+                </button>
+                <!-- Complete Task Button -->
+                <button class="text-green-600 hover:text-green-900 p-2 rounded-full hover:bg-green-50 transition-colors"
+                        (click)="completeTask(task.TaskID || '')"
+                        title="Compléter">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                  </svg>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
