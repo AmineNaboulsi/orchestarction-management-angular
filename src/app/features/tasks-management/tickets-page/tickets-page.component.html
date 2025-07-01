@@ -1,15 +1,11 @@
 <div class="p-6">
   <!-- Breadcrumb Navigation -->
-  <nav class="flex items-center space-x-2 text-sm text-gray-600 mb-6">
-    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-      <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
-    </svg>
-    <span class="font-medium text-gray-800">Tasks</span>
-    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-    </svg>
-    <span>Task Management</span>
-  </nav>
+   <app-breadcrumb-navigation
+      [items]="[
+        { label: 'Tasks', url: '/tasks', icon: 'home' },
+        { label: 'Task Management' }
+      ]">
+   </app-breadcrumb-navigation>
 
   <!-- Header Section -->
   <div class="flex justify-between items-center mb-6">
@@ -23,6 +19,16 @@
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path>
         </svg>
         {{ showFilters ? 'Hide Filters' : 'Show Filters' }}
+      </button>
+      <!-- -->
+     <button 
+        class="inline-flex items-center px-4 py-1 border border-gray-300 rounded-2xl shadow-sm text-sm font-medium text-[#00908E] bg-[#F8F8F8] hover:bg-gray-50 hover:scale-105 transition-all cursor-pointer"
+        (click)="createNewTask()"
+      >
+        <svg class="w-4 h-4 mr-2 text-[#00908E]" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+        </svg>
+        Create new task
       </button>
     </div>
   </div>
@@ -195,91 +201,16 @@
     </div>
   </div>
 
-  <!-- Controls Section -->
-  <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 mb-6">
-    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-      <div class="flex flex-wrap gap-6 items-center">
-        <div class="flex items-center gap-2">
-          <label for="pageSize" class="text-sm font-medium text-gray-600 whitespace-nowrap">Items per page:</label>
-          <select 
-            id="pageSize" 
-            [(ngModel)]="pageSize" 
-            (change)="changePageSize()" 
-            class="px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-teal-500">
-            <option value="5">5</option>
-            <option value="10">10</option>
-            <option value="20">20</option>
-            <option value="50">50</option>
-          </select>
-        </div>
-        <div class="flex items-center gap-2">
-          <label for="sortOrder" class="text-sm font-medium text-gray-600 whitespace-nowrap">Sort:</label>
-          <select 
-            id="sortOrder" 
-            [(ngModel)]="sortOrder" 
-            (change)="changeSortOrder()" 
-            class="px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-teal-500">
-            <option value="ASC">Ascending</option>
-            <option value="DESC">Descending</option>
-          </select>
-        </div>
-      </div>
-      
-      <div class="text-sm text-gray-600 font-medium" *ngIf="tasks">
-        Showing {{ tasks.entities?.length || 0 }} of {{ getTotalElements() }} tasks
-      </div>
-    </div>
-  </div>
-
-
-
-  <!-- Tasks List -->
   <div *ngIf="!loading">
     <div *ngIf="tasks?.entities && tasks?.entities?.length; else noTasks" class="space-y-4">
-      <div class="bg-white border border-gray-200 rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow duration-200" 
-           *ngFor="let task of tasks?.entities">
-        <!-- Task Header -->
-        <div class="flex flex-col sm:flex-row justify-between items-start mb-4 gap-3">
-          <h4 class="text-lg font-semibold text-gray-800">
-            {{ task?.TaskInfo?.name || 'Unnamed Task' }}
-          </h4>
-          <span class="inline-block bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs font-mono">
-            ID: {{ task.TaskID }}
-          </span>
-        </div>
-        
-        <!-- Task Details -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 mb-4 text-sm">
-          <div *ngIf="task?.TaskInfo?.assignee" class="text-gray-600">
-            <span class="font-medium text-gray-800">Assignee:</span> 
-            {{ task.TaskInfo?.assignee }}
-          </div>
-          <div *ngIf="task?.TaskInfo?.createTime" class="text-gray-600">
-            <span class="font-medium text-gray-800">Created:</span> 
-            {{ task.TaskInfo?.createTime | date:'medium' }}
-          </div>
-          <div *ngIf="task?.TaskInfo?.processDefinitionId" class="text-gray-600">
-            <span class="font-medium text-gray-800">Process:</span> 
-            {{ task.TaskInfo?.processDefinitionId }}
-          </div>
-        </div>
-        
-        <!-- Task Actions -->
-        <div class="flex justify-end">
-          <button 
-            class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 disabled:opacity-60 disabled:cursor-not-allowed"
-            (click)="completeTask(task.TaskID)"
-            [disabled]="loading">
-            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-            </svg>
-            Complete Task
-          </button>
-        </div>
-      </div>
+      <div class="min-w-full divide-y divide-gray-200 border border-gray-200 rounded">
+        <app-task-table
+          [tasks]="tasks">
+        </app-task-table>
     </div>
 
-    <!-- No Tasks Template -->
+    </div>
+
     <ng-template #noTasks>
       <div class="text-center py-12 bg-white rounded-lg border border-gray-200">
         <div class="text-gray-400 mb-4">
@@ -297,38 +228,14 @@
     </ng-template>
   </div>
 
-    <!-- Loading Indicator -->
-  <div *ngIf="loading" class="text-center py-12">
-    <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-teal-600"></div>
-    <p class="mt-2 text-gray-600">Loading tasks...</p>
+  <div *ngIf="loading && !error">
+    <app-simple-loading-mini></app-simple-loading-mini>
   </div>
-  
-  <!-- Pagination -->
-  <div  class="mt-8 flex justify-center">
-    <div class="flex items-center gap-4">
-      <button 
-        class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 disabled:opacity-60 disabled:cursor-not-allowed"
-        (click)="previousPage()" 
-        [disabled]="currentPage === 0">
-        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-        </svg>
-        Previous
-      </button>
-      
-      <span class="px-4 py-2 text-sm font-medium text-gray-600">
-        Page {{ currentPage + 1 }} of {{ getTotalPages() }}
-      </span>
-      
-      <button 
-        class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 disabled:opacity-60 disabled:cursor-not-allowed"
-        (click)="nextPage()" 
-        [disabled]="currentPage >= getTotalPages() - 1">
-        Next
-        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-        </svg>
-      </button>
-    </div>
-  </div>
+    <app-pagination
+      [totalItems]="totalTasks"
+      [totalElements]="getTotalElements()"
+      [pageSize]="pageSize"
+      [pageSizeOptions]="[10, 20, 50]"
+      (pageChange)="onPagination($event)">
+    </app-pagination>
 </div>

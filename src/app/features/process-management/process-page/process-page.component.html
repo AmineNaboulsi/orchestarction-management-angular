@@ -1,0 +1,205 @@
+<div class="p-6">
+  <!-- Breadcrumb Navigation -->
+  <app-breadcrumb-navigation
+      [items]="[
+        { label: 'Process', url: '/process', icon: 'home' },
+        { label: 'Process Management' }
+      ]">
+   </app-breadcrumb-navigation>
+
+  <!-- Header Section -->
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-2xl font-semibold text-gray-900">Process Management</h1>
+    <div class="flex items-center space-x-3">
+      <button
+        class="inline-flex items-center px-4 py-1 border border-gray-300 rounded-2xl shadow-sm text-sm font-medium text-[#094259] bg-[#F8F8F8] hover:bg-gray-50 hover:scale-105 transition-all cursor-pointer"
+        (click)="toggleFilters()">
+        <svg class="w-4 h-4 mr-2" fill="#094259" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path>
+        </svg>
+        {{ showFilters ? 'Hide Filters' : 'Show Filters' }}
+      </button>
+      <!-- -->
+      <button 
+        class="inline-flex items-center px-4 py-1 border border-gray-300 rounded-2xl shadow-sm text-sm font-medium text-[#00908E] bg-[#F8F8F8] hover:bg-gray-50 hover:scale-105 transition-all cursor-pointer"
+        (click)="runProcess()"
+      >
+        <svg class="w-4 h-4 mr-2 text-[#00908E]" fill="#00908E" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v18l15-9z"></path>
+        </svg>
+        Run
+      </button>
+    </div>
+  </div>
+
+  <!-- Error Message -->
+  <div *ngIf="error" class="mb-6 p-4 bg-red-50 border border-red-200 rounded-md">
+    <div class="flex">
+      <svg class="w-5 h-5 text-red-400 mr-2" fill="currentColor" viewBox="0 0 20 20">
+        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path>
+      </svg>
+      <p class="text-red-800">{{ error }}</p>
+    </div>
+  </div>
+
+  <!-- Filters Section -->
+  <div *ngIf="showFilters" class="p-6 container-fluid mb-4 rounded-3xl bg-gradient-to-tr from-zinc-50 to-gray-50 mx-auto ng-star-inserted">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <!-- Process Instance ID -->
+      <div>
+        <label class="flex items-center text-sm font-medium text-gray-700 mb-2">
+          <svg class="w-4 h-4 mr-2 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
+          </svg>
+          Process Instance ID
+        </label>
+        <input
+          type="text"
+          placeholder="Enter process instance ID"
+          class="bg-white w-full px-6 py-2 border border-gray-300 rounded-3xl placeholder-gray-500 shadow-sm focus:outline-none focus:ring-teal-500 focus:border-teal-500"
+          [(ngModel)]="filter.processInstanceIds">
+      </div>
+
+      <!-- Business Key -->
+      <div>
+        <label class="flex items-center text-sm font-medium text-gray-700 mb-2">
+          <svg class="w-4 h-4 mr-2 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"></path>
+          </svg>
+          Business Key
+        </label>
+        <input
+          type="text"
+          placeholder="Enter business key"
+          class="bg-white w-full px-6 py-2 border border-gray-300 rounded-3xl shadow-sm placeholder-gray-500 focus:outline-none focus:ring-teal-500 focus:border-teal-500"
+          [(ngModel)]="filter.businessKey">
+      </div>
+
+      <!-- Process Definition Key -->
+      <div>
+        <label class="flex items-center text-sm font-medium text-gray-700 mb-2">
+          <svg class="w-4 h-4 mr-2 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+          </svg>
+          Process Definition Key
+        </label>
+        <input
+          type="text"
+          placeholder="Enter process definition key"
+          class="bg-white w-full px-6 py-2 border border-gray-300 rounded-3xl placeholder-gray-500 shadow-sm focus:outline-none focus:ring-teal-500 focus:border-teal-500"
+          [(ngModel)]="filter.processDefinitionKey">
+      </div>
+
+      <!-- Start Date -->
+      <div>
+        <label class="flex items-center text-sm font-medium text-gray-700 mb-2">
+          <svg class="w-4 h-4 mr-2 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+          </svg>
+          Start Date
+        </label>
+        <input
+          type="datetime-local"
+          class="bg-white w-full px-6 py-2 border border-gray-300 rounded-3xl shadow-sm placeholder-gray-500 focus:outline-none focus:ring-teal-500 focus:border-teal-500"
+          [(ngModel)]="filter.startedAfter">
+      </div>
+
+      <!-- End Date -->
+      <div>
+        <label class="flex items-center text-sm font-medium text-gray-700 mb-2">
+          <svg class="w-4 h-4 mr-2 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+          </svg>
+          End Date
+        </label>
+        <input
+          type="datetime-local"
+          class="w-full px-6 py-2 border border-gray-300 rounded-3xl placeholder-gray-500 shadow-sm focus:outline-none focus:ring-teal-500 focus:border-teal-500"
+          [(ngModel)]="filter.startedBefore">
+      </div>
+    </div>
+
+    <!-- Filter Actions -->
+    <div class="flex justify-end space-x-3 mt-6">
+      <button
+        class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-3xl shadow-sm text-sm font-medium text-white bg-[#00908E]"
+        (click)="clearFilters()">
+        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+        Clear Filters
+      </button>
+      <button
+        class="inline-flex items-center px-4 py-2 border border-transparent rounded-3xl shadow-sm text-sm font-medium text-white bg-[#094259]"
+        (click)="applyFilters()">
+        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+        </svg>
+        Search
+      </button>
+    </div>
+  </div>
+
+  <!-- Processes List -->
+  <div *ngIf="!loading">
+
+    <!-- No Processes Template -->
+    <ng-template #noProcesses>
+      <div class="text-center py-12 bg-white rounded-lg border border-gray-200">
+        <div class="text-gray-400 mb-4">
+          <svg class="mx-auto h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+          </svg>
+        </div>
+        <p class="text-lg text-gray-600 mb-4">No processes found matching your criteria.</p>
+        <button
+          class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
+          (click)="clearFilters()">
+          Clear Filters
+        </button>
+      </div>
+    </ng-template>
+  </div>
+  <div *ngIf="!loading">
+    <div *ngIf="processes?.entities && processes?.entities?.length; else noTasks" class="space-y-4">
+      <div class="overflow-x-auto bg-white shadow-sm rounded-lg">
+        <app-process-table
+        [processes]="processes"
+        [loading]="loading"
+        [error]="error"
+        >
+        </app-process-table>
+    </div>
+
+    </div>
+
+    <ng-template #noTasks>
+      <div class="text-center py-12 bg-white rounded-lg border border-gray-200">
+        <div class="text-gray-400 mb-4">
+          <svg class="mx-auto h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+          </svg>
+        </div>
+        <p class="text-lg text-gray-600 mb-4">No tasks found matching your criteria.</p>
+        <button 
+          class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
+          (click)="clearFilters()">
+          Clear Filters
+        </button>
+      </div>
+    </ng-template>
+  </div>
+  <div *ngIf="loading" class="text-center py-12">
+    <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-teal-600"></div>
+    <p class="mt-2 text-gray-600">Loading processes...</p>
+  </div>
+
+  <app-pagination
+      [totalItems]="totalProcess"
+      [totalElements]="getTotalElements()"
+      [pageSize]="pageSize"
+      [pageSizeOptions]="[10, 20, 50]"
+      (pageChange)="onPagination($event)">
+  </app-pagination>
+
+</div>
