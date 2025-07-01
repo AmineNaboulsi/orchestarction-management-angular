@@ -163,71 +163,12 @@
   <div *ngIf="!loading">
     <div *ngIf="processes?.entities && processes?.entities?.length; else noTasks" class="space-y-4">
       <div class="overflow-x-auto bg-white shadow-sm rounded-lg">
-        <table class="min-w-full divide-y divide-gray-200 p-4">
-        <thead class="bg-gray-50">
-          <tr>
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              ProcessID
-            </th>
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              startTime
-            </th>
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              businessKey
-            </th>
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              processDefinitionName
-            </th>
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              processDefinitionKey
-            </th>
-          </tr>
-        </thead>
-        
-        <tbody class="bg-white divide-y divide-gray-200" *ngFor="let process of processes?.entities; let i = index">
-          <tr class="hover:bg-gray-50">
-            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 hover:underline font-semibold cursor-pointer">
-              {{ process?.ProcessID }}
-            </td>
-            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
-              <div class="flex flex-col space-y-1">
-                <div class="flex items-center rounded-full px-3 py-1 bg-gray-100">
-                  <svg class="w-4 h-4 mr-2 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                  </svg>
-                  <span class="text-sm font-medium  text-gray-700">{{ (process?.ProcessInfo?.startTime| date:'yyyy-MM-dd HH:mm:ss')|| "no date available" }}</span>
-                </div>
-              </div>
-            </td>
-            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-              {{ process?.ProcessInfo?.businessKey }}
-            </td>
-            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-              {{ process?.ProcessInfo?.processDefinitionName }}
-            </td>
-            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-               <div class="flex justify-end space-x-3">
-                   <button class="text-blue-600 hover:text-blue-900 p-2 rounded-full hover:bg-blue-50 transition-colors cursor-pointer"
-                        (click)="viewDetails(process?.ProcessID || '')"
-                        title="See details">
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
-                  </svg>
-                </button>
-                   <button class="text-red-600 hover:bg-red-200 p-2 rounded-full hover:text-red-500 transition-colors cursor-pointer"
-                    (click)="cancelProcess(process?.ProcessID || '')"
-                    title="Cancel"
-                    [disabled]="loading">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M6 18L18 6M6 6l12 12"></path>
-                    </svg>
-                  </button>
-                </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+        <app-process-table
+        [processes]="processes"
+        [loading]="loading"
+        [error]="error"
+        >
+        </app-process-table>
     </div>
 
     </div>
@@ -254,7 +195,7 @@
   </div>
 
   <app-pagination
-      [totalItems]="totalElements"
+      [totalItems]="totalProcess"
       [totalElements]="getTotalElements()"
       [pageSize]="pageSize"
       [pageSizeOptions]="[10, 20, 50]"

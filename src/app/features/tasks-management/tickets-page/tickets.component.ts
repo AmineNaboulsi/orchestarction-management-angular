@@ -7,7 +7,7 @@ import { BreadcrumbNavigationComponent } from '../../../shared/component/breadcr
 import { PaginationComponent } from "../../../shared/component/pagination/pagination.component";
 import { PageEvent } from '@angular/material/paginator';
 import { TaskTableComponent } from "../../../components/task/task-table/task-table.component";
-
+import { SimpleLoadingMiniComponent } from "../../../shared/component/loading/simple-loading-mini/simple-loading-mini.component";
 
 @Component({
   selector: 'app-tickets-page',
@@ -15,7 +15,8 @@ import { TaskTableComponent } from "../../../components/task/task-table/task-tab
     NgIf, FormsModule,
     BreadcrumbNavigationComponent,
     PaginationComponent,
-    TaskTableComponent
+    TaskTableComponent,
+    SimpleLoadingMiniComponent
 ],
   providers: [TaskBpmApiService],
   templateUrl: './tickets-page.component.html',
@@ -26,14 +27,11 @@ export class TicketsComponentPage implements OnInit {
   loading = false;
   error = '';
   totalTasks = 0;
-
   currentPage = 0;
   pageSize = 10;
   sortOrder = 'ASC';
-  
   showFilters = true;
   filter: TaskFilterDto = {};
-  
   groupIdsString = '';
 
   constructor(private ticketsApi: TaskBpmApiService, private router: Router) {}
