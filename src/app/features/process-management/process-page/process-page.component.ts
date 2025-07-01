@@ -7,12 +7,13 @@ import { BreadcrumbNavigationComponent } from '../../../shared/component/breadcr
 import { PaginationComponent } from '../../../shared/component/pagination/pagination.component';
 import { PageEvent } from '@angular/material/paginator';
 import { ProcessTableComponent } from "../../../components/process/process-table/process-table.component";
+import { ButtonShowHideFilterComponent } from "../../../shared/component/filter/button-show-hide-filter/button-show-hide-filter.component";
 
 @Component({
   selector: 'app-process-page',
-  imports: [ NgIf, FormsModule,
+  imports: [NgIf, FormsModule,
     BreadcrumbNavigationComponent,
-    PaginationComponent, ProcessTableComponent],
+    PaginationComponent, ProcessTableComponent, ButtonShowHideFilterComponent],
   templateUrl: './process-page.component.html',
   styleUrl: './process-page.component.css'
 })
@@ -61,8 +62,8 @@ export class ProcessPageComponent {
   /**
    * 
    */
-  toggleFilters() {
-    this.showFilters = !this.showFilters;
+  toggleFilters(newFilterState: boolean) {
+    this.showFilters = newFilterState;
   }
 
   /**
