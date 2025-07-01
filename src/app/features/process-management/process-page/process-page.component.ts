@@ -8,12 +8,13 @@ import { PaginationComponent } from '../../../shared/component/pagination/pagina
 import { PageEvent } from '@angular/material/paginator';
 import { ProcessTableComponent } from "../../../components/process/process-table/process-table.component";
 import { ButtonShowHideFilterComponent } from "../../../shared/component/filter/button-show-hide-filter/button-show-hide-filter.component";
+import { ProcessFilterFormComponent } from "../../../components/process/process-filter-form/process-filter-form.component";
 
 @Component({
   selector: 'app-process-page',
   imports: [NgIf, FormsModule,
     BreadcrumbNavigationComponent,
-    PaginationComponent, ProcessTableComponent, ButtonShowHideFilterComponent],
+    PaginationComponent, ProcessTableComponent, ButtonShowHideFilterComponent, ProcessFilterFormComponent],
   templateUrl: './process-page.component.html',
   styleUrl: './process-page.component.css'
 })
@@ -26,7 +27,7 @@ export class ProcessPageComponent {
   currentPage = 0;
   pageSize = 10;
   sortOrder = 'ASC';
-  showFilters = false;
+  showFilters = true;
   filter: ProcessFilterDto = {};
   
   constructor(private processService: ProcessBpmApiService, private router :Router) {}
@@ -41,7 +42,9 @@ export class ProcessPageComponent {
     this.error = "";
 
     const filterPayload:PagedRequestProcessFilterDto= {
-      ...this.filter,
+      filter: {
+        ...this.filter
+      },
       page: this.currentPage,
       size: this.pageSize,
     };
