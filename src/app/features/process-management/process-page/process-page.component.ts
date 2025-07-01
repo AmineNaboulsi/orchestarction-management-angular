@@ -6,12 +6,13 @@ import { Router } from '@angular/router';
 import { BreadcrumbNavigationComponent } from '../../../shared/component/breadcrumb-navigation/breadcrumb-navigation.component';
 import { PaginationComponent } from '../../../shared/component/pagination/pagination.component';
 import { PageEvent } from '@angular/material/paginator';
+import { ProcessTableComponent } from "../../../components/process/process-table/process-table.component";
 
 @Component({
   selector: 'app-process-page',
-  imports: [NgFor, NgIf, FormsModule, 
-    DatePipe,BreadcrumbNavigationComponent,
-    PaginationComponent],
+  imports: [ NgIf, FormsModule,
+    BreadcrumbNavigationComponent,
+    PaginationComponent, ProcessTableComponent],
   templateUrl: './process-page.component.html',
   styleUrl: './process-page.component.css'
 })
@@ -19,6 +20,7 @@ export class ProcessPageComponent {
   processes:PagedResultProcessDto| undefined;
   loading = false;
   error = '';
+  totalProcess = 0;
   totalElements = 0;
   currentPage = 0;
   pageSize = 10;
@@ -45,6 +47,7 @@ export class ProcessPageComponent {
     this.processService.listProcessInstances("","",filterPayload).subscribe({
       next: (response: any) => {
         this.processes = response.body;
+        this.totalProcess = this.processes?.entities?.length || 0;
         this.loading = false;
       },
       error: (err) => {
@@ -53,27 +56,6 @@ export class ProcessPageComponent {
         console.error(err);
       }
     });
-  }
-
-  /**
-   * Cancel process by Id
-   * 
-   * @param processInstanceId process Id
-   */
-  cancelProcess(processInstanceId: string) {
-    if (confirm('Are you sure you want to cancel this process?')) {
-      this.loading = true;
-      this.processService.cancelProcess("","",processInstanceId).subscribe({
-        next: () => {
-          this.loadProcesses();
-        },
-        error: (err) => {
-          this.error = 'Failed to cancel process. Please try again.';
-          this.loading = false;
-          console.error(err);
-        }
-      });
-    }
   }
 
   /**
@@ -89,18 +71,6 @@ export class ProcessPageComponent {
   clearFilters() {
     this.filter = {};
     this.currentPage = 0;
-  }
-  
-  /**
-   * 
-   * @param processInstanceId 
-   */
-  viewDetails(processInstanceId: string){
-    if(processInstanceId){
-      this.router.navigate([
-      'processes/view', processInstanceId
-    ]);
-    }
   }
 
   /**
@@ -130,7 +100,7 @@ export class ProcessPageComponent {
     this.loadProcesses();
   }
 
-   getTotalElements(): number {
+  getTotalElements(): number {
     return this.processes?.totalElements || 0;
   }
 }
