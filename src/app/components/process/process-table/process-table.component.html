@@ -21,7 +21,8 @@
         
         <tbody class="bg-white divide-y divide-gray-200" *ngFor="let process of processes?.entities; let i = index">
           <tr class="hover:bg-gray-50">
-            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 hover:underline font-semibold cursor-pointer">
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 hover:underline font-semibold cursor-pointer"
+            (click)="viewDetails(process?.ProcessID || '')">
               {{ process?.ProcessID }}
             </td>
             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
@@ -35,29 +36,47 @@
               </div>
             </td>
             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-              {{ process?.ProcessInfo?.businessKey }}
+              {{ process?.ProcessInfo?.businessKey || 'Empty' }}
             </td>
             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-              {{ process?.ProcessInfo?.processDefinitionName }}
+              {{ process?.ProcessInfo?.processDefinitionName || 'Empty' }}
             </td>
             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-               <div class="flex justify-end space-x-3">
+               <div class="flex justify-start gap-4 items-center">
                    <button class="text-blue-600 hover:text-blue-900 p-2 rounded-full hover:bg-blue-50 transition-colors cursor-pointer"
-                        (click)="viewDetails(process?.ProcessID || '')"
                         title="See details">
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
-                  </svg>
+                  <div class="flex items-center scale-90">
+                      <mat-icon aria-hidden="false" aria-label="menu icon" fontIcon="refresh"></mat-icon>
+                    </div>
                 </button>
-                   <button class="text-red-600 hover:bg-red-200 p-2 rounded-full hover:text-red-500 transition-colors cursor-pointer"
+                <div *ngIf="process?.ProcessInfo?.status=='active'; else resume">
+                  <button class="text-red-600 p-2 rounded-full cursor-pointer"
+                      (click)="PauseProcess(process?.ProcessID || '')"
+                      title="Pause"
+                      [disabled]="loading">
+                      <div class="flex items-center">
+                        <mat-icon aria-hidden="false" aria-label="menu icon" fontIcon="stop"></mat-icon>
+                      </div>
+                  </button>
+                </div>
+                <ng-template #resume>
+                  <button class="text-red-600 p-2 rounded-full cursor-pointer"
+                      (click)="ResumeProcess(process?.ProcessID || '')"
+                      title="Resume"
+                      [disabled]="loading">
+                      <div class="flex items-center">
+                        <mat-icon aria-hidden="false" aria-label="menu icon" fontIcon="arrow_right" class="scale-x-150"></mat-icon>
+                      </div>
+                  </button>
+                </ng-template>
+                <button class="text-red-600 hover:bg-red-200 p-1 rounded-full hover:text-red-500 transition-colors cursor-pointer"
                     (click)="cancelProcess(process?.ProcessID || '')"
                     title="Cancel"
                     [disabled]="loading">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M6 18L18 6M6 6l12 12"></path>
-                    </svg>
-                  </button>
+                    <div class="flex items-center">
+                      <mat-icon  aria-hidden="false" aria-label="menu icon" fontIcon="close"></mat-icon>
+                    </div>
+                </button>
                 </div>
             </td>
           </tr>

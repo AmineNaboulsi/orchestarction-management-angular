@@ -99,6 +99,15 @@
           <label class="text-sm font-medium text-gray-500 block mb-2">Description:</label>
           <div class="bg-gray-50 p-4 rounded-lg text-gray-900">{{ task.TaskInfo?.description }}</div>
         </div>
+
+        <button class="text-green-600 hover:text-green-900 p-2 rounded-full hover:bg-green-50 transition-colors"
+                        (click)="completeTask(task.TaskID || '')"
+                        title="Compléter">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                  </svg>
+                </button>
+                
       </div>
     </div>
 

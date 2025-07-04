@@ -1,5 +1,8 @@
 <!-- Top Navigation Bar -->
-<app-header></app-header>
+<app-header 
+  [profile]="profile"
+  (logout)="logout()"
+  ></app-header>
 
 <!-- Main Content -->
 <div class="h-full">

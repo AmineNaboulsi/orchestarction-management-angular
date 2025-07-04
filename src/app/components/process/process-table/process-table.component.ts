@@ -1,16 +1,19 @@
-import { Component, Input } from '@angular/core';
-import { PagedResultProcessDto, ProcessBpmApiService } from '../../../services/generated/api-client';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
-import { DatePipe, NgFor } from '@angular/common';
+import { DatePipe, NgFor, NgIf,  } from '@angular/common';
+import { PagedResultProcessDto, ProcessBpmApiService } from '../../../services/generated/api-client';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-process-table',
-  imports: [NgFor, DatePipe],
+  standalone: true,
+  imports: [NgFor,NgIf , DatePipe, MatIconModule],
   templateUrl: './process-table.component.html',
   styleUrl: './process-table.component.css'
 })
 export class ProcessTableComponent { 
   @Input() processes:PagedResultProcessDto| undefined;
+  @Output() enventHandlerRefresh = new EventEmitter<String>();
   @Input() loading = true ;
   @Input() error = '';
   
@@ -22,9 +25,9 @@ export class ProcessTableComponent {
    * @param processInstanceId 
    */
   viewDetails(processInstanceId: string){
-    if(processInstanceId){
+      if(processInstanceId){
       this.router.navigate([
-      'processes/view', processInstanceId
+        'processes/view', processInstanceId
     ]);
     }
   }
@@ -39,10 +42,42 @@ export class ProcessTableComponent {
       this.loading = true;
       this.processService.cancelProcess("","",processInstanceId).subscribe({
         next: () => {
-          //this.loadProcesses();
+          this.enventHandlerRefresh.emit();
         },
         error: (err) => {
           this.error = 'Failed to cancel process. Please try again.';
+          this.loading = false;
+          console.error(err);
+        }
+      });
+      
+    }
+  }
+
+  PauseProcess(processInstanceId: string){
+    if (confirm('Are you sure you want to pause this process?')) {
+      this.loading = true;
+      this.processService.stopProcess("","",processInstanceId).subscribe({
+        next: () => {
+          this.enventHandlerRefresh.emit();
+        },
+        error: (err) => {
+          this.error = 'Failed to pause process. Please try again.';
+          this.loading = false;
+          console.error(err);
+        }
+      });
+    }
+  }
+  ResumeProcess(processInstanceId: string){
+    if (confirm('Are you sure you want to resume this process?')) {
+      this.loading = true;
+      this.processService.resumeProcess("","",processInstanceId).subscribe({
+        next: () => {
+          this.enventHandlerRefresh.emit();
+        },
+        error: (err) => {
+          this.error = 'Failed to resume process. Please try again.';
           this.loading = false;
           console.error(err);
         }
