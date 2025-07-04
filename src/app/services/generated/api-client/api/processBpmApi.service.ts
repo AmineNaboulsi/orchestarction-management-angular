@@ -82,6 +82,9 @@ export class ProcessBpmApiService extends BaseService {
             localVarHeaders = localVarHeaders.set('x-api-canal', String(xApiCanal));
         }
 
+        // authentication (oauth2) required
+        localVarHeaders = this.configuration.addCredentialToHeaders('oauth2', 'Authorization', localVarHeaders, 'Bearer ');
+
         const localVarHttpHeaderAcceptSelected: string | undefined = options?.httpHeaderAccept ?? this.configuration.selectHeaderAccept([
             'application/json'
         ]);
@@ -152,6 +155,9 @@ export class ProcessBpmApiService extends BaseService {
         if (xApiCanal !== undefined && xApiCanal !== null) {
             localVarHeaders = localVarHeaders.set('x-api-canal', String(xApiCanal));
         }
+
+        // authentication (oauth2) required
+        localVarHeaders = this.configuration.addCredentialToHeaders('oauth2', 'Authorization', localVarHeaders, 'Bearer ');
 
         const localVarHttpHeaderAcceptSelected: string | undefined = options?.httpHeaderAccept ?? this.configuration.selectHeaderAccept([
             'application/json'
@@ -230,6 +236,9 @@ export class ProcessBpmApiService extends BaseService {
             localVarHeaders = localVarHeaders.set('x-api-canal', String(xApiCanal));
         }
 
+        // authentication (oauth2) required
+        localVarHeaders = this.configuration.addCredentialToHeaders('oauth2', 'Authorization', localVarHeaders, 'Bearer ');
+
         const localVarHttpHeaderAcceptSelected: string | undefined = options?.httpHeaderAccept ?? this.configuration.selectHeaderAccept([
             'application/json'
         ]);
@@ -296,6 +305,9 @@ export class ProcessBpmApiService extends BaseService {
         if (xApiCanal !== undefined && xApiCanal !== null) {
             localVarHeaders = localVarHeaders.set('x-api-canal', String(xApiCanal));
         }
+
+        // authentication (oauth2) required
+        localVarHeaders = this.configuration.addCredentialToHeaders('oauth2', 'Authorization', localVarHeaders, 'Bearer ');
 
         const localVarHttpHeaderAcceptSelected: string | undefined = options?.httpHeaderAccept ?? this.configuration.selectHeaderAccept([
             'application/json'
@@ -364,6 +376,9 @@ export class ProcessBpmApiService extends BaseService {
             localVarHeaders = localVarHeaders.set('x-api-canal', String(xApiCanal));
         }
 
+        // authentication (oauth2) required
+        localVarHeaders = this.configuration.addCredentialToHeaders('oauth2', 'Authorization', localVarHeaders, 'Bearer ');
+
         const localVarHttpHeaderAcceptSelected: string | undefined = options?.httpHeaderAccept ?? this.configuration.selectHeaderAccept([
             'application/json'
         ]);
@@ -430,6 +445,9 @@ export class ProcessBpmApiService extends BaseService {
         if (xApiCanal !== undefined && xApiCanal !== null) {
             localVarHeaders = localVarHeaders.set('x-api-canal', String(xApiCanal));
         }
+
+        // authentication (oauth2) required
+        localVarHeaders = this.configuration.addCredentialToHeaders('oauth2', 'Authorization', localVarHeaders, 'Bearer ');
 
         const localVarHttpHeaderAcceptSelected: string | undefined = options?.httpHeaderAccept ?? this.configuration.selectHeaderAccept([
             'application/json'
@@ -508,6 +526,9 @@ export class ProcessBpmApiService extends BaseService {
             localVarHeaders = localVarHeaders.set('x-api-canal', String(xApiCanal));
         }
 
+        // authentication (oauth2) required
+        localVarHeaders = this.configuration.addCredentialToHeaders('oauth2', 'Authorization', localVarHeaders, 'Bearer ');
+
         const localVarHttpHeaderAcceptSelected: string | undefined = options?.httpHeaderAccept ?? this.configuration.selectHeaderAccept([
             'application/json'
         ]);
@@ -560,6 +581,146 @@ export class ProcessBpmApiService extends BaseService {
      * @param xApiRequestId 
      * @param xApiCanal 
      * @param processInstanceId 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public resumeProcess(xApiRequestId: string, xApiCanal: string, processInstanceId: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: '*/*', context?: HttpContext, transferCache?: boolean}): Observable<ApiResponseString>;
+    public resumeProcess(xApiRequestId: string, xApiCanal: string, processInstanceId: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: '*/*', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<ApiResponseString>>;
+    public resumeProcess(xApiRequestId: string, xApiCanal: string, processInstanceId: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: '*/*', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<ApiResponseString>>;
+    public resumeProcess(xApiRequestId: string, xApiCanal: string, processInstanceId: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: '*/*', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+        if (xApiRequestId === null || xApiRequestId === undefined) {
+            throw new Error('Required parameter xApiRequestId was null or undefined when calling resumeProcess.');
+        }
+        if (xApiCanal === null || xApiCanal === undefined) {
+            throw new Error('Required parameter xApiCanal was null or undefined when calling resumeProcess.');
+        }
+        if (processInstanceId === null || processInstanceId === undefined) {
+            throw new Error('Required parameter processInstanceId was null or undefined when calling resumeProcess.');
+        }
+
+        let localVarHeaders = this.defaultHeaders;
+        if (xApiRequestId !== undefined && xApiRequestId !== null) {
+            localVarHeaders = localVarHeaders.set('x-api-requestId', String(xApiRequestId));
+        }
+        if (xApiCanal !== undefined && xApiCanal !== null) {
+            localVarHeaders = localVarHeaders.set('x-api-canal', String(xApiCanal));
+        }
+
+        // authentication (oauth2) required
+        localVarHeaders = this.configuration.addCredentialToHeaders('oauth2', 'Authorization', localVarHeaders, 'Bearer ');
+
+        const localVarHttpHeaderAcceptSelected: string | undefined = options?.httpHeaderAccept ?? this.configuration.selectHeaderAccept([
+            '*/*'
+        ]);
+        if (localVarHttpHeaderAcceptSelected !== undefined) {
+            localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
+        }
+
+        const localVarHttpContext: HttpContext = options?.context ?? new HttpContext();
+
+        const localVarTransferCache: boolean = options?.transferCache ?? true;
+
+
+        let responseType_: 'text' | 'json' | 'blob' = 'json';
+        if (localVarHttpHeaderAcceptSelected) {
+            if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
+                responseType_ = 'text';
+            } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
+                responseType_ = 'json';
+            } else {
+                responseType_ = 'blob';
+            }
+        }
+
+        let localVarPath = `/v1/api/ui/process/${this.configuration.encodeParam({name: "processInstanceId", value: processInstanceId, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/resume`;
+        const { basePath, withCredentials } = this.configuration;
+        return this.httpClient.request<ApiResponseString>('post', `${basePath}${localVarPath}`,
+            {
+                context: localVarHttpContext,
+                responseType: <any>responseType_,
+                ...(withCredentials ? { withCredentials } : {}),
+                headers: localVarHeaders,
+                observe: observe,
+                transferCache: localVarTransferCache,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * @param xApiRequestId 
+     * @param xApiCanal 
+     * @param processInstanceId 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public stopProcess(xApiRequestId: string, xApiCanal: string, processInstanceId: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<ApiResponseString>;
+    public stopProcess(xApiRequestId: string, xApiCanal: string, processInstanceId: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<ApiResponseString>>;
+    public stopProcess(xApiRequestId: string, xApiCanal: string, processInstanceId: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<ApiResponseString>>;
+    public stopProcess(xApiRequestId: string, xApiCanal: string, processInstanceId: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+        if (xApiRequestId === null || xApiRequestId === undefined) {
+            throw new Error('Required parameter xApiRequestId was null or undefined when calling stopProcess.');
+        }
+        if (xApiCanal === null || xApiCanal === undefined) {
+            throw new Error('Required parameter xApiCanal was null or undefined when calling stopProcess.');
+        }
+        if (processInstanceId === null || processInstanceId === undefined) {
+            throw new Error('Required parameter processInstanceId was null or undefined when calling stopProcess.');
+        }
+
+        let localVarHeaders = this.defaultHeaders;
+        if (xApiRequestId !== undefined && xApiRequestId !== null) {
+            localVarHeaders = localVarHeaders.set('x-api-requestId', String(xApiRequestId));
+        }
+        if (xApiCanal !== undefined && xApiCanal !== null) {
+            localVarHeaders = localVarHeaders.set('x-api-canal', String(xApiCanal));
+        }
+
+        // authentication (oauth2) required
+        localVarHeaders = this.configuration.addCredentialToHeaders('oauth2', 'Authorization', localVarHeaders, 'Bearer ');
+
+        const localVarHttpHeaderAcceptSelected: string | undefined = options?.httpHeaderAccept ?? this.configuration.selectHeaderAccept([
+            'application/json'
+        ]);
+        if (localVarHttpHeaderAcceptSelected !== undefined) {
+            localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
+        }
+
+        const localVarHttpContext: HttpContext = options?.context ?? new HttpContext();
+
+        const localVarTransferCache: boolean = options?.transferCache ?? true;
+
+
+        let responseType_: 'text' | 'json' | 'blob' = 'json';
+        if (localVarHttpHeaderAcceptSelected) {
+            if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
+                responseType_ = 'text';
+            } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
+                responseType_ = 'json';
+            } else {
+                responseType_ = 'blob';
+            }
+        }
+
+        let localVarPath = `/v1/api/ui/process/${this.configuration.encodeParam({name: "processInstanceId", value: processInstanceId, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/stop`;
+        const { basePath, withCredentials } = this.configuration;
+        return this.httpClient.request<ApiResponseString>('post', `${basePath}${localVarPath}`,
+            {
+                context: localVarHttpContext,
+                responseType: <any>responseType_,
+                ...(withCredentials ? { withCredentials } : {}),
+                headers: localVarHeaders,
+                observe: observe,
+                transferCache: localVarTransferCache,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * @param xApiRequestId 
+     * @param xApiCanal 
+     * @param processInstanceId 
      * @param updateVariablesRequestDto 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -588,6 +749,9 @@ export class ProcessBpmApiService extends BaseService {
         if (xApiCanal !== undefined && xApiCanal !== null) {
             localVarHeaders = localVarHeaders.set('x-api-canal', String(xApiCanal));
         }
+
+        // authentication (oauth2) required
+        localVarHeaders = this.configuration.addCredentialToHeaders('oauth2', 'Authorization', localVarHeaders, 'Bearer ');
 
         const localVarHttpHeaderAcceptSelected: string | undefined = options?.httpHeaderAccept ?? this.configuration.selectHeaderAccept([
             'application/json'

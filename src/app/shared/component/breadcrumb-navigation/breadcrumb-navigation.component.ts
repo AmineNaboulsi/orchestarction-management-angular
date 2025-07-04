@@ -4,6 +4,7 @@ import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-breadcrumb-navigation',
+  standalone: true,
   imports: [RouterLink, NgIf, NgFor],
   templateUrl: './breadcrumb-navigation.component.html',
   styleUrl: './breadcrumb-navigation.component.css'

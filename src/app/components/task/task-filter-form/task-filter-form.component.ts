@@ -1,10 +1,11 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { TaskFilterDto } from '../../../services/generated/api-client';
 import { PageEvent } from '@angular/material/paginator';
+import { TaskFilterDto } from '../../../services/generated/api-client';
 
 @Component({
   selector: 'app-task-filter-form',
+  standalone:true,
   imports: [FormsModule],
   templateUrl: './task-filter-form.component.html',
   styleUrl: './task-filter-form.component.css'

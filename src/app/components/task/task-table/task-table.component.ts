@@ -5,6 +5,7 @@ import { PagedResultTaskDto, TaskBpmApiService } from '../../../services/generat
 
 @Component({
   selector: 'app-task-table',
+  standalone: true,
   imports: [NgFor, DatePipe, NgClass],
   templateUrl: './task-table.component.html',
   styleUrl: './task-table.component.css'
@@ -60,33 +61,6 @@ export class TaskTableComponent {
     if (taskId) {
       this.router.navigate(['/tasks/view', taskId]);
     }
-  }
-
-  /**
-   * 
-   * @param taskId 
-   * @returns 
-   */
-  completeTask(taskId: string | undefined) {
-    if (!taskId) {
-        alert('Invalid task ID');
-        return;
-    }
-    if (!confirm('Are you sure you want to complete this task?')) {
-      return;
-    }
-    this.ticketsApi.completeTask("", "", taskId, {
-      Variables: {}
-    }).subscribe({
-      next: (response :any) => {
-        alert('Task completed successfully!');
-        // this.loadTasks();
-      },
-      error: (err :any) => {
-        console.error('Error completing task', err);
-        alert('Failed to complete task. Please try again.');
-      }
-    });
   }
   
 }

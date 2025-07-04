@@ -13,7 +13,7 @@
         <div class="flex items-center">
              <div class="flex items-center space-x-3">
                 <div class="flex items-center">
-                <img src="dashy-logo.png" alt="{{ titlePage }}" class="max-h-12" />
+                <img src="dashy-logo.png" alt="logo" class="max-h-12" />
                 </div>
             </div>
         </div>
@@ -45,9 +45,9 @@
         <select class="appearance-none bg-transparent border-none text-sm text-gray-600 pr-6 focus:outline-none cursor-pointer"
                 [(ngModel)]="selectedLanguage"
                 (change)="onLanguageChange(selectedLanguage)">
-          <option value="Français">Français</option>
-          <option value="English">English</option>
-          <option value="العربية">العربية</option>
+          <option value="fr">Français</option>
+          <option value="en">English</option>
+          <option value="ar">العربية</option>
         </select>
         <svg class="absolute right-0 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" 
              fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -55,16 +55,49 @@
         </svg>
       </div>
       
-      <!-- User Profile -->
-      <div class="flex items-center space-x-2">
-        <div class="w-8 h-8 bg-teal-600 rounded-full flex items-center justify-center">
-          <span class="text-white font-semibold text-sm">{{ currentUser.initials }}</span>
+      <header class="sticky top-0 z-20 w-full bg-white px-4 py-3">
+      <div class="relative" *ngIf="profile">
+        <button
+          id="user-menu-button"
+          aria-expanded="isDropdownOpen"
+          (click)="toggleDropdown()"
+          class="border border-teal-600 p-0.5 font-medium text-gray-600 rounded-full hover:text-teal-700 ">
+          <span class="sr-only">Open user menu</span>
+          <div class="flex items-center">
+            <div class="relative inline-flex items-center justify-center w-9 h-9 overflow-hidden bg-teal-600 rounded-full">
+              <span class="font-medium text-white">{{ getUserInitial() }}</span>
+            </div>
+            <span class="ml-2 max-sm:hidden">{{ getUsername() }}</span>
+            <mat-icon aria-hidden="false" aria-label="menu icon" fontIcon="arrow_drop_down"></mat-icon>
+          </div>
+        </button>
+        <div
+          *ngIf="isDropdownOpen"
+          id="user-dropdown"
+          class="z-10 bg-white divide-y divide-gray-100 rounded-lg w-40 absolute top-full mt-2 right-0">
+          <div class="px-4 py-3 text-sm text-gray-600">
+            <div class="font-medium">{{ getUsername() }}</div>
+            <div class="truncate">{{ getUserEmail() }}</div>
+          </div>
+          <ul class="py-2 text-sm text-gray-700" aria-labelledby="user-menu-button">
+            <li>
+              <a
+                (click)="navigateToProfile()"
+                class="cursor-pointer block px-4 py-2 hover:bg-gray-100">
+                <i class="fa-regular fa-user mr-2"></i>Mon profil
+              </a>
+            </li>
+            <li>
+              <a
+                (click)="onLogout()"
+                class="cursor-pointer block px-4 py-2 hover:bg-gray-100">
+                <i class="fa-solid fa-arrow-right-from-bracket mr-2"></i>Se Déconnecter
+              </a>
+            </li>
+          </ul>
         </div>
-        <span class="text-sm text-gray-700">{{ currentUser.name }}</span>
-        <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-        </svg>
       </div>
+</header>
     </div>
   </div>
 </header>

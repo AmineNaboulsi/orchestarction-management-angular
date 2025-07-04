@@ -66,6 +66,9 @@ export class InProcessBpmApiService extends BaseService {
             localVarHeaders = localVarHeaders.set('x-api-canal', String(xApiCanal));
         }
 
+        // authentication (oauth2) required
+        localVarHeaders = this.configuration.addCredentialToHeaders('oauth2', 'Authorization', localVarHeaders, 'Bearer ');
+
         const localVarHttpHeaderAcceptSelected: string | undefined = options?.httpHeaderAccept ?? this.configuration.selectHeaderAccept([
             'application/json'
         ]);

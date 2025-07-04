@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { PagedRequestTaskFilterDto, PagedResultTaskDto, TaskBpmApiService, TaskFilterDto } from '../../../services/generated/api-client';
 import { NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -10,9 +9,11 @@ import { TaskTableComponent } from "../../../components/task/task-table/task-tab
 import { SimpleLoadingMiniComponent } from "../../../shared/component/loading/simple-loading-mini/simple-loading-mini.component";
 import { TaskFilterFormComponent } from "../../../components/task/task-filter-form/task-filter-form.component";
 import { ButtonShowHideFilterComponent } from "../../../shared/component/filter/button-show-hide-filter/button-show-hide-filter.component";
+import { PagedRequestTaskFilterDto, PagedResultTaskDto, TaskBpmApiService, TaskFilterDto } from '../../../services/generated/api-client';
 
 @Component({
   selector: 'app-tickets-page',
+  standalone: true,
   imports: [
     NgIf, FormsModule,
     BreadcrumbNavigationComponent,
@@ -60,7 +61,6 @@ export class TicketsComponentPage implements OnInit {
         ...this.filter,
         groupIds: groupIds 
       },
-
     };
     
      this.ticketsApi.searchTasks("", "", searchRequest).subscribe({
@@ -75,7 +75,6 @@ export class TicketsComponentPage implements OnInit {
         this.loading = false;
       }
     });
-
   }
 
   /**
