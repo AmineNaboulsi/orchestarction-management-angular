@@ -100,17 +100,27 @@
           <div class="bg-gray-50 p-4 rounded-lg text-gray-900">{{ task.TaskInfo?.description }}</div>
         </div>
 
-        <button class="text-green-600 hover:text-green-900 p-2 rounded-full hover:bg-green-50 transition-colors"
+        <button class="text-green-600 hover:text-green-900 p-2 rounded-full hover:bg-green-50 transition-colors cursor-pointer"
                         (click)="completeTask(task.TaskID || '')"
                         title="Compléter">
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                  </svg>
+                        <div class="flex items-center gap-2.5 " *ngIf="!isLoading;else LoadingProcess" >
+                          <mat-icon aria-hidden="false" aria-label="menu icon" fontIcon="check"></mat-icon>
+                          <label class="cursor-pointer">Compléter</label>
+                        </div>
+                        <ng-template #LoadingProcess>
+                          <div class="flex items-center gap-2.5">
+                            <mat-spinner diameter="20"></mat-spinner>
+                          </div>
+                        </ng-template>
                 </button>
                 
       </div>
     </div>
-
+  <p-toast 
+    position="top-right" 
+    [life]="5000"
+    [style]="{ 'z-index': '9999', 'position': 'fixed', 'top': '20px', 'right': '20px' }">
+  </p-toast>
   <div *ngIf="loading && !error" class="flex items-center justify-center p-8">
     <svg
       class="animate-spin h-5 w-5 text-gray-700"
