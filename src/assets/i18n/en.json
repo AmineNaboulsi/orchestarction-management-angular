@@ -1,20 +1,91 @@
 {
-  "header": {
-    "title": "My Application",
-    "home": "Home",
-    "about": "About",
-    "contact": "Contact",
-    "language": "Language",
-    "profile": "my profile",
-    "logout": "Logout"
-  },
   "welcome": {
     "title": "Welcome",
     "message": "Welcome to our multi-language application!"
   },
+  "task": {},
   "buttons": {
     "submit": "Submit",
     "cancel": "Cancel",
     "save": "Save"
+  },
+  "TASK": {
+    "TITLE": "Task Management",
+    "TASKPATH": "Tasks",
+    "DASHBOARD": {
+      "PAGE": {},
+      "TABLE": {
+        "HEADER": {
+          "IDTicket": "Ticket ID",
+          "CERATEAT": "Created At",
+          "CATEGORIE": "Category",
+          "PRIORITY": "Priority",
+          "STATUT": "Status",
+          "ACTION": "Action"
+        }
+      },
+      "FILTERS": {
+        "FILEDS": {
+          "ProcessDefinitionKey": "Process Definition Key",
+          "TaskID": "Task ID",
+          "Assignee ID": "Assignee ID",
+          "UserID": "User ID",
+          "BusinessKey": "Business Key",
+          "GroupIDs": "Group IDs (comma-separated)",
+          "StartDate": "Start Date",
+          "EndDate": "End Date"
+        }
+      }
+    }
+  },
+  "MENU": {},
+  "FOOTER": "© 2025 Dashy. All rights reserved.",
+  "PAGINATOR": {
+    "FIRST_PAGE": "First page",
+    "ITEMS_PER_PAGE": "Items per page:",
+    "LAST_PAGE": "Last page",
+    "NEXT_PAGE": "Next",
+    "PREVIOUS_PAGE": "Previous",
+    "NO_RECORDS_FOUND": "No records found!",
+    "RECORDS_FOUND": "records found"
+  },
+  "APP_BUTTONS": {
+    "SAVE": "Save",
+    "CANCEL": "Cancel",
+    "EDIT": "Edit",
+    "DELETE": "Delete",
+    "CONSULT": "Consult",
+    "SUBMIT": "Submit",
+    "ASSIGN": "Assign",
+    "TRANSFER": "Transfer",
+    "CLOSE": "Close",
+    "HERE": "Here",
+    "ADD": "Add",
+    "RESET": "Reset",
+    "SHOW_FILTER": "Show",
+    "HIDE_FILTER": "Hide",
+    "ADD_MORE": "Add more",
+    "SEARCH": "Search",
+    "UPLOAD": "Upload",
+    "DOWNLOAD": "Download",
+    "EXPORT": "Export",
+    "ARCHIVE": "Archive",
+    "ENTER": "Enter",
+    "CLEARFILTER": "Clear filter",
+    "PRIORITY": {
+    "LOW": "Low",
+    "MEDIUM": "Medium",
+    "HIGH": "High"
+    },
+    "NOTASSIGN": "Unassigned"
+  },
+  "APP_USER": {
+    "PROFILE": "My profile",
+    "LOGOUT": "Logout",
+    "FIRST_NAME": "First name",
+    "EDIT": "Edit",
+    "LAST_NAME": "Last name",
+    "USERNAME": "Username",
+    "EMAIL": "Email"
   }
 }

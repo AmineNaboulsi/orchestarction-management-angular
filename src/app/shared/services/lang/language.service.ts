@@ -12,6 +12,7 @@ export class LanguageService {
     { code: 'fr', name: 'Français'},  
     { code: 'ar', name: 'Arabe'}
   ];
+  private rtlLanguages = ['ar', 'he', 'fa', 'ur'];
 
   // Add a BehaviorSubject to track current language
   private currentLanguageSubject = new BehaviorSubject<string>('en');
@@ -39,7 +40,7 @@ export class LanguageService {
     
     const supportedLangCodes = this.supportedLanguages.map(lang => lang.code);
     
-    let languageToUse = 'en'; // fallback
+    let languageToUse = 'en';
     
     if (savedLang && supportedLangCodes.includes(savedLang)) {
       languageToUse = savedLang;
@@ -49,7 +50,6 @@ export class LanguageService {
     
     console.log('Language to use:', languageToUse);
     
-    // Use the language and debug the loading
     this.translate.use(languageToUse).subscribe({
       next: (translations) => {
         console.log('Translations loaded successfully for:', languageToUse);
@@ -57,19 +57,16 @@ export class LanguageService {
       },
       error: (error) => {
         console.error('Error loading translations:', error);
-        // Fallback to English if error occurs
         this.translate.use('en').subscribe(() => {
           this.currentLanguageSubject.next('en');
         });
       }
     });
 
-    // Test if translation works after a delay
     setTimeout(() => {
       const testTranslation = this.translate.instant('header.title');
       console.log('Test translation for header.title:', testTranslation);
       
-      // If translation returns the key itself, it means translation file wasn't loaded
       if (testTranslation === 'header.title') {
         console.warn('Translation not found - check if translation files are loaded properly');
       }
@@ -102,10 +99,13 @@ export class LanguageService {
       }
 
       this.translate.use(langCode).subscribe({
-        next: (translations) => {
+      next: (translations) => {
           console.log('Language changed successfully to:', langCode);
           localStorage.setItem('selectedLanguage', langCode);
           this.currentLanguageSubject.next(langCode);
+
+          this.updateDirection(langCode);
+
           resolve(translations);
         },
         error: (error) => {
@@ -114,6 +114,19 @@ export class LanguageService {
         }
       });
     });
+  }
+
+  private updateDirection(langCode: string) {
+    const isRtl = this.rtlLanguages.includes(langCode);
+    document.documentElement.lang = langCode;
+    document.documentElement.dir = isRtl ? 'rtl' : 'ltr';
+
+    // Optional body class
+    if (isRtl) {
+      document.body.classList.add('rtl');
+    } else {
+      document.body.classList.remove('rtl');
+    }
   }
 
   getLanguageName(langCode: string): string {

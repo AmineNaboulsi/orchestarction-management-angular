@@ -1,20 +1,91 @@
 {
-  "header": {
-    "title": "Mon Application",
-    "home": "Accueil",
-    "about": "À propos",
-    "contact": "Contact",
-    "language": "Langue",
-    "profile": "Mon profile",
-    "logout": "Se Déconnecter"
-  },
   "welcome": {
     "title": "Bienvenue",
-    "message": "Bienvenue dans notre application multilingue!"
+    "message": "Bienvenue dans notre application!"
   },
+  "task": {},
   "buttons": {
     "submit": "Soumettre",
     "cancel": "Annuler",
     "save": "Enregistrer"
+  },
+  "TASK": {
+    "TITLE": "Gestion des tâches",
+    "TASKPATH": "Tâches",
+    "DASHBOARD": {
+      "PAGE": {},
+      "TABLE": {
+        "HEADER": {
+          "IDTicket": "ID du ticket",
+          "CERATEAT": "Créé le",
+          "CATEGORIE": "Catégorie",
+          "PRIORITY": "Priorité",
+          "STATUT": "Statut",
+          "ACTION": "Action"
+        }
+      },
+      "FILTERS": {
+        "FILEDS": {
+          "ProcessDefinitionKey": "Clé de définition de processus",
+          "TaskID": "ID de tâche",
+          "Assignee ID": "ID de l'assigné",
+          "UserID": "ID utilisateur",
+          "BusinessKey": "Clé métier",
+          "GroupIDs": "ID de groupes (séparés par des virgules)",
+          "StartDate": "Date de début",
+          "EndDate": "Date de fin"
+        }
+      }
+    }
+  },
+  "MENU": {},
+  "FOOTER": "© 2025 Dashy. Tous droits réservés.",
+  "PAGINATOR": {
+    "FIRST_PAGE": "Première page",
+    "ITEMS_PER_PAGE": "Articles par page :",
+    "LAST_PAGE": "Dernière page",
+    "NEXT_PAGE": "Suivant",
+    "PREVIOUS_PAGE": "Précédent",
+    "NO_RECORDS_FOUND": "Aucun enregistrement trouvé !",
+    "RECORDS_FOUND": "enregistrements trouvés"
+  },
+  "APP_BUTTONS": {
+    "SAVE": "Enregistrer",
+    "CANCEL": "Annuler",
+    "EDIT": "Modifier",
+    "DELETE": "Supprimer",
+    "CONSULT": "Consulter",
+    "SUBMIT": "Soumettre",
+    "ASSIGN": "Assigner",
+    "TRANSFER": "Transférer",
+    "CLOSE": "Fermer",
+    "HERE": "Ici",
+    "ADD": "Ajouter",
+    "RESET": "Réinitialiser",
+    "SHOW_FILTER": "Afficher",
+    "HIDE_FILTER": "Masquer",
+    "ADD_MORE": "Ajouter plus",
+    "SEARCH": "Rechercher",
+    "UPLOAD": "Importer",
+    "DOWNLOAD": "Télécharger",
+    "EXPORT": "Exporter",
+    "ARCHIVE": "Archiver",
+    "ENTER": "Entrer",
+    "CLEARFILTER": "Réinitialiser les filtres",
+    "PRIORITY": {
+      "LOW": "Faible",
+      "MEDIUM": "Moyenne",
+      "HIGH": "Élevée"
+    },
+    "NOTASSIGN": "Non assignée"
+  },
+  "APP_USER": {
+    "PROFILE": "Mon profil",
+    "LOGOUT": "Se déconnecter",
+    "FIRST_NAME": "Prénom",
+    "EDIT": "Modifier",
+    "LAST_NAME": "Nom",
+    "USERNAME": "Nom d'utilisateur",
+    "EMAIL": "Email"
   }
 }

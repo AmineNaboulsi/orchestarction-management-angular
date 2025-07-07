@@ -11,6 +11,7 @@ import { TaskFilterFormComponent } from "../../../components/task/task-filter-fo
 import { ButtonShowHideFilterComponent } from "../../../shared/component/filter/button-show-hide-filter/button-show-hide-filter.component";
 import { PagedRequestTaskFilterDto, PagedResultTaskDto, TaskBpmApiService, TaskFilterDto } from '../../../services/generated/api-client';
 import { KeycloakService } from '../../../shared/services/keycloak/keycloak.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-tickets-page',
@@ -22,7 +23,8 @@ import { KeycloakService } from '../../../shared/services/keycloak/keycloak.serv
     TaskTableComponent,
     SimpleLoadingMiniComponent,
     TaskFilterFormComponent,
-    ButtonShowHideFilterComponent
+    ButtonShowHideFilterComponent,
+    TranslateModule
 ],
   providers: [TaskBpmApiService],
   templateUrl: './tickets-page.component.html',

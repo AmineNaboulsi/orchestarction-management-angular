@@ -2,11 +2,12 @@ import { DatePipe, NgClass, NgFor } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { PagedResultTaskDto, TaskBpmApiService } from '../../../services/generated/api-client';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-task-table',
   standalone: true,
-  imports: [NgFor, DatePipe, NgClass],
+  imports: [NgFor, DatePipe, NgClass, TranslateModule],
   templateUrl: './task-table.component.html',
   styleUrl: './task-table.component.css'
 })

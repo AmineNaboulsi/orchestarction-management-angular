@@ -6,3 +6,13 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 :root {
   --mdc-circular-progress-active-indicator-color: #16a34a;
 }
+
+body.rtl {
+  direction: rtl;
+  text-align: right;
+}
+
+body:not(.rtl) {
+  direction: ltr;
+  text-align: left;
+}

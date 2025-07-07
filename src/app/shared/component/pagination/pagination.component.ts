@@ -1,8 +1,9 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import {MatPaginatorModule, PageEvent} from '@angular/material/paginator';
+import {MatPaginatorIntl, MatPaginatorModule, PageEvent} from '@angular/material/paginator';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
+import { CustomMatPaginatorIntl } from './custom-mat-paginator-intl';
 @Component({
   selector: 'app-pagination',
   standalone: true,
@@ -10,7 +11,10 @@ import { MatIconModule } from '@angular/material/icon';
     MatPaginatorModule,MatFormFieldModule,
     MatSelectModule,MatIconModule],
   templateUrl: './pagination.component.html',
-  styleUrl: './pagination.component.css'
+  styleUrl: './pagination.component.css',
+  providers: [
+    { provide: MatPaginatorIntl, useClass: CustomMatPaginatorIntl }
+  ]
 })
 export class PaginationComponent {
   @Input() totalItems: number = 0;

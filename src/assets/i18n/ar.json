@@ -1,20 +1,91 @@
 {
-  "header": {
-    "title": "arab",
-    "home": "arab",
-    "about": "arab",
-    "contact": "arab",
-    "language": "arab",
-    "profile": "ملفي الشخصي",
-    "logout": "تسجيل الخروج"
-  },
   "welcome": {
-    "title": "arab",
-    "message": "arab to our multi-language application!"
+    "title": "مرحباً",
+    "message": "مرحباً بك في تطبيقنا!"
   },
+  "task": {},
   "buttons": {
-    "submit": "arab",
-    "cancel": "arab",
-    "save": "arab"
+    "submit": "إرسال",
+    "cancel": "إلغاء",
+    "save": "حفظ"
+  },
+  "TASK": {
+    "TITLE": "إدارة المهام",
+    "TASKPATH": "المهام",
+    "DASHBOARD": {
+      "PAGE": {},
+      "TABLE": {
+        "HEADER": {
+          "IDTicket": "معرّف التذكرة",
+          "CERATEAT": "تاريخ الإنشاء",
+          "CATEGORIE": "الفئة",
+          "PRIORITY": "الأولوية",
+          "STATUT": "الحالة",
+          "ACTION": "الإجراء"
+        }
+      },
+      "FILTERS": {
+        "FILEDS": {
+          "ProcessDefinitionKey": "مفتاح تعريف العملية",
+          "TaskID": "معرّف المهمة",
+          "Assignee ID": "معرّف المُكلَّف",
+          "UserID": "معرّف المستخدم",
+          "BusinessKey": "مفتاح الأعمال",
+          "GroupIDs": "معرّفات المجموعات (مفصولة بفواصل)",
+          "StartDate": "تاريخ البدء",
+          "EndDate": "تاريخ الانتهاء"
+        }
+      }
+    }
+  },
+  "MENU": {},
+  "FOOTER": "© 2025 Dashy. جميع الحقوق محفوظة.",
+  "PAGINATOR": {
+    "FIRST_PAGE": "الصفحة الأولى",
+    "ITEMS_PER_PAGE": "عناصر في الصفحة:",
+    "LAST_PAGE": "الصفحة الأخيرة",
+    "NEXT_PAGE": "التالي",
+    "PREVIOUS_PAGE": "السابق",
+    "NO_RECORDS_FOUND": "لم يتم العثور على سجلات!",
+    "RECORDS_FOUND": "تم العثور على سجلات"
+  },
+  "APP_BUTTONS": {
+    "SAVE": "حفظ",
+    "CANCEL": "إلغاء",
+    "EDIT": "تعديل",
+    "DELETE": "حذف",
+    "CONSULT": "عرض",
+    "SUBMIT": "إرسال",
+    "ASSIGN": "تعيين",
+    "TRANSFER": "نقل",
+    "CLOSE": "إغلاق",
+    "HERE": "هنا",
+    "ADD": "إضافة",
+    "RESET": "إعادة تعيين",
+    "SHOW_FILTER": "إظهار",
+    "HIDE_FILTER": "إخفاء",
+    "ADD_MORE": "إضافة المزيد",
+    "SEARCH": "بحث",
+    "UPLOAD": "رفع",
+    "DOWNLOAD": "تنزيل",
+    "EXPORT": "تصدير",
+    "ARCHIVE": "أرشفة",
+    "ENTER": "دخول",
+    "CLEARFILTER": "مسح الفلاتر",
+    "PRIORITY": {
+      "LOW": "منخفضة",
+      "MEDIUM": "متوسطة",
+      "HIGH": "مرتفعة"
+    },
+    "NOTASSIGN": "غير مُعيّنة"
+  },
+  "APP_USER": {
+    "PROFILE": "ملفي الشخصي",
+    "LOGOUT": "تسجيل الخروج",
+    "FIRST_NAME": "الاسم الأول",
+    "EDIT": "تعديل",
+    "LAST_NAME": "الاسم الأخير",
+    "USERNAME": "اسم المستخدم",
+    "EMAIL": "البريد الإلكتروني"
   }
 }
