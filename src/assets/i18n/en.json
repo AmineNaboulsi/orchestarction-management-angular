@@ -1,0 +1,20 @@
+{
+  "header": {
+    "title": "My Application",
+    "home": "Home",
+    "about": "About",
+    "contact": "Contact",
+    "language": "Language",
+    "profile": "my profile",
+    "logout": "Logout"
+  },
+  "welcome": {
+    "title": "Welcome",
+    "message": "Welcome to our multi-language application!"
+  },
+  "buttons": {
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "save": "Save"
+  }
+}

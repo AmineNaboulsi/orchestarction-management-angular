@@ -6,6 +6,10 @@ import { HeaderComponent } from './layout/header/header.component';
 import { FooterComponent } from './layout/footer/footer.component';
 import { AuthService } from './services/auth/services/auth.service';
 import { KeycloakProfile } from 'keycloak-js';
+import { HttpClient } from '@angular/common/http';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { TranslateModule } from '@ngx-translate/core';
+
 
 @Component({
   selector: 'app-root',
@@ -14,7 +18,8 @@ import { KeycloakProfile } from 'keycloak-js';
     RouterOutlet,
     FormsModule,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    TranslateModule
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'

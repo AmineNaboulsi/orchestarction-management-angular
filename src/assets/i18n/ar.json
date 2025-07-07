@@ -1,0 +1,20 @@
+{
+  "header": {
+    "title": "arab",
+    "home": "arab",
+    "about": "arab",
+    "contact": "arab",
+    "language": "arab",
+    "profile": "ملفي الشخصي",
+    "logout": "تسجيل الخروج"
+  },
+  "welcome": {
+    "title": "arab",
+    "message": "arab to our multi-language application!"
+  },
+  "buttons": {
+    "submit": "arab",
+    "cancel": "arab",
+    "save": "arab"
+  }
+}

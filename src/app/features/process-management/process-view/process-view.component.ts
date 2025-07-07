@@ -21,11 +21,14 @@ import { MatIconModule } from '@angular/material/icon';
 })
 export class ProcessViewComponent implements OnInit {
   processId: string | null = null;
+  companyId: string | null = null;
   pageR: PagedRequestVoid = { 
     size: 10,
     page: 0,
     sort: 'ASC',
-    filter: {}
+    filter: {
+      tenantId : this.companyId
+    }
 };
   apiResponse: ApiResponsePagedResultProcessHistoryDto | null = null;
 

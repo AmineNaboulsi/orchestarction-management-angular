@@ -10,7 +10,6 @@ import { ButtonShowHideFilterComponent } from "../../../shared/component/filter/
 import { ProcessFilterFormComponent } from "../../../components/process/process-filter-form/process-filter-form.component";
 import { PagedRequestProcessFilterDto, PagedResultProcessDto, ProcessBpmApiService, ProcessFilterDto } from '../../../services/generated/api-client';
 import { SimpleLoadingMiniComponent } from "../../../shared/component/loading/simple-loading-mini/simple-loading-mini.component";
-
 @Component({
   selector: 'app-process-page',
   standalone: true,
@@ -86,7 +85,7 @@ export class ProcessPageComponent {
     this.currentPage = 0;
     this.loadProcesses()
   }
-
+  
   /**
    * 
    */

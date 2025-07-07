@@ -10,6 +10,7 @@ import { SimpleLoadingMiniComponent } from "../../../shared/component/loading/si
 import { TaskFilterFormComponent } from "../../../components/task/task-filter-form/task-filter-form.component";
 import { ButtonShowHideFilterComponent } from "../../../shared/component/filter/button-show-hide-filter/button-show-hide-filter.component";
 import { PagedRequestTaskFilterDto, PagedResultTaskDto, TaskBpmApiService, TaskFilterDto } from '../../../services/generated/api-client';
+import { KeycloakService } from '../../../shared/services/keycloak/keycloak.service';
 
 @Component({
   selector: 'app-tickets-page',
@@ -31,6 +32,7 @@ export class TicketsComponentPage implements OnInit {
   tasks: PagedResultTaskDto | undefined;
   loading = false;
   error = '';
+  companyId = '';
   totalTasks = 0;
   currentPage = 0;
   pageSize = 10;
@@ -38,8 +40,10 @@ export class TicketsComponentPage implements OnInit {
   showFilters = true;
   filter: TaskFilterDto = {};
   groupIdsString = '';
+    
 
-  constructor(private ticketsApi: TaskBpmApiService, private router: Router) {}
+  constructor(private keycloakService: KeycloakService,
+    private ticketsApi: TaskBpmApiService, private router: Router) {}
 
   ngOnInit() {
     this.loadTasks();
@@ -58,6 +62,7 @@ export class TicketsComponentPage implements OnInit {
       size: this.pageSize,
       page: this.currentPage,
       filter: {
+        // this.companyId = this.keycloakService.getCompanyId();
         ...this.filter,
         groupIds: groupIds 
       },

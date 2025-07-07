@@ -5,18 +5,17 @@ import { BreadcrumbNavigationComponent } from '../../../shared/component/breadcr
 import { ApiResponseTaskDto, TaskBpmApiService, TaskDto } from '../../../services/generated/api-client';
 import { MatIconModule } from '@angular/material/icon';
 import { ToastModule } from 'primeng/toast';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 @Component({
   selector: 'app-ticket-view',
   standalone: true,
-  imports: [NgIf, DatePipe,ToastModule,MatProgressSpinnerModule,
+  imports: [NgIf, DatePipe,ToastModule,MatProgressSpinnerModule,ConfirmDialogModule,
     BreadcrumbNavigationComponent, MatIconModule],
   templateUrl: './ticket-view.component.html',
   styleUrls: ['./ticket-view.component.css'],
-  
 })
 export class TicketViewComponent implements OnInit {
   taskId: string | null = null;
@@ -29,8 +28,8 @@ export class TicketViewComponent implements OnInit {
     private taskBpmApi: TaskBpmApiService,
     private route: ActivatedRoute,
     private router: Router,
-    private messageService: MessageService
-
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService,
   ) {}
 
   ngOnInit(): void {
@@ -41,7 +40,7 @@ export class TicketViewComponent implements OnInit {
   }
 
   goBack(): void {
-    this.router.navigate(['/tickets']);
+    this.router.navigate(['/tasks']);
   }
   
     /**
@@ -49,16 +48,34 @@ export class TicketViewComponent implements OnInit {
    * @param taskId 
    * @returns 
    */
-  completeTask(taskId: string | undefined) {
+  confirmeCompletion(taskId: string | undefined){
     if (!taskId) {
         alert('Invalid task ID');
         return;
     }
-    if (!confirm('Are you sure you want to complete this task?')) {
-      return;
-    }
+    this.confirmationService.confirm({
+            header: 'Confirmation',
+            message: 'Are you sure you want to complete this task ?',
+            icon: 'pi pi-exclamation-circle',
+            rejectButtonProps: {
+                label: 'Cancel',
+                icon: 'pi pi-times',
+                outlined: true,
+                size: 'small'
+            },
+            acceptButtonProps: {
+                label: 'Save',
+                icon: 'pi pi-check',
+                size: 'small'
+            },
+            accept: () => {
+                this.completeTask(taskId)
+            }
+        });
+  }
+  completeTask(taskId: string | undefined) {
     this.isLoading = true;
-    this.taskBpmApi.completeTask("", "", taskId, {
+    this.taskBpmApi.completeTask("", "", taskId || '', {
       Variables: {}
     }).subscribe({
       next: (response: ApiResponseTaskDto) => {
@@ -68,6 +85,7 @@ export class TicketViewComponent implements OnInit {
           detail: response?.message
         });
         this.isLoading = false;
+        this.router.navigate(['/tasks']);
       },
       error: (error) => {
         this.messageService.add({ 
