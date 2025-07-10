@@ -75,7 +75,7 @@ export class TicketViewComponent implements OnInit {
   }
   completeTask(taskId: string | undefined) {
     this.isLoading = true;
-    this.taskBpmApi.completeTask("", "", taskId || '', {
+    this.taskBpmApi.completeTask("x-api-requestId", "", taskId || '', {
       Variables: {}
     }).subscribe({
       next: (response: ApiResponseTaskDto) => {
@@ -87,11 +87,11 @@ export class TicketViewComponent implements OnInit {
         this.isLoading = false;
         this.router.navigate(['/tasks']);
       },
-      error: (error) => {
+      error: (er) => {
         this.messageService.add({ 
           severity: 'error', 
-          summary: 'Error', 
-          detail: 'unauthorised acces for this operation, please verify your permission'
+          summary: 'Error ', 
+          detail: er?.error?.message
         });
         this.isLoading = false;
       },

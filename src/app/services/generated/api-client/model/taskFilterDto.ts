@@ -11,6 +11,7 @@
 
 export interface TaskFilterDto { 
     processDefinitionKey?: string;
+    tenantId?: string;
     taskId?: string;
     assigneeId?: string;
     groupIds?: Array<string>;

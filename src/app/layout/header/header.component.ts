@@ -76,7 +76,7 @@ export class HeaderComponent implements OnInit{
 
   getCompanyId(): string {
     const companyId = this.profile?.attributes?.['companyId'];
-    return Array.isArray(companyId) ? companyId[0] : (companyId as string) || 'No company ID';
+    return Array.isArray(companyId) ? companyId[0] : (companyId as string) || 'No company Found';
   }
 
 

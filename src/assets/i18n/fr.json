@@ -13,7 +13,9 @@
     "TITLE": "Gestion des tâches",
     "TASKPATH": "Tâches",
     "DASHBOARD": {
-      "PAGE": {},
+      "PAGE": {
+        "CREATETASK" : "Créer un ticket"
+      },
       "TABLE": {
         "HEADER": {
           "IDTicket": "ID du ticket",
@@ -28,6 +30,7 @@
         "FILEDS": {
           "ProcessDefinitionKey": "Clé de définition de processus",
           "TaskID": "ID de tâche",
+          "TaskName": "Nom de tâche",
           "Assignee ID": "ID de l'assigné",
           "UserID": "ID utilisateur",
           "BusinessKey": "Clé métier",
@@ -77,7 +80,8 @@
       "MEDIUM": "Moyenne",
       "HIGH": "Élevée"
     },
-    "NOTASSIGN": "Non assignée"
+    "NOTASSIGN": "Non assignée",
+    "NORESULTAT": "No records found!."
   },
   "APP_USER": {
     "PROFILE": "Mon profil",

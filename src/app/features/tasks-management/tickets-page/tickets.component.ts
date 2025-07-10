@@ -10,8 +10,10 @@ import { SimpleLoadingMiniComponent } from "../../../shared/component/loading/si
 import { TaskFilterFormComponent } from "../../../components/task/task-filter-form/task-filter-form.component";
 import { ButtonShowHideFilterComponent } from "../../../shared/component/filter/button-show-hide-filter/button-show-hide-filter.component";
 import { PagedRequestTaskFilterDto, PagedResultTaskDto, TaskBpmApiService, TaskFilterDto } from '../../../services/generated/api-client';
-import { KeycloakService } from '../../../shared/services/keycloak/keycloak.service';
 import { TranslateModule } from '@ngx-translate/core';
+import { KeycloakProfileService } from '../../../shared/services/keycloak/keycloak.service';
+import { KeycloakProfile } from 'keycloak-js';
+import { HeaderService } from '../../../shared/interceptors/HeaderService';
 
 @Component({
   selector: 'app-tickets-page',
@@ -34,27 +36,59 @@ export class TicketsComponentPage implements OnInit {
   tasks: PagedResultTaskDto | undefined;
   loading = false;
   error = '';
-  companyId = '';
+  companyId : string = "";
   totalTasks = 0;
   currentPage = 0;
   pageSize = 10;
   sortOrder = 'ASC';
   showFilters = true;
-  filter: TaskFilterDto = {};
+  filter: TaskFilterDto = {
+  };
   groupIdsString = '';
+  userProfile: KeycloakProfile | null = null;
+  userRoles: string[] = [];
+
+  constructor(
+    private keycloakProfileService: KeycloakProfileService,
+    private headerService: HeaderService,
+    private ticketsApi: TaskBpmApiService, 
+    private router: Router) {}
+
+  async ngOnInit() {
+    // this.loadProfile();
     
+  }
+  
+  loadProfile(): void {
+    if (!this.keycloakProfileService.isAuthenticated()) {
+      console.warn('User is not authenticated');
+      alert('User is not authenticated')
+      return;
+    }
 
-  constructor(private keycloakService: KeycloakService,
-    private ticketsApi: TaskBpmApiService, private router: Router) {}
-
-  ngOnInit() {
-    this.loadTasks();
+    this.loading = true;
+    
+    this.keycloakProfileService.getUserProfile().subscribe({
+      next: (profile) => {
+        this.userProfile = profile;
+        this.userRoles = this.keycloakProfileService.getUserRoles();
+        this.loading = false;
+        this.loadTasks();
+      },
+      error: (error) => {
+        error = "Failed to load user not found"
+        console.error('Failed to load user profile:', error);
+        this.loading = false;
+      }
+    });
   }
 
   /**
    * 
    */
   loadTasks() {
+    const companyIdArray = this.userProfile?.attributes?.["companyId"];
+    const campanyId = Array.isArray(companyIdArray) ? companyIdArray[0] : undefined;
     this.loading = true;
     this.error = '';
     const groupIds = this.groupIdsString.trim() 
@@ -64,23 +98,25 @@ export class TicketsComponentPage implements OnInit {
       size: this.pageSize,
       page: this.currentPage,
       filter: {
-        // this.companyId = this.keycloakService.getCompanyId();
+        tenantId : campanyId,
         ...this.filter,
         groupIds: groupIds 
       },
     };
-    
-     this.ticketsApi.searchTasks("", "", searchRequest).subscribe({
-      next: (response :any) => {
-        this.tasks = response.body;
-        this.totalTasks = this.tasks?.entities?.length || 0;
-        this.loading = false;
-      },
-      error: (err :any) => {
-        console.error('Error loading tasks', err);
-        this.error = 'Failed to load tasks. Please try again.';
-        this.loading = false;
-      }
+    this.ticketsApi.searchTasks(
+      this.headerService.getRequestId() ,
+      this.headerService.getCanalId() ,
+      searchRequest).subscribe({
+        next: (response: any) => {
+          this.tasks = response.body;
+          this.totalTasks = this.tasks?.entities?.length || 0;
+          this.loading = false;
+        },
+        error: (err: any) => {
+          console.error('Error loading tasks', err);
+          this.error = 'Failed to load tasks. Please try again.';
+          this.loading = false;
+        }
     });
   }
 

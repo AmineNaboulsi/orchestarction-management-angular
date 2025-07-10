@@ -1,12 +1,13 @@
 import { KeycloakConfig } from 'keycloak-js';
+import { environment } from '../../environments/environment';
 
 export const keycloakConfig: KeycloakConfig = {
-  url: 'http://197.230.72.114:30194/realms/mvp-dashy/protocol/openid-connect/token',
-  realm: 'mvp-dashy',     
-  clientId: 'backoffice',   
+  url: environment.keycloak.url + '/realms/master/protocol/openid-connect/token',
+  realm:  environment.keycloak.realm,     
+  clientId: environment.keycloak.clientId,   
 };
 
-// Optional: Initialize options
+
 export const initOptions = {
   onLoad: 'login-required' as const,
   flow: 'standard' as const,

@@ -25,24 +25,7 @@
         </div>
       </div>
     </div>
-    <!-- <aside id="logo-sidebar" class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
-      <div class="h-full px-3 py-1 overflow-y-auto bg-gray-50 ">
-              <div  class="px-4 py-2.5 flex items-center">
-                <button  name="sidebarButton" type="button" class="text-gray-800  hover:bg-gray-200 hover:text-secondary rounded-lg text-sm p-1.5 inline-flex items-center hover:text-white">
-                  <svg  aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="w-[35px] h-[35px] text-secondary text-gray-800 ">
-                    <path  stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M5 7h14M5 12h14M5 17h10"></path>
-                  </svg>
-                </button>
-                <a  href="#" class="flex items-center ml-4 cursor-pointer">
-                  <img  width="120px" loading="lazy" src="dashy-logo.png" alt="Dashy logo">
-                </a>
-              </div>
-              <ul class="space-y-2 font-medium">
-                <li>
-                  <a data-drawer-hide="drawer-navigation" aria-controls="drawer-navigation" class="flex items-center p-2 text-base text-secondary dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group border-l-4 border-accent bg-gray-200" href="#/analytics-chat"><i class="fa-lg fa-fw mr-3 text-secondary transition dark:text-gray-400 group-hover:text-primary dark:group-hover:text-white fa-solid fa-chart-simple"></i><span class="max-w-md truncate">Tableau de bord</span></a>s</li>
-              </ul>
-      </div>
-    </aside> -->
+
       <!-- Right side: Language and User -->
     <div class="flex items-center space-x-4">
       <!-- Language Selector -->
@@ -89,14 +72,14 @@
                   <a
                     (click)="navigateToProfile()"
                     class="cursor-pointer block px-4 py-2 hover:bg-gray-100">
-                    <i class="fa-regular fa-user mr-2"></i>{{ 'header.profile' | translate }}
+                    <i class="fa-regular fa-user mr-2"></i>{{ 'APP_USER.PROFILE' | translate }}
                   </a>
                 </li>
                 <li>
                   <a
                     (click)="onLogout()"
                     class="cursor-pointer block px-4 py-2 hover:bg-gray-100">
-                    <i class="fa-solid fa-arrow-right-from-bracket mr-2"></i>{{ 'header.logout' | translate }}
+                    <i class="fa-solid fa-arrow-right-from-bracket mr-2"></i>{{ 'APP_USER.LOGOUT' | translate }}
                   </a>
                 </li>
               </ul>

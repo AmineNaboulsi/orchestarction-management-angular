@@ -13,7 +13,9 @@
     "TITLE": "إدارة المهام",
     "TASKPATH": "المهام",
     "DASHBOARD": {
-      "PAGE": {},
+      "PAGE": {
+        "CREATETASK" : "إنشاء تذكرة"
+      },
       "TABLE": {
         "HEADER": {
           "IDTicket": "معرّف التذكرة",
@@ -28,6 +30,7 @@
         "FILEDS": {
           "ProcessDefinitionKey": "مفتاح تعريف العملية",
           "TaskID": "معرّف المهمة",
+          "TaskName": "اسم المهمة",
           "Assignee ID": "معرّف المُكلَّف",
           "UserID": "معرّف المستخدم",
           "BusinessKey": "مفتاح الأعمال",
@@ -70,14 +73,15 @@
     "DOWNLOAD": "تنزيل",
     "EXPORT": "تصدير",
     "ARCHIVE": "أرشفة",
-    "ENTER": "دخول",
+    "ENTER": "أدخل",
     "CLEARFILTER": "مسح الفلاتر",
     "PRIORITY": {
       "LOW": "منخفضة",
       "MEDIUM": "متوسطة",
       "HIGH": "مرتفعة"
     },
-    "NOTASSIGN": "غير مُعيّنة"
+    "NOTASSIGN": "غير مُعيّنة",
+    "NORESULTAT": "لم يتم العثور على أي سجلات!"
   },
   "APP_USER": {
     "PROFILE": "ملفي الشخصي",
