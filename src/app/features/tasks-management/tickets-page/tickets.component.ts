@@ -55,8 +55,7 @@ export class TicketsComponentPage implements OnInit {
     private router: Router) {}
 
   async ngOnInit() {
-    // this.loadProfile();
-    
+    this.loadProfile();
   }
   
   loadProfile(): void {

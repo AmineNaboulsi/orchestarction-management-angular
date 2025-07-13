@@ -7,9 +7,8 @@
   </app-breadcrumb-navigation>
 
   <!-- Loading State -->
-  <div *ngIf="!apiResponse" class="flex items-center justify-center py-12">
-    <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-    <span class="ml-3 text-gray-600">Loading process history...</span>
+  <div *ngIf="!apiResponse">
+      <app-simple-loading-mini></app-simple-loading-mini>
   </div>
 
   <!-- Main Content -->

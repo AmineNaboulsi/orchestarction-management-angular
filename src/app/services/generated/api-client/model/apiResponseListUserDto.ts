@@ -7,11 +7,11 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { PagedResultProcessHistoryDto } from './pagedResultProcessHistoryDto';
+import { UserDto } from './userDto';
 
 
-export interface ApiResponsePagedResultProcessHistoryDto { 
-    body?: PagedResultProcessHistoryDto;
+export interface ApiResponseListUserDto { 
+    body?: Array<UserDto>;
     requestID?: string;
     timeStamp?: string;
     status?: string;

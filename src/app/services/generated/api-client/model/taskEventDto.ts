@@ -9,16 +9,15 @@
  */
 
 
-export interface TaskFilterDto { 
-    processDefinitionKey?: string;
+export interface TaskEventDto { 
+    id?: string;
     taskId?: string;
-    assigneeId?: string;
-    groupIds?: Array<string>;
+    eventType?: string;
+    description?: string;
     userId?: string;
-    businessKey?: string;
-    taskName?: string;
-    tenantId?: string;
-    startDate?: string;
-    endDate?: string;
+    userDisplayName?: string;
+    timestamp?: string;
+    formattedTime?: string;
+    eventData?: { [key: string]: object; };
 }
 

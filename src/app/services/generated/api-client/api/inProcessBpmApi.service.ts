@@ -17,6 +17,8 @@ import { CustomHttpParameterCodec }                          from '../encoder';
 import { Observable }                                        from 'rxjs';
 
 // @ts-ignore
+import { ApiResponseProcessDeploymentDto } from '../model/apiResponseProcessDeploymentDto';
+// @ts-ignore
 import { ApiResponseProcessDto } from '../model/apiResponseProcessDto';
 // @ts-ignore
 import { StartProcessRequestDto } from '../model/startProcessRequestDto';
@@ -35,6 +37,111 @@ export class InProcessBpmApiService extends BaseService {
 
     constructor(protected httpClient: HttpClient, @Optional() @Inject(BASE_PATH) basePath: string|string[], @Optional() configuration?: Configuration) {
         super(basePath, configuration);
+    }
+
+    /**
+     * @param xApiRequestId 
+     * @param xApiCanal 
+     * @param deploymentName 
+     * @param tenantId 
+     * @param processFileName 
+     * @param bpmnXml 
+     * @param bpmnFile 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public deployProcess(xApiRequestId: string, xApiCanal: string, deploymentName?: string, tenantId?: string, processFileName?: string, bpmnXml?: string, bpmnFile?: Blob, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<ApiResponseProcessDeploymentDto>;
+    public deployProcess(xApiRequestId: string, xApiCanal: string, deploymentName?: string, tenantId?: string, processFileName?: string, bpmnXml?: string, bpmnFile?: Blob, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<ApiResponseProcessDeploymentDto>>;
+    public deployProcess(xApiRequestId: string, xApiCanal: string, deploymentName?: string, tenantId?: string, processFileName?: string, bpmnXml?: string, bpmnFile?: Blob, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<ApiResponseProcessDeploymentDto>>;
+    public deployProcess(xApiRequestId: string, xApiCanal: string, deploymentName?: string, tenantId?: string, processFileName?: string, bpmnXml?: string, bpmnFile?: Blob, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+        if (xApiRequestId === null || xApiRequestId === undefined) {
+            throw new Error('Required parameter xApiRequestId was null or undefined when calling deployProcess.');
+        }
+        if (xApiCanal === null || xApiCanal === undefined) {
+            throw new Error('Required parameter xApiCanal was null or undefined when calling deployProcess.');
+        }
+
+        let localVarQueryParameters = new HttpParams({encoder: this.encoder});
+        localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+          <any>deploymentName, 'deploymentName');
+        localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+          <any>tenantId, 'tenantId');
+        localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+          <any>processFileName, 'processFileName');
+        localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+          <any>bpmnXml, 'bpmnXml');
+
+        let localVarHeaders = this.defaultHeaders;
+        if (xApiRequestId !== undefined && xApiRequestId !== null) {
+            localVarHeaders = localVarHeaders.set('x-api-requestId', String(xApiRequestId));
+        }
+        if (xApiCanal !== undefined && xApiCanal !== null) {
+            localVarHeaders = localVarHeaders.set('x-api-canal', String(xApiCanal));
+        }
+
+        // authentication (oauth2) required
+        localVarHeaders = this.configuration.addCredentialToHeaders('oauth2', 'Authorization', localVarHeaders, 'Bearer ');
+
+        const localVarHttpHeaderAcceptSelected: string | undefined = options?.httpHeaderAccept ?? this.configuration.selectHeaderAccept([
+            'application/json'
+        ]);
+        if (localVarHttpHeaderAcceptSelected !== undefined) {
+            localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
+        }
+
+        const localVarHttpContext: HttpContext = options?.context ?? new HttpContext();
+
+        const localVarTransferCache: boolean = options?.transferCache ?? true;
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'multipart/form-data'
+        ];
+
+        const canConsumeForm = this.canConsumeForm(consumes);
+
+        let localVarFormParams: { append(param: string, value: any): any; };
+        let localVarUseForm = false;
+        let localVarConvertFormParamsToString = false;
+        // use FormData to transmit files using content-type "multipart/form-data"
+        // see https://stackoverflow.com/questions/4007969/application-x-www-form-urlencoded-or-multipart-form-data
+        localVarUseForm = canConsumeForm;
+        if (localVarUseForm) {
+            localVarFormParams = new FormData();
+        } else {
+            localVarFormParams = new HttpParams({encoder: this.encoder});
+        }
+
+        if (bpmnFile !== undefined) {
+            localVarFormParams = localVarFormParams.append('bpmnFile', <any>bpmnFile) as any || localVarFormParams;
+        }
+
+        let responseType_: 'text' | 'json' | 'blob' = 'json';
+        if (localVarHttpHeaderAcceptSelected) {
+            if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
+                responseType_ = 'text';
+            } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
+                responseType_ = 'json';
+            } else {
+                responseType_ = 'blob';
+            }
+        }
+
+        let localVarPath = `/v1/api/internal/process/deploy`;
+        const { basePath, withCredentials } = this.configuration;
+        return this.httpClient.request<ApiResponseProcessDeploymentDto>('post', `${basePath}${localVarPath}`,
+            {
+                context: localVarHttpContext,
+                body: localVarConvertFormParamsToString ? localVarFormParams.toString() : localVarFormParams,
+                params: localVarQueryParameters,
+                responseType: <any>responseType_,
+                ...(withCredentials ? { withCredentials } : {}),
+                headers: localVarHeaders,
+                observe: observe,
+                transferCache: localVarTransferCache,
+                reportProgress: reportProgress
+            }
+        );
     }
 
     /**

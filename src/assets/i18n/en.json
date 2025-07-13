@@ -1,7 +1,7 @@
 {
   "welcome": {
     "title": "Welcome",
-    "message": "Welcome to our multi-language application!"
+    "message": "Welcome to our application!"
   },
   "task": {},
   "buttons": {
@@ -41,7 +41,11 @@
       }
     }
   },
-  "MENU": {},
+  "MENU": {
+    "ALERT" : {
+      "NODATA" : "Aucune information disponible"
+    }
+  },
   "FOOTER": "© 2025 Dashy. All rights reserved.",
   "PAGINATOR": {
     "FIRST_PAGE": "First page",

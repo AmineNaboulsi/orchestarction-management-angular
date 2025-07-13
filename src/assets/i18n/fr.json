@@ -41,7 +41,11 @@
       }
     }
   },
-  "MENU": {},
+  "MENU": {
+    "ALERT" : {
+      "NODATA" : "Aucune information disponible"
+    }
+  },
   "FOOTER": "© 2025 Dashy. Tous droits réservés.",
   "PAGINATOR": {
     "FIRST_PAGE": "Première page",

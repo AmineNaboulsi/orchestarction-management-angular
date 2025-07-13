@@ -12,5 +12,7 @@
 export interface StartProcessRequestDto { 
     processDefinitionKey?: string;
     variables?: { [key: string]: object; };
+    tenantId?: string;
+    businessKey?: string;
 }
 

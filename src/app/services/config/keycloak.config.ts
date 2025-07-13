@@ -1,5 +1,5 @@
 import { KeycloakConfig } from 'keycloak-js';
-import { environment } from '../../environments/environment';
+import { environment } from '../../../environments/environment';
 
 export const keycloakConfig: KeycloakConfig = {
   url: environment.keycloak.url + '/realms/master/protocol/openid-connect/token',

@@ -50,7 +50,7 @@
 
   <div *ngIf="!loading">
     <div *ngIf="tasks?.entities && tasks?.entities?.length; else noTasks" class="space-y-4">
-      <div class="min-w-full divide-y divide-gray-200 border border-gray-200 rounded">
+      <div class="relative overflow-x-auto min-w-full divide-y divide-gray-200 border border-gray-200 rounded">
         <app-task-table
           [tasks]="tasks">
         </app-task-table>

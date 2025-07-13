@@ -1,162 +1,263 @@
-<div class="p-6">
-     <div class="flex justify-between items-center mb-6">
-        <app-breadcrumb-navigation
-          [items]="[
-            { label: 'Tasks', url: '/tasks', icon: 'home' },
-            { label: 'Create new Task' }
-          ]">
-   </app-breadcrumb-navigation>
-        <button 
-        (click)="goBack()" 
-          class="text-[#00908E] inline-flex items-center px-4 py-0.5 border border-gray-300 rounded-2xl shadow-sm text-sm font-semibold bg-[#F8F8F8] hover:bg-gray-50 hover:scale-105 transition-all">
-        Liste des tickets
-      </button>
-     </div>
-  
-  <div *ngIf="taskId" class="space-y-4 flex justify-between">
-    <div *ngIf="task">
-      <div class="bg-white rounded-xlp-8">
-        <div class="flex justify-between items-center mb-8 pb-4 border-b border-gray-200">
-          <h3 class="text-2xl font-semibold text-gray-800">{{ task.TaskInfo?.name || 'Untitled Task' }}</h3>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-          <div *ngIf="task.TaskID" class="flex flex-col">
-            <label class="text-sm font-medium text-gray-500 mb-1">Task ID:</label>
-            <span class="text-gray-900 font-mono text-sm">{{ task.TaskID }}</span>
-          </div>
-
-          <div *ngIf="task.TaskInfo?.assignee" class="flex flex-col">
-            <label class="text-sm font-medium text-gray-500 mb-1">Assignee:</label>
-            <span class="text-gray-900">{{ task.TaskInfo?.assignee }}</span>
-          </div>
-
-          <div *ngIf="task.TaskInfo?.owner" class="flex flex-col">
-            <label class="text-sm font-medium text-gray-500 mb-1">Owner:</label>
-            <span class="text-gray-900">{{ task.TaskInfo?.owner }}</span>
-          </div>
-
-          <div *ngIf="task.TaskInfo?.priority" class="flex flex-col">
-            <label class="text-sm font-medium text-gray-500 mb-1">Priority:</label>
-            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium w-fit"
-                  >
-              {{ task.TaskInfo?.priority }}
-            </span>
-          </div>
-
-          <div *ngIf="task.TaskInfo?.createTime" class="flex flex-col">
-            <label class="text-sm font-medium text-gray-500 mb-1">Created:</label>
-            <span class="text-gray-900">{{ task.TaskInfo?.createTime | date:'medium' }}</span>
-          </div>
-
-          <div *ngIf="task.TaskInfo?.dueDate" class="flex flex-col">
-            <label class="text-sm font-medium text-gray-500 mb-1">Due Date:</label>
-            <span class="text-gray-900">{{ task.TaskInfo?.dueDate | date:'medium' }}</span>
-          </div>
-
-          <div *ngIf="task.TaskInfo?.processInstanceId" class="flex flex-col">
-            <label class="text-sm font-medium text-gray-500 mb-1">Process Instance ID:</label>
-            <span class="text-gray-900 font-mono text-sm">{{ task.TaskInfo?.processInstanceId }}</span>
-          </div>
-
-          <div *ngIf="task.TaskInfo?.processDefinitionId" class="flex flex-col">
-            <label class="text-sm font-medium text-gray-500 mb-1">Process Definition ID:</label>
-            <span class="text-gray-900 font-mono text-sm">{{ task.TaskInfo?.processDefinitionId }}</span>
-          </div>
-
-          <div *ngIf="task.TaskInfo?.executionId" class="flex flex-col">
-            <label class="text-sm font-medium text-gray-500 mb-1">Execution ID:</label>
-            <span class="text-gray-900 font-mono text-sm">{{ task.TaskInfo?.executionId }}</span>
-          </div>
-
-          <div *ngIf="task.TaskInfo?.taskDefinitionKey" class="flex flex-col">
-            <label class="text-sm font-medium text-gray-500 mb-1">Task Definition Key:</label>
-            <span class="text-gray-900 font-mono text-sm">{{ task.TaskInfo?.taskDefinitionKey }}</span>
-          </div>
-
-          <div *ngIf="task.TaskInfo?.category" class="flex flex-col">
-            <label class="text-sm font-medium text-gray-500 mb-1">Category:</label>
-            <span class="text-gray-900">{{ task.TaskInfo?.category }}</span>
-          </div>
-
-          <div *ngIf="task.TaskInfo?.parentTaskId" class="flex flex-col">
-            <label class="text-sm font-medium text-gray-500 mb-1">Parent Task ID:</label>
-            <span class="text-gray-900 font-mono text-sm">{{ task.TaskInfo?.parentTaskId }}</span>
-          </div>
-
-          <div *ngIf="task.TaskInfo?.tenantId" class="flex flex-col">
-            <label class="text-sm font-medium text-gray-500 mb-1">Tenant ID:</label>
-            <span class="text-gray-900 font-mono text-sm">{{ task.TaskInfo?.tenantId }}</span>
-          </div>
-
-          <div *ngIf="task.TaskInfo?.processBusinessKey" class="flex flex-col">
-            <label class="text-sm font-medium text-gray-500 mb-1">Process Business Key:</label>
-            <span class="text-gray-900 font-mono text-sm">{{ task.TaskInfo?.processBusinessKey }}</span>
+ <div class="min-h-screen bg-gray-50">
+      <!-- Header -->
+      <div class="pt-6 pl-6 pr-6 flex justify-between items-center">
+          <app-breadcrumb-navigation [items]="[
+                      { label: 'Tasks', url: '/tasks', icon: 'home' },
+                      { label: 'Ticket Details' }
+                    ]">
+          </app-breadcrumb-navigation>
+          <div class="flex items-center space-x-2 text-sm text-gray-600 mb-6">
+            <button (click)="goBack()"
+              class="text-[#00908E] inline-flex items-s px-4 py-0.5 border border-gray-300 rounded-2xl shadow-sm text-sm font-semibold bg-[#F8F8F8] hover:bg-gray-50 hover:scale-105 transition-all">
+              Liste des tickets
+            </button>
           </div>
         </div>
 
-        <div *ngIf="task.TaskInfo?.description" class="mb-8">
-          <label class="text-sm font-medium text-gray-500 block mb-2">Description:</label>
-          <div class="bg-gray-50 p-4 rounded-lg text-gray-900">{{ task.TaskInfo?.description }}</div>
+      <!-- Main Content -->
+      <div class="sm:px-6 lg:px-8 ">
+        
+        <!-- Loading State -->
+        <div *ngIf="loading && !error" class="flex items-center justify-center py-20">
+          <div class="text-center">
+            <app-simple-loading-mini></app-simple-loading-mini>
+            <p class="text-gray-600 text-lg">Chargement des détails du ticket...</p>
+          </div>
         </div>
 
-        <button class="text-green-600 hover:text-green-900 p-2 rounded-full hover:bg-green-50 transition-colors cursor-pointer"
-                        (click)="confirmeCompletion(task.TaskID || '')"
-                        title="Compléter">
-                        <div class="flex items-center gap-2.5 " *ngIf="!isLoading;else LoadingProcess" >
-                          <mat-icon aria-hidden="false" aria-label="menu icon" fontIcon="check"></mat-icon>
-                          <label class="cursor-pointer">Compléter</label>
-                        </div>
-                        <ng-template #LoadingProcess>
-                          <div class="flex items-center gap-2.5">
-                            <mat-spinner diameter="20"></mat-spinner>
-                          </div>
-                        </ng-template>
+        <!-- Error State -->
+        <div *ngIf="error" class="max-w-md mx-auto">
+          <div class="bg-red-50 border border-red-200 text-red-700 p-6 rounded-xl shadow-sm">
+            <div class="flex items-start">
+              <mat-icon class="text-red-400 mr-3 mt-1">error</mat-icon>
+              <div class="flex-1">
+                <h3 class="font-semibold mb-1">Erreur de chargement</h3>
+                <p class="text-sm mb-4">{{ error }}</p>
+                <button 
+                  (click)="retry()"
+                  class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition-colors flex items-center">
+                  <mat-icon class="mr-2 text-sm">refresh</mat-icon>
+                  Réessayer
                 </button>
-                
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Task Details -->
+        <div *ngIf="task && !loading" class="grid grid-cols-1 lg:grid-cols-4 gap-4">
+          
+          <div class="px-6 py-6 lg:col-span-1 bg-white rounded-xl shadow-sm border border-gray-200 overflow-auto ">
+            <h3 class="text-lg font-semibold text-gray-900 mb-6 flex items-center">
+                <mat-icon class="mr-2 text-teal-600">comment</mat-icon>
+                Commentaires et Historique
+              </h3> 
+            <!-- Comments -->
+                <div class="flex flex-col gap-2 overflow-auto">
+                    <div *ngFor="let comment of taskHistory?.comments" class="flex items-start space-x-3 bg-[#FDFDEA] px-4 py-6 rounded-2xl shadow-xs border border-gray-200 ">
+                    <div class="flex-1">
+                      <div class="flex items-center gap-2">
+                        <span class="text-xs font-medium text-teal-500">{{ '@' + comment.CommentInfo.userId }}</span>
+                        <span class="text-xs font-medium text-gray-500">|</span>
+                        <span class="text-xs text-gray-500">{{ (comment.CommentInfo.time | date: 'longDate') + ' at ' +  (comment.CommentInfo.time | date:'shortTime') }}</span>
+                      </div>
+                      <p class="text-sm text-gray-700 mt-1">{{ comment.CommentInfo.fullMessage }}</p>
+                    </div>
+                    </div>
+                </div>
+          </div>
+          <!-- Main Content Column -->
+          <div class="lg:col-span-2 space-y-6">
+            
+            <!-- Ticket Header -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+              <!-- Header Section -->
+              <div class="bg-gradient-to-r from-teal-50 to-blue-50 px-6 py-6 border-b border-gray-200">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center space-x-4">
+                    <div class="w-12 h-12 bg-teal-600 rounded-lg flex items-center justify-center">
+                      <mat-icon class="text-white text-xl">confirmation_number</mat-icon>
+                    </div>
+                    <div>
+                      <h1 class="text-2xl font-bold text-gray-900">
+                        Ticket n°{{ getShortTaskId(task.TaskID || '') }}
+                      </h1>
+                      <p class="text-gray-600 text-sm">{{ task.TaskInfo?.name || 'Tâche sans titre' }}</p>
+                    </div>
+                  </div>
+                  
+                  <!-- Status & Priority Badges -->
+                  <div class="flex flex-col space-y-2">
+                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800">
+                      <span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
+                      En cours
+                    </span>
+                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-yellow-100 text-yellow-800">
+                      <mat-icon class="mr-1 text-xs">flag</mat-icon>
+                      Priorité {{ task.TaskInfo?.priority || 'Normale' }}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Contact Information -->
+              <div class="p-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Informations de contact</h3>
+                    <div class="space-y-3">
+                      <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-teal-600 rounded-full flex items-center justify-center">
+                          <mat-icon class="text-white text-sm">person</mat-icon>
+                        </div>
+                        <div>
+                          <p class="text-sm font-medium text-gray-500">Nom du contact</p>
+                          <p class="text-gray-900 font-semibold">{{ task.TaskInfo?.assignee || 'Non assigné' }}</p>
+                        </div>
+                      </div>
+                      <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center">
+                          <mat-icon class="text-white text-sm">phone</mat-icon>
+                        </div>
+                        <div>
+                          <p class="text-sm font-medium text-gray-500">Téléphone</p>
+                          <p class="text-gray-900 font-semibold">N/A</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Détails du ticket</h3>
+                    <div class="space-y-3">
+                      <div class="flex justify-between">
+                        <span class="text-sm font-medium text-gray-500">Catégorie:</span>
+                        <span class="text-sm text-gray-900">{{ task.TaskInfo?.category || 'Commande' }}</span>
+                      </div>
+                      <div class="flex justify-between">
+                        <span class="text-sm font-medium text-gray-500">Date de création:</span>
+                        <span class="text-sm text-gray-900">{{ task.TaskInfo?.createTime | date:'short' }}</span>
+                      </div>
+                      <div class="flex justify-between">
+                        <span class="text-sm font-medium text-gray-500">Échéance:</span>
+                        <span class="text-sm text-gray-900">{{ task.TaskInfo?.dueDate ? (task.TaskInfo?.dueDate | date:'short') : 'N/A' }}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="mt-5 flex justify-end w-full ">
+                 <button 
+                   (click)="completeTask()"
+                   [disabled]="isLoading"
+                   class="cursor-pointer inline-flex items-center px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-all hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed font-semibold">
+                   <mat-spinner diameter="20" class="mr-2" *ngIf="isLoading"></mat-spinner>
+                   <mat-icon class="mr-2" *ngIf="!isLoading">check</mat-icon>
+
+                   Compléter la tâche
+                 </button>
+               </div>
+              </div>
+            </div>
+
+            <!-- Comments Section -->
+            <div *ngIf="showCommentSection" class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+          
+              <!-- Add Comment -->
+              <div class="mb-6">
+                <label for="newComment" class="block text-sm font-medium text-gray-700 mb-2">
+                  Commentaire :
+                </label>
+                <div class="relative">
+                  <textarea 
+                    id="newComment" 
+                    [(ngModel)]="newComment" 
+                    placeholder="Entrez votre commentaire..." 
+                    rows="4"
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition-colors resize-none text-gray-900 placeholder-gray-400">
+                  </textarea>
+                  <div class="absolute bottom-3 right-3 text-xs text-gray-400">
+                    {{ newComment.length || 0 }}/500
+                  </div>
+                </div>
+                <div class="flex justify-end mt-3">
+                  <button 
+                    (click)="addComment()" 
+                    [disabled]="isAddingComment"
+                    class="inline-flex items-center px-6 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-all hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed font-semibold text-sm">
+                    <mat-spinner diameter="16" class="mr-2" *ngIf="isAddingComment"></mat-spinner>
+                    <mat-icon class="mr-2 text-sm" *ngIf="!isAddingComment">add</mat-icon>
+                    {{ isAddingComment ? 'Ajout...' : 'Ajouter un commentaire' }}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sidebar -->
+          <div class="space-y-6">
+            
+            <!-- Contact Profile -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+              <div class="text-center">
+                <div class="w-20 h-20 bg-teal-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <mat-icon class="text-white text-2xl">person</mat-icon>
+                </div>
+                <h3 class="text-lg font-semibold text-gray-900 mb-2">{{ task.TaskInfo?.assignee || 'Non assigné' }}</h3>
+                <p class="text-sm text-gray-600 mb-4">Contact principal</p>
+                <div class="space-y-2 text-sm">
+                  <div class="flex items-center justify-between">
+                    <span class="text-gray-500">Téléphone:</span>
+                    <span class="text-gray-900">N/A</span>
+                  </div>
+                  <div class="flex items-center justify-between">
+                    <span class="text-gray-500">Adresse:</span>
+                    <span class="text-gray-900">N/A</span>
+                  </div>
+                  <div class="flex items-center justify-between">
+                    <span class="text-gray-500">Email:</span>
+                    <span class="text-gray-900">N/A</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Activity Timeline -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+              <h3 class="text-lg font-semibold text-gray-900 mb-6 flex items-center">
+                <mat-icon class="mr-2 text-teal-600">timeline</mat-icon>
+                Historique de conversation
+              </h3>
+
+              <!-- Loading State -->
+              <div *ngIf="historyLoading" class="flex items-center justify-center py-8">
+                <mat-spinner diameter="30"></mat-spinner>
+                <span class="ml-3 text-gray-500 text-sm">Chargement...</span>
+              </div>
+
+              <!-- History Content -->
+              <div *ngIf="!historyLoading && taskHistory" class="space-y-4">
+                <div *ngFor="let event of taskHistory.auditEvents" class="flex items-start space-x-3">
+                  <div class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0">
+                    <mat-icon class="text-white text-xs">{{ getEventIcon(event.eventType) }}</mat-icon>
+                  </div>
+                  <div class="flex-1">
+                    <div class="flex items-center space-x-2 mb-1">
+                      <span class="text-sm font-medium text-gray-900">{{ event.userId || 'Système' }}</span>
+                      <span class="text-xs text-gray-500">{{ event.timestamp | date:'short' }}</span>
+                    </div>
+                    <p class="text-sm text-gray-600">{{ event.description }}</p>
+                  </div>
+                </div>
+
+                <!-- Empty state -->
+                <div *ngIf="!taskHistory.auditEvents?.length && !taskHistory.comments?.length" class="text-center py-8 text-gray-500">
+                  <mat-icon class="text-gray-400 text-3xl mb-2">history</mat-icon>
+                  <p class="text-sm">Aucun historique disponible</p>
+                </div>
+              </div>
+            </div>
+          </div>
+           <p-toast position="top-right" [life]="5000" [style]="{ 'z-index': '9999' }"></p-toast>
+        </div>
       </div>
     </div>
-  <p-toast 
-    position="top-right" 
-    [life]="5000"
-    [style]="{ 'z-index': '9999', 'position': 'fixed', 'top': '20px', 'right': '20px' }">
-  </p-toast>
-  <p-confirmdialog ></p-confirmdialog>
-  <div *ngIf="loading && !error" class="flex items-center justify-center p-8">
-    <svg
-      class="animate-spin h-5 w-5 text-gray-700"
-      fill="none"
-      stroke="currentColor"
-      viewBox="0 0 24 24"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <line x1="12" y1="2" x2="12" y2="6"></line>
-      <line x1="12" y1="18" x2="12" y2="22"></line>
-      <line x1="4.93" y1="4.93" x2="7.76" y2="7.76"></line>
-      <line x1="16.24" y1="16.24" x2="19.07" y2="19.07"></line>
-      <line x1="2" y1="12" x2="6" y2="12"></line>
-      <line x1="18" y1="12" x2="22" y2="12"></line>
-      <line x1="4.93" y1="19.07" x2="7.76" y2="16.24"></line>
-      <line x1="16.24" y1="7.76" x2="19.07" y2="4.93"></line>
-    </svg>
-    <span class="ml-3 text-gray-600">Loading task details...</span>
-  </div>
-
-  <div *ngIf="error" class="bg-red-50 border border-red-200 text-red-700 p-4 rounded-lg">
-    <div class="flex items-center">
-      <svg class="w-5 h-5 text-red-400 mr-2" fill="currentColor" viewBox="0 0 20 20">
-        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path>
-      </svg>
-      <p>{{ error }}</p>
-      <button
-        (click)="retry()"
-        class="ml-4 inline-flex items-center px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500">
-        Retry
-      </button>
-    </div>
-  </div>
-  
-</div>

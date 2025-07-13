@@ -13,5 +13,6 @@ export interface ProcessDefinitionDto {
     processDefinitionId?: string;
     key?: string;
     name?: string;
+    tenantId?: string;
 }
 

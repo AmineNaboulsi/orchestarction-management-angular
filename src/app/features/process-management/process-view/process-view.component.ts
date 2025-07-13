@@ -10,12 +10,13 @@ import { DatePipe, NgFor, NgIf } from '@angular/common';
 import { PageEvent } from '@angular/material/paginator';
 import { PaginationComponent } from '../../../shared/component/pagination/pagination.component';
 import { MatIconModule } from '@angular/material/icon';
+import { SimpleLoadingMiniComponent } from "../../../shared/component/loading/simple-loading-mini/simple-loading-mini.component";
 
 @Component({
   selector: 'app-process-view',
   standalone: true,
-  imports: [NgFor, NgIf,DatePipe,
-    BreadcrumbNavigationComponent, PaginationComponent, MatIconModule],
+  imports: [NgFor, NgIf, DatePipe,
+    BreadcrumbNavigationComponent, PaginationComponent, MatIconModule, SimpleLoadingMiniComponent],
   templateUrl: './process-view.component.html',
   styleUrls: ['./process-view.component.css']
 })

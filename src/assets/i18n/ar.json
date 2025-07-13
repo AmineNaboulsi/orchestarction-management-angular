@@ -41,7 +41,11 @@
       }
     }
   },
-  "MENU": {},
+   "MENU": {
+    "ALERT" : {
+      "NODATA" : "Aucune information disponible"
+    }
+  },
   "FOOTER": "© 2025 Dashy. جميع الحقوق محفوظة.",
   "PAGINATOR": {
     "FIRST_PAGE": "الصفحة الأولى",

@@ -16,15 +16,19 @@ model/addCommentRequestDto.ts
 model/apiResponseCommentDto.ts
 model/apiResponseListCommentDto.ts
 model/apiResponseListTaskDto.ts
+model/apiResponseListTaskEventDto.ts
+model/apiResponseListUserDto.ts
 model/apiResponseMapStringObject.ts
 model/apiResponsePagedResultProcessDefinitionDto.ts
 model/apiResponsePagedResultProcessDto.ts
 model/apiResponsePagedResultProcessHistoryDto.ts
 model/apiResponsePagedResultTaskDto.ts
+model/apiResponseProcessDeploymentDto.ts
 model/apiResponseProcessDto.ts
 model/apiResponseProcessStateDto.ts
 model/apiResponseString.ts
 model/apiResponseTaskDto.ts
+model/apiResponseTaskHistoryDto.ts
 model/apiResponseUserDto.ts
 model/assignTaskRequestDto.ts
 model/claimTaskRequestDto.ts
@@ -40,6 +44,7 @@ model/pagedResultProcessDto.ts
 model/pagedResultProcessHistoryDto.ts
 model/pagedResultTaskDto.ts
 model/processDefinitionDto.ts
+model/processDeploymentDto.ts
 model/processDto.ts
 model/processFilterDto.ts
 model/processHistoryDto.ts
@@ -48,7 +53,9 @@ model/processStateDto.ts
 model/startProcessRequestDto.ts
 model/taskAssignment.ts
 model/taskDto.ts
+model/taskEventDto.ts
 model/taskFilterDto.ts
+model/taskHistoryDto.ts
 model/taskInfo.ts
 model/unassignTaskRequestDto.ts
 model/updateVariablesRequestDto.ts
