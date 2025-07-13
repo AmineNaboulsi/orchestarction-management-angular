@@ -17,8 +17,10 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent implements OnInit{
+
   @Input() profile: KeycloakProfile  | null = null;
   @Output() logout = new EventEmitter<void>();
+  @Output() OpenBeurgeurMenu = new EventEmitter<boolean>();
   supportedLanguages: any[] = [];
   currentLanguage: string = 'en';
   private languageSubscription: Subscription = new Subscription();
@@ -26,6 +28,10 @@ export class HeaderComponent implements OnInit{
 
   constructor(private router: Router,private languageService: LanguageService) {}
   
+  OpenMenu() {
+    this.OpenBeurgeurMenu.emit(true)
+  }
+
   ngOnInit(): void {
      this.supportedLanguages = this.languageService.getSupportedLanguages();
     this.currentLanguage = this.languageService.getCurrentLanguage();
@@ -87,6 +93,5 @@ export class HeaderComponent implements OnInit{
 
   navigateToProfile() {
     this.isDropdownOpen = false;
-    this.router.navigate(['/profile/my-profile']);
   }
 }

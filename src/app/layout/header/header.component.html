@@ -3,10 +3,10 @@
     <!-- Left side: Menu and Logo -->
     <div class="flex items-center space-x-4">
       <!-- Menu Button -->
-      <button class="p-2 rounded-md hover:bg-gray-100">
-        <svg class="w-6 h-6 text-[#16374A]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M4 6h16M4 12h16M4 18h16"></path>
-        </svg>
+      <button 
+      (click)="OpenMenu()"
+      class="p-2 rounded-md hover:bg-gray-100 ">
+        <mat-icon>menu</mat-icon>
       </button>
       
      <div class="flex items-center space-x-4">

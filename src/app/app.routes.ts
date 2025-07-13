@@ -12,9 +12,9 @@ export const routes: Routes = [
     { path: 'tasks', component: TicketsComponentPage },
     { path: 'tasks/create', component: TicketCreateComponent },
     { path: 'tasks/view/:id', component: TicketViewComponent },
-    { path: 'tasks/edit/:id', component: TicketEditComponent ,canActivate: [AuthGuard] },
-    { path: 'process', component: ProcessPageComponent ,canActivate: [AuthGuard] },
-    { path: 'processes/:id', component: ProcessViewComponent ,canActivate: [AuthGuard]},
-    { path: 'processes/view/:id', component: ProcessViewComponent ,canActivate: [AuthGuard]},
+    { path: 'tasks/edit/:id', component: TicketEditComponent, canActivate: [AuthGuard],data: { roles: ['admin'] } },
+    { path: 'process', component: ProcessPageComponent, canActivate: [AuthGuard],data: { roles: ['admin'] }  },
+    { path: 'processes/:id', component: ProcessViewComponent, canActivate: [AuthGuard],data: { roles: ['admin'] }  },
+    { path: 'processes/view/:id', component: ProcessViewComponent, canActivate: [AuthGuard],data: { roles: ['admin'] }  },
     { path: '', component: HomeComponent },
 ];

@@ -9,23 +9,28 @@ import { KeycloakProfile } from 'keycloak-js';
 import { HttpClient } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateModule } from '@ngx-translate/core';
+import { SidebarComponent } from "./layout/sidebar/sidebar.component";
 
 
 @Component({
   selector: 'app-root',
   standalone:true,
   imports: [
+    NgIf,
     RouterOutlet,
     FormsModule,
     HeaderComponent,
     FooterComponent,
-    TranslateModule
-  ],
+    TranslateModule,
+    SidebarComponent
+],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit {
+
   
+  isOpened = false;
   isAuthenticated = false;
   profile: KeycloakProfile | null = null;
   constructor(private authService: AuthService) {}
@@ -37,6 +42,10 @@ export class AppComponent implements OnInit {
         this.profile = profile;
       });
     }
+  }
+
+  OpenBergueurMenu(etat: boolean) {
+    this.isOpened = etat ;  
   }
 
   login(): void {

@@ -43,7 +43,18 @@
             </div>
           </div>
         </div>
-
+        <!-- Error State -->
+        <div *ngIf="info">
+            <div class="border-t-2 border-b-2 bg-gradient-to-br text-yellow-800 rounded-tl-2xl rounded-br-2xl p-6">
+                <div class="flex items-start">
+                    <mat-icon class="text-yellow-400 mr-3 mt-1">info</mat-icon>
+                    <div class="flex-1">
+                        <h3 class="font-semibold mb-1">Info</h3>
+                        <p class="text-sm mb-4">{{ info }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- Task Details -->
         <div *ngIf="task && !loading" class="grid grid-cols-1 lg:grid-cols-4 gap-4">
           

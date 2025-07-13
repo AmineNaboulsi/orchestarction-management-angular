@@ -11,6 +11,7 @@ import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeng/themes/aura'; 
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -23,8 +24,10 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes, withHashLocation()),
     provideHttpClient(withInterceptors([authInterceptor])),
     provideAnimationsAsync(),
+    provideAnimations(),
     importProvidersFrom(
       TranslateModule.forRoot({
+        
         loader: {
           provide: TranslateLoader,
           useFactory: HttpLoaderFactory,

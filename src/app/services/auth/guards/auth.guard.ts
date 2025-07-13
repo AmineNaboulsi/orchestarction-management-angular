@@ -21,4 +21,6 @@ export class AuthGuard extends KeycloakAuthGuard {
     }
     return this.authenticated;
   }
+
+  
 }

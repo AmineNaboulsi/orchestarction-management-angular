@@ -59,7 +59,7 @@ export class TicketViewComponent implements OnInit {
   loading = false;
   error: string | null = null;
   isLoading = false;
-
+  info: string | null = null;
   newComment: string = '';
   isAddingComment: boolean = false;
   showCommentSection: boolean = true;
@@ -106,6 +106,20 @@ export class TicketViewComponent implements OnInit {
     )
   }
 
+    /**
+ * Handle case where response is successful but no task data
+ */
+  private handleNoTaskData(): void {
+    this.info = 'NO_DATA';
+    this.loading = false;
+    this.messageService.add({
+      severity: 'info',
+      summary: 'Aucune donnée',
+      detail: 'Aucune information disponible pour cette tâche.',
+      life: 5000
+    });
+  }
+
   ngOnInit(): void {
     this.taskId = this.route.snapshot.paramMap.get('id');
     if (this.taskId) {
@@ -131,6 +145,7 @@ export class TicketViewComponent implements OnInit {
         this.comments = this.taskHistory?.comments || [];
         this.hasHistory = (this.taskHistory?.auditEvents?.length || 0) > 0 || (this.taskHistory?.comments?.length || 0) > 0;
         this.historyLoading = false;
+       
       },
       error: (err) => {
         console.error('Error loading task history:', err);
@@ -305,9 +320,13 @@ export class TicketViewComponent implements OnInit {
 
     this.taskBpmApi.getTaskById('', '', taskId).subscribe({
       next : (response: ApiResponseTaskDto) =>{
-        this.task = response.body || undefined;
         
-        this.loading = false;
+         if (response.status === '200' && response.body) {
+          this.task = response.body || undefined;
+            this.loading = false;
+        } else {
+          this.handleNoTaskData();
+        }
       },
       error: (err)=> {
             this.messageService.add({ 

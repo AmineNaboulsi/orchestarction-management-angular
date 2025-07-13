@@ -1,18 +1,23 @@
 <!-- Top Navigation Bar -->
 <app-header 
   [profile]="profile"
+  (OpenBeurgeurMenu)="OpenBergueurMenu($event)"
   (logout)="logout()"
   ></app-header>
 
 <!-- Main Content -->
 <div class="h-full">
   <main class="main bg-gray-200 px-2 pt-2 h-full">
+    <app-sidebar
+    class="transition-all"
+    *ngIf="isOpened"
+    (closeBergerMenu)="OpenBergueurMenu($event)"
+    ></app-sidebar>
       <div class="grid grid-rows-[1fr,auto] h-full bg-white">
         <div class="justify-start">
-            <router-outlet></router-outlet >
+            <router-outlet></router-outlet>
         </div>
         <app-footer></app-footer>
       </div>  
-      
   </main>
 </div>
