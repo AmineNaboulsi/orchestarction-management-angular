@@ -57,6 +57,7 @@ model/taskEventDto.ts
 model/taskFilterDto.ts
 model/taskHistoryDto.ts
 model/taskInfo.ts
+model/taskUpdate.ts
 model/unassignTaskRequestDto.ts
 model/updateVariablesRequestDto.ts
 model/userDto.ts

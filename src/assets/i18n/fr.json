@@ -41,15 +41,31 @@
       }
     },
     "EDIT": {
-      "TITLE": "Modifier le Ticket n°",
+      "UNSAVED_CHANGES": {
+        "HEADER": "Modifications non sauvegardées",
+        "MESSAGE": "Vous avez des modifications non sauvegardées. Êtes-vous sûr de vouloir quitter ?"
+      },
+      "CONFIRM_SAVE": {
+        "HEADER": "Confirmer les modifications",
+        "MESSAGE": "Êtes-vous sûr de vouloir sauvegarder ces modifications ?"
+      },
+      "TITLE": "Modifier le Ticket N° ",
       "BASIC_INFO": "Informations de base",
       "TECHNICAL_DETAILS": "Détails techniques (lecture seule)",
-      "SAVECHANGES": "Sauvegarder les modifications"
+      "SAVECHANGES": "Enregistrer les modifications",
+      "TASK_REASSIGN": "La tâche sera réassignée à",
+      "TASK_DATES": "Dates de la tâche",
+      "CREATED_AT": "Créé le",
+      "DUE_DATE": "Date d'échéance",
+      "SELECT_DATE": "Sélectionner une date",
+      "CLEAR_DATE": "Effacer la date",
+      "TIME_REMAINING": "Temps restant"
     },
     "HISTORY": {
       "EMPTY": "Aucune information disponible pour cette tâche."
     },
     "VIEW": {
+      "TITLE": "Ticket n°",
       "COMMENTS_HISTORY": "Commentaires et Historique",
       "COMMENT": "Commentaire",
       "ADD_COMMENT": "Ajouter un commentaire",
@@ -150,8 +166,7 @@
     "INFO": "Information"
   },
   "COMMENT": {
-    "ADDED": "Commentaire ajouté"
-    ,
+    "ADDED": "Commentaire ajouté",
     "PLACEHOLDER": "Entrez votre commentaire..."
   }
 }

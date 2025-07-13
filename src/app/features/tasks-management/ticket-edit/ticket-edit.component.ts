@@ -1,27 +1,48 @@
-import { CommonModule, DatePipe, NgFor, NgIf } from '@angular/common';
+import { CommonModule, DatePipe, NgClass, NgFor, NgIf } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { BreadcrumbNavigationComponent } from '../../../shared/component/breadcrumb-navigation/breadcrumb-navigation.component';
 import { MatIconModule } from '@angular/material/icon';
 import { ToastModule } from 'primeng/toast';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { ApiResponseListTaskDto, ApiResponseListUserDto, ApiResponseTaskDto, TaskBpmApiService, TaskDto, UserBpmnApiService, UserDto } from '../../../services/generated/api-client';
-import { FormBuilder, FormGroup,  Validators } from '@angular/forms';
+import { ApiResponseListTaskDto, ApiResponseListUserDto, ApiResponseString, ApiResponseTaskDto, TaskBpmApiService, TaskDto, TaskUpdate, UserBpmnApiService, UserDto } from '../../../services/generated/api-client';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { HeaderService } from '../../../shared/interceptors/HeaderService';
 import { SimpleLoadingMiniComponent } from "../../../shared/component/loading/simple-loading-mini/simple-loading-mini.component";
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms'
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 @Component({
   selector: 'app-ticket-edit',
-  imports: [NgIf,NgFor,DatePipe,ReactiveFormsModule,FormsModule,ToastModule, MatProgressSpinnerModule, ConfirmDialogModule,
-    BreadcrumbNavigationComponent,TranslateModule, MatIconModule, SimpleLoadingMiniComponent],
+  imports: [
+    NgIf,
+    NgFor,
+    DatePipe,
+    FormsModule,
+    ReactiveFormsModule,
+    MatDatepickerModule,
+    TranslateModule,
+    MatIconModule,
+    MatProgressSpinnerModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatNativeDateModule,
+    ToastModule,
+    ConfirmDialogModule,
+    BreadcrumbNavigationComponent,
+    SimpleLoadingMiniComponent
+  ],
   templateUrl: './ticket-edit.component.html',
   styleUrl: './ticket-edit.component.css'
 })
 export class TicketEditComponent implements OnInit {
+
   taskId: string | null = null;
   task: TaskDto | undefined;
   editForm: FormGroup;
@@ -29,7 +50,7 @@ export class TicketEditComponent implements OnInit {
   error: string | null = null;
   info: string | null = null;
   isSaving = false;
-  users :Array<UserDto> | null = null;
+  users: Array<UserDto> | null = null;
 
   constructor(
     private taskBpmApi: TaskBpmApiService,
@@ -38,6 +59,7 @@ export class TicketEditComponent implements OnInit {
     private router: Router,
     private headerService: HeaderService,
     private messageService: MessageService,
+    private translateService: TranslateService,
     private confirmationService: ConfirmationService,
     private formBuilder: FormBuilder
   ) {
@@ -47,10 +69,22 @@ export class TicketEditComponent implements OnInit {
       priority: [50],
       category: [''],
       description: [''],
-      dueDate: ['']
+      dueDate: [''] 
     });
   }
+  get dueDate(): Date | null {
+    return this.task?.TaskInfo?.dueDate ? new Date(this.task.TaskInfo?.dueDate) : null;
+  }
+  set dueDate(value: Date | null) {
+    // Update due date when a new date is selected
+    if (this.task) {
+      const formattedDate = value ? value.toISOString() : null;
+      // this.updateDueDate(formattedDate);
+    }
+  }
+  clearDueDate() {
 
+  }
   ngOnInit(): void {
     this.taskId = this.route.snapshot.paramMap.get('id');
     if (this.taskId) {
@@ -62,8 +96,8 @@ export class TicketEditComponent implements OnInit {
   Assign() {
     const assignee = this.editForm.get('assignee')?.value;
     console.log({
-      editForm :  this.editForm,
-      assignee : assignee
+      editForm: this.editForm,
+      assignee: assignee
     })
     if (!assignee || !this.taskId) {
       this.messageService.add({
@@ -112,21 +146,21 @@ export class TicketEditComponent implements OnInit {
   }
 
   loadUsers() {
-     this.userBpmApi.listUsers(
-        this.headerService.getRequestId(),
-        this.headerService.getCanalId(),
-     ).subscribe(
+    this.userBpmApi.listUsers(
+      this.headerService.getRequestId(),
+      this.headerService.getCanalId(),
+    ).subscribe(
       {
-        next : (response: ApiResponseListUserDto) => {
+        next: (response: ApiResponseListUserDto) => {
           this.users = response?.body || null;
         },
-        error :(err)  => {
+        error: (err) => {
           console.error({
-            err : err
+            err: err
           })
         },
       }
-     )
+    )
   }
 
   loadTaskById(taskId: string): void {
@@ -137,22 +171,22 @@ export class TicketEditComponent implements OnInit {
     this.taskBpmApi.getTaskById(
       this.headerService.getRequestId(),
       this.headerService.getCanalId(), taskId).subscribe({
-      next: (response: ApiResponseTaskDto) => {
-        if (response.status === '200' && response.body) {
-          this.task = response.body;
-          if (this.task) {
-            this.populateForm();
+        next: (response: ApiResponseTaskDto) => {
+          if (response.status === '200' && response.body) {
+            this.task = response.body;
+            if (this.task) {
+              this.populateForm();
+            }
+            this.loading = false;
+          } else {
+            this.handleNoTaskData();
           }
+        },
+        error: (err) => {
           this.loading = false;
-        } else {
-          this.handleNoTaskData();
+          // this.handleTaskLoadError(err);
         }
-      },
-      error: (err) => {
-        this.loading = false;
-        // this.handleTaskLoadError(err);
-      }
-    });
+      });
   }
 
   /**
@@ -174,19 +208,13 @@ export class TicketEditComponent implements OnInit {
   populateForm(): void {
     if (!this.task?.TaskInfo) return;
 
-    let dueDateValue = '';
-    if (this.task.TaskInfo.dueDate) {
-      const date = new Date(this.task.TaskInfo.dueDate);
-      dueDateValue = date.toISOString().slice(0, 16);
-    }
-
     this.editForm.patchValue({
       name: this.task.TaskInfo.name || '',
       assignee: this.task.TaskInfo.assignee || '',
       priority: this.task.TaskInfo.priority || 50,
       category: this.task.TaskInfo.category || '',
       description: this.task.TaskInfo.description || '',
-      dueDate: dueDateValue
+      dueDate: ''
     });
   }
 
@@ -204,8 +232,8 @@ export class TicketEditComponent implements OnInit {
     }
 
     this.confirmationService.confirm({
-      header: 'Confirmer les modifications',
-      message: 'Êtes-vous sûr de vouloir sauvegarder ces modifications ?',
+      header: this.translateService?.instant('TASK.EDIT.CONFIRM_SAVE.HEADER'),
+      message: this.translateService?.instant('TASK.EDIT.CONFIRM_SAVE.MESSAGE'),
       icon: 'pi pi-exclamation-triangle',
       rejectButtonProps: {
         label: 'Annuler',
@@ -221,7 +249,7 @@ export class TicketEditComponent implements OnInit {
       accept: () => {
         this.saveTask();
       }
-    }); 
+    });
   }
 
   /**
@@ -231,27 +259,45 @@ export class TicketEditComponent implements OnInit {
     this.isSaving = true;
     const formData = this.editForm.value;
 
-    // Convert dueDate back to ISO format if provided
-    let dueDate = null;
-    if (formData.dueDate) {
-      dueDate = new Date(formData.dueDate).toISOString();
-    }
-    if(this.editForm.get('assignee')?.value !== this.task?.TaskInfo?.assignee){
-      this.Assign()
-    }
-    
-    const updatePayload = {
-      TaskInfo: {
-        ...this.task?.TaskInfo,
-        name: formData.name,
-        assignee: formData.assignee,
-        priority: parseInt(formData.priority),
-        category: formData.category,
-        description: formData.description,
-        dueDate: dueDate
-      }
+    const UpdatedTask: TaskUpdate = {
+      ...this.task?.TaskInfo,
+      id: this.task?.TaskID,
+      name: formData.name,
+      priority: parseInt(formData.priority),
+      assignee : formData.assignee,
+      category: formData.category,
+      description: formData.description,
+      dueDate: formData.dueDate || undefined
     };
-     this.isSaving = false;
+    this.isSaving = false;
+    console.log({
+      UpdatedTask: UpdatedTask
+    })
+    this.taskBpmApi.updateTaskById(
+      this.headerService.getRequestId(),
+      this.headerService.getCanalId(),
+      UpdatedTask
+    ).subscribe({
+      next : ( response?: ApiResponseString) => {
+      this.messageService.add({
+            severity: 'success',
+            summary: 'Sucess',
+            detail: response?.message ,
+            life: 5000
+          });
+      },
+      error : (err) =>  {
+        this.messageService.add({
+            severity: 'error',
+            summary: 'Erreur',
+            detail: err,
+            life: 5000
+        });
+      },
+    })
+    // if (this.editForm.get('assignee')?.value !== this.task?.TaskInfo?.assignee) {
+    //   this.Assign()
+    // }
   }
 
   /**
@@ -260,8 +306,8 @@ export class TicketEditComponent implements OnInit {
   goBack(): void {
     if (this.editForm.dirty) {
       this.confirmationService.confirm({
-        header: 'Modifications non sauvegardées',
-        message: 'Vous avez des modifications non sauvegardées. Êtes-vous sûr de vouloir quitter ?',
+        header: this.translateService?.instant('TASK.EDIT.UNSAVED_CHANGES.HEADER'),
+        message: this.translateService?.instant('TASK.EDIT.UNSAVED_CHANGES.MESSAGE'),
         icon: 'pi pi-exclamation-triangle',
         rejectButtonProps: {
           label: 'Rester',

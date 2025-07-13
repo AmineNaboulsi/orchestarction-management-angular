@@ -74,7 +74,8 @@
       </div>
     </ng-template>
   </div>
-
+          <p-toast position="top-right" [life]="5000" [style]="{ 'z-index': '9999' }">
+          </p-toast>
   <div *ngIf="loading && !error">
     <app-simple-loading-mini></app-simple-loading-mini>
   </div>

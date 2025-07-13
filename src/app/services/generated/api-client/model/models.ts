@@ -42,6 +42,7 @@ export * from './taskEventDto';
 export * from './taskFilterDto';
 export * from './taskHistoryDto';
 export * from './taskInfo';
+export * from './taskUpdate';
 export * from './unassignTaskRequestDto';
 export * from './updateVariablesRequestDto';
 export * from './userDto';

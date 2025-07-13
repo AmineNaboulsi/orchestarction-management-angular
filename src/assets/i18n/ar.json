@@ -40,12 +40,28 @@
       }
     },
     "EDIT": {
-      "TITLE": "تعديل التذكرة رقم",
-      "BASIC_INFO": "معلومات أساسية",
-      "TECHNICAL_DETAILS": "تفاصيل تقنية (للقراءة فقط)",
-      "SAVECHANGES": "حفظ التعديلات"
+      "UNSAVED_CHANGES": {
+        "HEADER": "تغييرات غير محفوظة",
+        "MESSAGE": "لديك تغييرات غير محفوظة. هل أنت متأكد أنك تريد المغادرة؟"
+      },
+      "CONFIRM_SAVE": {
+        "HEADER": "تأكيد التعديلات",
+        "MESSAGE": "هل أنت متأكد أنك تريد حفظ هذه التعديلات؟"
+      },
+      "TITLE": "تعديل التذكرة رقم ",
+      "BASIC_INFO": "المعلومات الأساسية",
+      "TECHNICAL_DETAILS": "التفاصيل التقنية (للقراءة فقط)",
+      "SAVECHANGES": "حفظ التغييرات",
+      "TASK_REASSIGN": "سيتم إعادة تعيين المهمة إلى",
+      "TASK_DATES": "تواريخ المهمة",
+      "CREATED_AT": "تم الإنشاء في",
+      "DUE_DATE": "تاريخ الاستحقاق",
+      "SELECT_DATE": "اختر تاريخاً",
+      "CLEAR_DATE": "مسح التاريخ",
+      "TIME_REMAINING": "الوقت المتبقي"
     },
     "VIEW": {
+      "TITLE": "التذكرة رقم",
       "COMMENTS_HISTORY": "التعليقات والسجل",
       "COMMENT": "التعليقات ",
       "ADD_COMMENT": "إضافة تعليق",
@@ -53,7 +69,7 @@
       "CONTACT_INFO": "معلومات الاتصال",
       "TICKET_DETAILS": "تفاصيل التذكرة",
       "COMPLETE_TASK": "إكمال المهمة",
-      "CONVERSATION_HISTORY": "سجل المحادثة",
+      "CONVERSATION_HISTORY": "السجل",
       "MAIN_CONTACT": "جهة الاتصال الرئيسية",
       "PHONE": "الهاتف:",
       "ADDRESS": "العنوان:",
@@ -150,7 +166,6 @@
   },
   "COMMENT": {
     "ADDED": "تمت إضافة التعليق",
-        "PLACEHOLDER": "أدخل تعليقك..."
-
+    "PLACEHOLDER": "أدخل تعليقك..."
   }
 }

@@ -40,15 +40,31 @@
       }
     },
     "EDIT": {
-      "TITLE": "Edit Ticket No.",
+      "UNSAVED_CHANGES": {
+        "HEADER": "Unsaved Changes",
+        "MESSAGE": "You have unsaved changes. Are you sure you want to leave?"
+      },
+      "CONFIRM_SAVE": {
+        "HEADER": "Confirm Changes",
+        "MESSAGE": "Are you sure you want to save these changes?"
+      },
+      "TITLE": "Edit Ticket N° ",
       "BASIC_INFO": "Basic Information",
       "TECHNICAL_DETAILS": "Technical details (read-only)",
-      "SAVECHANGES": "Save Changes"
+      "SAVECHANGES": "Save Changes",
+      "TASK_REASSIGN": "The task will be reassigned to",
+      "TASK_DATES": "Task Dates",
+      "CREATED_AT": "Created At",
+      "DUE_DATE": "Due Date",
+      "SELECT_DATE": "Select Date",
+      "CLEAR_DATE": "Clear Date",
+      "TIME_REMAINING": "Time Remaining"
     },
-     "HISTORY": {
+    "HISTORY": {
       "EMPTY": "No information available for this task."
     },
     "VIEW": {
+      "TITLE": "Ticket N° ",
       "COMMENTS_HISTORY": "Comments and History",
       "COMMENT": "Comment",
       "ADD_COMMENT": "Add a comment",
@@ -150,7 +166,6 @@
   },
   "COMMENT": {
     "ADDED": "Comment added",
-        "PLACEHOLDER": "Enter your comment..."
-
+    "PLACEHOLDER": "Enter your comment..."
   }
 }

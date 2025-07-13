@@ -15,6 +15,7 @@ import { KeycloakProfileService } from '../../../shared/services/keycloak/keyclo
 import { KeycloakProfile } from 'keycloak-js';
 import { HeaderService } from '../../../shared/interceptors/HeaderService';
 import { MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
 
 @Component({
   selector: 'app-tickets-page',
@@ -27,7 +28,8 @@ import { MessageService } from 'primeng/api';
     SimpleLoadingMiniComponent,
     TaskFilterFormComponent,
     ButtonShowHideFilterComponent,
-    TranslateModule
+    TranslateModule,
+    ToastModule
 ],
   providers: [TaskBpmApiService],
   templateUrl: './tickets-page.component.html',
@@ -58,7 +60,7 @@ export class TicketsComponentPage implements OnInit {
 
   async ngOnInit() {
     this.loadProfile();
-  }
+  } 
   
   loadProfile(): void {
     if (!this.keycloakProfileService.isAuthenticated()) {
@@ -121,7 +123,7 @@ export class TicketsComponentPage implements OnInit {
             severity: 'info',
             summary: 'Aucune donnée',
             detail: 'Aucune information disponible pour cette tâche.',
-            life: 5000
+            life: 5000 
           });
         }
     });

@@ -1,12 +1,12 @@
 import { animate, style, transition, trigger } from '@angular/animations';
-import { NgFor } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports:[MatIconModule, RouterModule, NgFor],
+  imports:[MatIconModule, RouterModule, NgFor,NgIf],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.css',
   animations: [
@@ -22,6 +22,7 @@ import { RouterModule } from '@angular/router';
   ],
 })
 export class SidebarComponent {
+sidebarVisible = true;
 
   @Output() closeBergerMenu = new EventEmitter<boolean>()
 
@@ -44,6 +45,7 @@ export class SidebarComponent {
   ];
 
   Close(){
+    this.sidebarVisible = false;
     this.closeBergerMenu.emit(false);
   }
 }

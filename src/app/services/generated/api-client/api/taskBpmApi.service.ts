@@ -43,6 +43,8 @@ import { CompleteTaskRequestDto } from '../model/completeTaskRequestDto';
 // @ts-ignore
 import { PagedRequestTaskFilterDto } from '../model/pagedRequestTaskFilterDto';
 // @ts-ignore
+import { TaskUpdate } from '../model/taskUpdate';
+// @ts-ignore
 import { UnassignTaskRequestDto } from '../model/unassignTaskRequestDto';
 
 // @ts-ignore
@@ -994,6 +996,86 @@ export class TaskBpmApiService extends BaseService {
         return this.httpClient.request<ApiResponseTaskDto>('post', `${basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
+                responseType: <any>responseType_,
+                ...(withCredentials ? { withCredentials } : {}),
+                headers: localVarHeaders,
+                observe: observe,
+                transferCache: localVarTransferCache,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * @param xApiRequestId 
+     * @param xApiCanal 
+     * @param taskUpdate 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public updateTaskById(xApiRequestId: string, xApiCanal: string, taskUpdate: TaskUpdate, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<ApiResponseString>;
+    public updateTaskById(xApiRequestId: string, xApiCanal: string, taskUpdate: TaskUpdate, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<ApiResponseString>>;
+    public updateTaskById(xApiRequestId: string, xApiCanal: string, taskUpdate: TaskUpdate, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<ApiResponseString>>;
+    public updateTaskById(xApiRequestId: string, xApiCanal: string, taskUpdate: TaskUpdate, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+        if (xApiRequestId === null || xApiRequestId === undefined) {
+            throw new Error('Required parameter xApiRequestId was null or undefined when calling updateTaskById.');
+        }
+        if (xApiCanal === null || xApiCanal === undefined) {
+            throw new Error('Required parameter xApiCanal was null or undefined when calling updateTaskById.');
+        }
+        if (taskUpdate === null || taskUpdate === undefined) {
+            throw new Error('Required parameter taskUpdate was null or undefined when calling updateTaskById.');
+        }
+
+        let localVarHeaders = this.defaultHeaders;
+        if (xApiRequestId !== undefined && xApiRequestId !== null) {
+            localVarHeaders = localVarHeaders.set('x-api-requestId', String(xApiRequestId));
+        }
+        if (xApiCanal !== undefined && xApiCanal !== null) {
+            localVarHeaders = localVarHeaders.set('x-api-canal', String(xApiCanal));
+        }
+
+        // authentication (oauth2) required
+        localVarHeaders = this.configuration.addCredentialToHeaders('oauth2', 'Authorization', localVarHeaders, 'Bearer ');
+
+        const localVarHttpHeaderAcceptSelected: string | undefined = options?.httpHeaderAccept ?? this.configuration.selectHeaderAccept([
+            'application/json'
+        ]);
+        if (localVarHttpHeaderAcceptSelected !== undefined) {
+            localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
+        }
+
+        const localVarHttpContext: HttpContext = options?.context ?? new HttpContext();
+
+        const localVarTransferCache: boolean = options?.transferCache ?? true;
+
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected !== undefined) {
+            localVarHeaders = localVarHeaders.set('Content-Type', httpContentTypeSelected);
+        }
+
+        let responseType_: 'text' | 'json' | 'blob' = 'json';
+        if (localVarHttpHeaderAcceptSelected) {
+            if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
+                responseType_ = 'text';
+            } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
+                responseType_ = 'json';
+            } else {
+                responseType_ = 'blob';
+            }
+        }
+
+        let localVarPath = `/v1/api/ui/task/`;
+        const { basePath, withCredentials } = this.configuration;
+        return this.httpClient.request<ApiResponseString>('put', `${basePath}${localVarPath}`,
+            {
+                context: localVarHttpContext,
+                body: taskUpdate,
                 responseType: <any>responseType_,
                 ...(withCredentials ? { withCredentials } : {}),
                 headers: localVarHeaders,

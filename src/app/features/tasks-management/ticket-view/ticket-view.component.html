@@ -66,13 +66,13 @@
             <!-- Comments -->
                 <div class="flex flex-col gap-2 overflow-auto">
                     <div *ngFor="let comment of taskHistory?.comments" class="flex items-start space-x-3 bg-[#FDFDEA] px-4 py-6 rounded-2xl shadow-xs border border-gray-200 ">
-                    <div class="flex-1">
-                      <div class="flex items-center gap-2">
+                    <div class="flex-1 overflow-auto w-full">
+                      <div class="flex items-center gap-2 sticky top-0 left-0">
                         <span class="text-xs font-medium text-teal-500">{{ '@' + comment.CommentInfo.userId }}</span>
                         <span class="text-xs font-medium text-gray-500">|</span>
                         <span class="text-xs text-gray-500">{{ (comment.CommentInfo.time | date: 'longDate') + ' at ' +  (comment.CommentInfo.time | date:'shortTime') }}</span>
                       </div>
-                      <p class="text-sm text-gray-700 mt-1">{{ comment.CommentInfo.fullMessage }}</p>
+                      <p class="text-sm text-gray-700 mt-1 ">{{ comment.CommentInfo.fullMessage }}</p>
                     </div>
                     </div>
                 </div>
@@ -90,9 +90,8 @@
                       <mat-icon class="text-white text-xl">confirmation_number</mat-icon>
                     </div>
                     <div>
-                      <h1 class="text-2xl font-bold text-gray-900">
-                        Ticket n°{{ getShortTaskId(task.TaskID || '') }}
-                      </h1>
+                      <span class="text-2xl font-bold text-gray-900">{{'TASK.VIEW.TITLE' | translate}}</span>
+                       <span class="text-2xl font-bold text-gray-900">{{ getShortTaskId(task.TaskID || '') }}</span>
                       <p class="text-gray-600 text-sm">{{ task.TaskInfo?.name || 'Tâche sans titre' }}</p>
                     </div>
                   </div>
@@ -168,8 +167,8 @@
                     </div>
                   </div>
                 </div>
-                <div class="mt-5 flex flex-col">
-                  <p *ngIf="task.TaskInfo?.description">
+                <div class="mt-5 flex flex-col gap-2">
+                  <p *ngIf="task.TaskInfo?.description" class="bg-gray-100 px-3 pt-4 pb-10 rounded-2xl border border-gray-300">
                     <strong>
                       {{
                         'TASK.COMMON.DESCRIPTION' | translate
@@ -239,7 +238,8 @@
                 <div class="w-20 h-20 bg-teal-600 rounded-full flex items-center justify-center mx-auto mb-4">
                   <mat-icon class="text-white text-2xl">person</mat-icon>
                 </div>
-                <h3 class="text-lg font-semibold text-gray-900 mb-2">{{ task.TaskInfo?.assignee || 'Non assigné' }}</h3>
+                <h3 class="text-lg font-semibold text-gray-900 mb-2">{{ task.TaskInfo?.assignee || 
+                ( 'APP_BUTTONS.NOTASSIGN' | translate ) }}</h3>
                 <p class="text-sm text-gray-600 mb-4">
                   {{ 'TASK.VIEW.MAIN_CONTACT' | translate}}
                 </p>
@@ -270,7 +270,7 @@
             <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
               <h3 class="text-lg font-semibold text-gray-900 mb-6 flex items-center">
                 <mat-icon class="mr-2 text-teal-600">timeline</mat-icon>
-                Historique de conversation
+                {{ 'TASK.VIEW.CONVERSATION_HISTORY' | translate}}
               </h3>
 
               <!-- Loading State -->
@@ -302,7 +302,9 @@
               </div>
             </div>
           </div>
-           <p-toast position="top-right" [life]="5000" [style]="{ 'z-index': '9999' }"></p-toast>
+          <p-toast position="top-right" [life]="5000" [style]="{ 'z-index': '9999' }">
+          </p-toast>
+          <p-confirmdialog></p-confirmdialog>
         </div>
       </div>
     </div>

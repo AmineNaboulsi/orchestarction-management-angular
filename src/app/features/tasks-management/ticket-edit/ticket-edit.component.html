@@ -21,7 +21,7 @@
                 <h1 class="text-2xl font-bold text-gray-900 mt-2 flex items-center">
                     <mat-icon class="mr-3 text-green-600 text-3xl">edit</mat-icon>
                     <span>{{ 'TASK.EDIT.TITLE' | translate}}</span>
-                    <span class="px-1">{{ taskId || 'Loading...' }}</span> 
+                    <span class="px-1">{{ taskId || 'Loading...' }}</span>
                 </h1>
             </div>
         </div>
@@ -70,9 +70,9 @@
 
         <!-- Edit Form -->
         <div *ngIf="task && !loading">
-            <form [formGroup]="editForm" (ngSubmit)="onSubmit()" class="grid grid-cols-1 xl:grid-cols-4 gap-8">
+            <form [formGroup]="editForm" (ngSubmit)="onSubmit()" class="grid grid-cols-1 xl:grid-cols-6 gap-8">
                 <!-- Main Content Area -->
-                <div class="xl:col-span-3 space-y-8">
+                <div class="xl:col-span-4 space-y-8">
 
                     <!-- Basic Information Card -->
                     <div
@@ -112,7 +112,8 @@
                                     <div class="grid grid-rows-[auto,1fr] gap-3">
                                         <div class="flex items-center justify-between gap-4">
                                             <div class="flex-1">
-                                                <div class="text-xs text-gray-500 mb-1">{{'TASK.COMMON.CURRENT_ASSIGNEE' | translate}}</div>
+                                                <div class="text-xs text-gray-500 mb-1">{{'TASK.COMMON.CURRENT_ASSIGNEE'
+                                                    | translate}}</div>
                                                 <div
                                                     class="flex items-center p-3 bg-white rounded-lg border border-gray-200 shadow-sm">
                                                     <div
@@ -120,12 +121,14 @@
                                                         <mat-icon class="text-white text-sm">person</mat-icon>
                                                     </div>
                                                     <div>
-                                                        <div class="font-semibold text-gray-900">{{ task.TaskInfo?.assignee || 'Non assigné' }}</div>
-                                                        <div class="text-xs text-gray-500">{{'TASK.COMMON.CURRENT_ASSIGNEE' | translate}}</div>
+                                                        <div class="font-semibold text-gray-900">{{
+                                                            task.TaskInfo?.assignee || 'Non assigné' }}</div>
+                                                        <div class="text-xs text-gray-500">
+                                                            {{'TASK.COMMON.CURRENT_ASSIGNEE' | translate}}</div>
                                                     </div>
                                                 </div>
                                             </div>
-    
+
                                             <div class="flex flex-col items-center px-4">
                                                 <mat-icon
                                                     class="text-green-500 text-2xl animate-pulse">arrow_forward</mat-icon>
@@ -133,7 +136,7 @@
                                                     {{'TASK.COMMON.CHANGE_ASSIGNEE' | translate}}
                                                 </span>
                                             </div>
-    
+
                                             <div class="flex-1">
                                                 <div class="text-xs text-gray-500 mb-1">
                                                     {{ 'TASK.COMMON.NEW_ASSIGNEE' | translate}}
@@ -141,7 +144,8 @@
                                                 <div class="relative">
                                                     <select ofr id="assignee" formControlName="assignee"
                                                         class="w-full px-4 py-3 pl-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200 bg-white shadow-sm hover:shadow-md">
-                                                        <option *ngFor="let user of users" [value]="user.UserID">{{ user.UserID }}</option>
+                                                        <option *ngFor="let user of users" [value]="user.UserID">{{
+                                                            user.UserID }}</option>
                                                     </select>
                                                     <mat-icon
                                                         class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-sm">person_add</mat-icon>
@@ -156,12 +160,14 @@
                                         <div class="flex items-center">
                                             <mat-icon class="text-green-600 mr-2 text-sm">check_circle</mat-icon>
                                             <span class="text-sm text-green-800 font-medium">
-                                                La tâche sera réassignée à
-                                                <strong>{{ editForm.get('assignee')?.value }}</strong>
+                                                {{'TASK.EDIT.TASK_REASSIGN' | translate }}
+                                                <strong>
+                                                    {{ editForm.get('assignee')?.value }}
+                                                </strong>
                                             </span>
                                         </div>
                                     </div>
-                                    
+
                                 </div>
                             </div>
 
@@ -175,7 +181,7 @@
                                     class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors"
                                     placeholder="Catégorie de la tâche">
                             </div>
-                            <div >
+                            <div>
                                 <label for="priority" class="block text-sm font-medium text-gray-700 mb-2">
                                     <mat-icon class="mr-1 text-sm text-gray-500">flag</mat-icon>
                                     {{'TASK.COMMON.PRIORITY' | translate}}
@@ -198,11 +204,11 @@
                         class="bg-white rounded-xl shadow-sm border border-gray-100 p-8 hover:shadow-md transition-all duration-300">
                         <h3 class="text-xl font-semibold text-gray-900 mb-6 flex items-center">
                             <mat-icon class="mr-2 text-green-600">description</mat-icon>
-                             {{ 'TASK.COMMON.DESCRIPTION' | translate }}
+                            {{ 'TASK.COMMON.DESCRIPTION' | translate }}
                         </h3>
                         <div>
                             <label for="description" class="block text-sm font-medium text-gray-700 mb-2">
-                                 {{ 'TASK.COMMON.DESCRIPTION_DETAILS' | translate }}
+                                {{ 'TASK.COMMON.DESCRIPTION_DETAILS' | translate }}
                             </label>
                             <textarea id="description" formControlName="description" rows="6"
                                 class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors resize-none"
@@ -214,42 +220,48 @@
                     <div class="bg-gray-50 rounded-xl shadow-sm border border-gray-200 p-8">
                         <h3 class="text-xl font-semibold text-gray-600 mb-6 flex items-center">
                             <mat-icon class="mr-2 text-gray-500">code</mat-icon>
-                           {{ 'TASK.EDIT.TECHNICAL_DETAILS' | translate }}
+                            {{ 'TASK.EDIT.TECHNICAL_DETAILS' | translate }}
                         </h3>
                         <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
                             <div class="p-4 bg-white rounded-lg border border-gray-200">
-                                <div class="text-sm font-medium text-gray-500 mb-2">{{ 'TASK.COMMON.TASK_ID' | translate }}</div>
+                                <div class="text-sm font-medium text-gray-500 mb-2">{{ 'TASK.COMMON.TASK_ID' | translate
+                                    }}</div>
                                 <div class="text-gray-700 font-mono text-xs break-all">{{ task.TaskID }}</div>
                             </div>
 
                             <div *ngIf="task.TaskInfo?.processInstanceId"
                                 class="p-4 bg-white rounded-lg border border-gray-200">
-                                <div class="text-sm font-medium text-gray-500 mb-2">{{ 'TASK.COMMON.PROCESS_INSTANCE_ID' | translate }}</div>
+                                <div class="text-sm font-medium text-gray-500 mb-2">{{ 'TASK.COMMON.PROCESS_INSTANCE_ID'
+                                    | translate }}</div>
                                 <div class="text-gray-700 font-mono text-xs break-all">{{
                                     task.TaskInfo?.processInstanceId }}</div>
                             </div>
 
                             <div *ngIf="task.TaskInfo?.taskDefinitionKey"
                                 class="p-4 bg-white rounded-lg border border-gray-200">
-                                <div class="text-sm font-medium text-gray-500 mb-2">{{ 'TASK.COMMON.TASK_DEFINITION_KEY' | translate }}</div>
+                                <div class="text-sm font-medium text-gray-500 mb-2">{{ 'TASK.COMMON.TASK_DEFINITION_KEY'
+                                    | translate }}</div>
                                 <div class="text-gray-700 font-mono text-xs">{{ task.TaskInfo?.taskDefinitionKey }}
                                 </div>
                             </div>
 
                             <div *ngIf="task.TaskInfo?.tenantId" class="p-4 bg-white rounded-lg border border-gray-200">
-                                <div class="text-sm font-medium text-gray-500 mb-2">{{ 'TASK.COMMON.TENANT_ID' | translate }}</div>
+                                <div class="text-sm font-medium text-gray-500 mb-2">{{ 'TASK.COMMON.TENANT_ID' |
+                                    translate }}</div>
                                 <div class="text-gray-700 font-mono text-xs">{{ task.TaskInfo?.tenantId }}</div>
                             </div>
 
                             <div *ngIf="task.TaskInfo?.createTime"
                                 class="p-4 bg-white rounded-lg border border-gray-200">
-                                <div class="text-sm font-medium text-gray-500 mb-2">{{ 'TASK.COMMON.CREATED_DATE' | translate }}</div>
+                                <div class="text-sm font-medium text-gray-500 mb-2">{{ 'TASK.COMMON.CREATED_DATE' |
+                                    translate }}</div>
                                 <div class="text-gray-700 text-sm">{{ task.TaskInfo?.createTime | date:'medium' }}</div>
                             </div>
 
                             <div *ngIf="task.TaskInfo?.processDefinitionId"
                                 class="p-4 bg-white rounded-lg border border-gray-200">
-                                <div class="text-sm font-medium text-gray-500 mb-2">{{ 'TASK.COMMON.TASK_DEFINITION_KEY' | translate }}</div>
+                                <div class="text-sm font-medium text-gray-500 mb-2">{{ 'TASK.COMMON.TASK_DEFINITION_KEY'
+                                    | translate }}</div>
                                 <div class="text-gray-700 font-mono text-xs break-all">{{
                                     task.TaskInfo?.processDefinitionId }}</div>
                             </div>
@@ -258,68 +270,77 @@
                 </div>
 
                 <!-- Sidebar -->
-                <div class="xl:col-span-1 space-y-6">
+                <div class="xl:col-span-2 space-y-6">
 
-                    <!-- Current Status -->
+
+                    <!-- Task Dates Panel -->
                     <div
                         class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-all duration-300">
                         <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
-                            <mat-icon class="mr-2 text-green-600">info</mat-icon>
-                            <span>{{ 'TASK.COMMON.CURRENT_STATUS' | translate }}</span>
+                            <mat-icon class="mr-2 text-blue-600">schedule</mat-icon>
+                            <span>{{ 'TASK.EDIT.TASK_DATES' | translate }}</span>
                         </h3>
 
                         <div class="space-y-3">
+                            <!-- Created At -->
                             <div
-                                class="flex items-center justify-between p-3 bg-blue-50 rounded-lg border border-blue-100">
-                                <span class="text-sm font-medium text-gray-600">
-                                    {{ 'TASK.COMMON.STATUS' | translate}}
+                                class="flex items-center justify-between pt-1.5 px-3 ">
+                                <span class="text-sm font-medium text-gray-600 flex items-center">
+                                    <mat-icon class="mr-2 text-gray-500 text-base">access_time</mat-icon>
+                                    {{ 'TASK.EDIT.CREATED_AT' | translate }}
                                 </span>
-                                <span
-                                    class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-800">
-                                    <span class="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
-                                    En cours
+                                <span class="text-sm font-semibold text-gray-900">
+                                    {{ task.TaskInfo?.createTime | date:'dd/MM/yyyy HH:mm'}}
                                 </span>
                             </div>
 
+                            <!-- Due Date -->
                             <div
-                                class="flex items-center justify-between p-3 bg-green-50 rounded-lg border border-green-100">
-                                <span class="text-sm font-medium text-gray-600">
-                                    {{ 'TASK.COMMON.ASSIGNEE' | translate }}
-                                </span>
-                                <span class="text-sm font-semibold text-gray-900">{{ task.TaskInfo?.assignee || ('APP_BUTTONS.NOTASSIGN' | translate ) }}</span>
-                            </div>
-
-                            <div
-                                class="flex items-center justify-between p-3 bg-purple-50 rounded-lg border border-purple-100">
-                                <span class="text-sm font-medium text-gray-600">
-                                     {{
-                                        'TASK.COMMON.CURRENT_PRIORITY' | translate 
-                                    }}
-                                </span>
-                                <span class="text-sm font-semibold text-gray-900">{{ task.TaskInfo?.priority || 'Nondéfinie' }}</span>
+                                class="flex flex-col rounded-lg px-3 ">
+                                <div class="flex items-center justify-between ">
+                                    <span class=" text-sm font-medium text-gray-600 flex items-center">
+                                        <mat-icon class="mr-2 text-orange-500 text-base">event</mat-icon>
+                                        {{ 'TASK.EDIT.DUE_DATE' | translate }}
+                                    </span>
+                                    <div class="pt-3">
+                                        <mat-form-field appearance="outline" class="w-40 ">
+                                            <input 
+                                                matInput 
+                                                [matDatepicker]="dueDatePicker"
+                                                name="dueDate"
+                                                formControlName="dueDate"
+                                                placeholder="{{ 'TASK.EDIT.SELECT_DATE' | translate }}"
+                                                class="text-sm">
+                                            <mat-datepicker-toggle matSuffix
+                                                [for]="dueDatePicker"></mat-datepicker-toggle>
+                                            <mat-datepicker #dueDatePicker></mat-datepicker>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
 
+                    <!-- Action Buttons -->
                     <div class="flex justify-between gap-2">
-                            <button type="button" (click)="goBack()"
-                                class="cursor-pointer inline-flex items-center px-2 py-1 border-2 border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-all font-semibold">
-                                <mat-icon class="mr-2">cancel</mat-icon>
-                                {{'APP_BUTTONS.CANCEL' | translate}}
-                            </button>
+                        <button type="button" (click)="goBack()"
+                            class="w-full cursor-pointer inline-flex items-center px-2 py-1 border-2 border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-all font-semibold">
+                            <mat-icon class="mr-2">cancel</mat-icon>
+                            <span class="text-center">{{'APP_BUTTONS.CANCEL' | translate}}</span>
+                        </button>
 
-                            <button type="submit" [disabled]="editForm.invalid || isSaving"
-                                class="cursor-pointer inline-flex items-center px-3 py-0.5 bg-[#00908E] text-white rounded-lg transition-all hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed font-semibold">
-                                <mat-spinner diameter="20" class="mr-2" *ngIf="isSaving"></mat-spinner>
-                                <mat-icon class="mr-2" *ngIf="!isSaving">save</mat-icon>
-                                <div *ngIf="isSaving">
-                                     {{'EDIT.SAVECHANGES' | translate}}
-                                </div>
-                                <div *ngIf="!isSaving">
-                                     {{'APP_BUTTONS.SAVE' | translate}}
-                                    </div>
-                            </button>
-                        </div>
+                        <button type="submit" [disabled]="editForm.invalid || isSaving"
+                            class="w-full text-center cursor-pointer inline-flex items-center px-3 py-0.5 bg-[#00908E] text-white rounded-lg transition-all hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed font-semibold">
+                            <mat-spinner diameter="20" class="mr-2" *ngIf="isSaving"></mat-spinner>
+                            <mat-icon class="mr-2" *ngIf="!isSaving">save</mat-icon>
+                            <div *ngIf="isSaving">
+                                <span class="text-center">{{'EDIT.SAVECHANGES' | translate}}</span>
+                            </div>
+                            <div *ngIf="!isSaving">
+                                <span class="text-center">{{'APP_BUTTONS.SAVE' | translate}}</span>
+                            </div>
+                        </button>
+                    </div>
                 </div>
             </form>
         </div>
