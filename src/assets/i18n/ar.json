@@ -3,7 +3,6 @@
     "title": "مرحباً",
     "message": "مرحباً بك في تطبيقنا!"
   },
-  "task": {},
   "buttons": {
     "submit": "إرسال",
     "cancel": "إلغاء",
@@ -14,7 +13,7 @@
     "TASKPATH": "المهام",
     "DASHBOARD": {
       "PAGE": {
-        "CREATETASK" : "إنشاء تذكرة"
+        "CREATETASK": "إنشاء تذكرة"
       },
       "TABLE": {
         "HEADER": {
@@ -39,11 +38,61 @@
           "EndDate": "تاريخ الانتهاء"
         }
       }
+    },
+    "EDIT": {
+      "TITLE": "تعديل التذكرة رقم",
+      "BASIC_INFO": "معلومات أساسية",
+      "TECHNICAL_DETAILS": "تفاصيل تقنية (للقراءة فقط)",
+      "SAVECHANGES": "حفظ التعديلات"
+    },
+    "VIEW": {
+      "COMMENTS_HISTORY": "التعليقات والسجل",
+      "COMMENT": "التعليقات ",
+      "ADD_COMMENT": "إضافة تعليق",
+      "CONTACT_NAME": "اسم جهة الاتصال",
+      "CONTACT_INFO": "معلومات الاتصال",
+      "TICKET_DETAILS": "تفاصيل التذكرة",
+      "COMPLETE_TASK": "إكمال المهمة",
+      "CONVERSATION_HISTORY": "سجل المحادثة",
+      "MAIN_CONTACT": "جهة الاتصال الرئيسية",
+      "PHONE": "الهاتف:",
+      "ADDRESS": "العنوان:",
+      "EMAIL": "البريد الإلكتروني:"
+    },
+    "HISTORY": {
+      "EMPTY": "لا توجد معلومات متاحة لهذه المهمة."
+    },
+    "COMMON": {
+      "TASK_NAME": "اسم المهمة *",
+      "ASSIGNEE": "مُسند إلى",
+      "TICKEYLIST": "قائمة التذاكر",
+      "CURRENT_ASSIGNEE": "المسند إليه حالياً:",
+      "CHANGE_ASSIGNEE": "تغيير",
+      "NEW_ASSIGNEE": "المُسند الجديد:",
+      "CATEGORY": "الفئة",
+      "CATEGORY_DESC": "فئة المهمة",
+      "PRIORITY": "الأولوية",
+      "DESCRIPTION": "الوصف",
+      "DESCRIPTION_DETAILS": "وصف تفصيلي للمهمة",
+      "DESCRIPTION_PLACEHOLDER": "قم بوصف تفاصيل المهمة والأهداف والتعليمات المحددة...",
+      "TASK_ID": "معرف المهمة",
+      "PROCESS_INSTANCE_ID": "معرف عملية التشغيل",
+      "TASK_DEFINITION_KEY": "مفتاح تعريف المهمة",
+      "TENANT_ID": "معرف المستأجر",
+      "CREATED_DATE": "تاريخ الإنشاء",
+      "PROCESS_DEFINITION_ID": "معرف تعريف العملية",
+      "STATUS": "الحالة",
+      "CURRENT_STATUS": "الحالة الحالية",
+      "CURRENT_PRIORITY": "الأولوية الحالية",
+      "ASSIGNED_TO": "مُسند إلى",
+      "CLOSE_TICKET": "إغلاق التذكرة",
+      "NoDefined": "غير محدد",
+      "DUE_DATE": "تاريخ الاستحقاق"
     }
   },
-   "MENU": {
-    "ALERT" : {
-      "NODATA" : "Aucune information disponible"
+  "MENU": {
+    "ALERT": {
+      "NODATA": "Aucune information disponible"
     }
   },
   "FOOTER": "© 2025 Dashy. جميع الحقوق محفوظة.",
@@ -95,5 +144,13 @@
     "LAST_NAME": "الاسم الأخير",
     "USERNAME": "اسم المستخدم",
     "EMAIL": "البريد الإلكتروني"
+  },
+  "ALERT": {
+    "INFO": "معلومة"
+  },
+  "COMMENT": {
+    "ADDED": "تمت إضافة التعليق",
+        "PLACEHOLDER": "أدخل تعليقك..."
+
   }
 }

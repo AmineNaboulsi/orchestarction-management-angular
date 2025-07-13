@@ -13,10 +13,11 @@ import { HeaderService } from '../../../shared/interceptors/HeaderService';
 import { SimpleLoadingMiniComponent } from "../../../shared/component/loading/simple-loading-mini/simple-loading-mini.component";
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms'
+import { TranslateModule } from '@ngx-translate/core';
 @Component({
   selector: 'app-ticket-edit',
   imports: [NgIf,NgFor,DatePipe,ReactiveFormsModule,FormsModule,ToastModule, MatProgressSpinnerModule, ConfirmDialogModule,
-    BreadcrumbNavigationComponent, MatIconModule, SimpleLoadingMiniComponent],
+    BreadcrumbNavigationComponent,TranslateModule, MatIconModule, SimpleLoadingMiniComponent],
   templateUrl: './ticket-edit.component.html',
   styleUrl: './ticket-edit.component.css'
 })
@@ -235,7 +236,7 @@ export class TicketEditComponent implements OnInit {
     if (formData.dueDate) {
       dueDate = new Date(formData.dueDate).toISOString();
     }
-    if(formData.assignee){
+    if(this.editForm.get('assignee')?.value !== this.task?.TaskInfo?.assignee){
       this.Assign()
     }
     

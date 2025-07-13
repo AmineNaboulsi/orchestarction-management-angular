@@ -14,7 +14,7 @@
     "TASKPATH": "Tâches",
     "DASHBOARD": {
       "PAGE": {
-        "CREATETASK" : "Créer un ticket"
+        "CREATETASK": "Créer un ticket"
       },
       "TABLE": {
         "HEADER": {
@@ -39,11 +39,61 @@
           "EndDate": "Date de fin"
         }
       }
+    },
+    "EDIT": {
+      "TITLE": "Modifier le Ticket n°",
+      "BASIC_INFO": "Informations de base",
+      "TECHNICAL_DETAILS": "Détails techniques (lecture seule)",
+      "SAVECHANGES": "Sauvegarder les modifications"
+    },
+    "HISTORY": {
+      "EMPTY": "Aucune information disponible pour cette tâche."
+    },
+    "VIEW": {
+      "COMMENTS_HISTORY": "Commentaires et Historique",
+      "COMMENT": "Commentaire",
+      "ADD_COMMENT": "Ajouter un commentaire",
+      "CONTACT_NAME": "Nom du contact",
+      "CONTACT_INFO": "Informations de contact",
+      "TICKET_DETAILS": "Détails du ticket",
+      "COMPLETE_TASK": "Compléter la tâche",
+      "CONVERSATION_HISTORY": "Historique de conversation",
+      "MAIN_CONTACT": "Contact principal",
+      "PHONE": "Téléphone :",
+      "ADDRESS": "Adresse :",
+      "EMAIL": "Email :"
+    },
+    "COMMON": {
+      "TASK_NAME": "Nom de la tâche *",
+      "TICKEYLIST": "Liste des tickets",
+      "ASSIGNEE": "Assigné à",
+      "CURRENT_ASSIGNEE": "Actuellement assigné à :",
+      "CHANGE_ASSIGNEE": "Changer",
+      "NEW_ASSIGNEE": "Nouvel assigné :",
+      "CATEGORY": "Catégorie",
+      "CATEGORY_DESC": "Catégorie de la tâche",
+      "PRIORITY": "Priorité",
+      "DESCRIPTION": "Description",
+      "DESCRIPTION_DETAILS": "Description détaillée de la tâche",
+      "DESCRIPTION_PLACEHOLDER": "Décrivez les détails de la tâche, les objectifs, et les instructions spécifiques...",
+      "TASK_ID": "ID de la tâche",
+      "PROCESS_INSTANCE_ID": "ID de l'instance de processus",
+      "TASK_DEFINITION_KEY": "Clé de définition de tâche",
+      "TENANT_ID": "ID locataire",
+      "CREATED_DATE": "Date de création",
+      "PROCESS_DEFINITION_ID": "ID de définition du processus",
+      "STATUS": "Statut",
+      "CURRENT_STATUS": "Statut actuel",
+      "CURRENT_PRIORITY": "Priorité actuelle",
+      "ASSIGNED_TO": "Assigné à",
+      "CLOSE_TICKET": "Clôturer le ticket",
+      "NoDefined": "Non définie",
+      "DUE_DATE": "Échéance"
     }
   },
   "MENU": {
-    "ALERT" : {
-      "NODATA" : "Aucune information disponible"
+    "ALERT": {
+      "NODATA": "Aucune information disponible"
     }
   },
   "FOOTER": "© 2025 Dashy. Tous droits réservés.",
@@ -95,5 +145,13 @@
     "LAST_NAME": "Nom",
     "USERNAME": "Nom d'utilisateur",
     "EMAIL": "Email"
+  },
+  "ALERT": {
+    "INFO": "Information"
+  },
+  "COMMENT": {
+    "ADDED": "Commentaire ajouté"
+    ,
+    "PLACEHOLDER": "Entrez votre commentaire..."
   }
 }

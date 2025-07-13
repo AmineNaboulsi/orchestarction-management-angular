@@ -11,6 +11,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { HeaderService } from '../../../shared/interceptors/HeaderService';
 import { FormsModule, NgModel } from '@angular/forms';
 import { SimpleLoadingMiniComponent } from "../../../shared/component/loading/simple-loading-mini/simple-loading-mini.component";
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 interface TaskEvent {
   id: string;
@@ -48,7 +49,7 @@ interface TaskHistory {
 @Component({
   selector: 'app-ticket-view',
   standalone: true,
-  imports: [NgIf, NgFor, DatePipe, ToastModule,
+  imports: [NgIf, NgFor,TranslateModule, DatePipe, ToastModule,
     BreadcrumbNavigationComponent, MatProgressSpinnerModule, ConfirmDialogModule, MatIconModule, FormsModule, SimpleLoadingMiniComponent],
   templateUrl: './ticket-view.component.html',
   styleUrls: ['./ticket-view.component.css'],
@@ -73,6 +74,7 @@ export class TicketViewComponent implements OnInit {
     private router: Router,
     private headerService: HeaderService,
     private messageService: MessageService,
+    private translate: TranslateService,
     private confirmationService: ConfirmationService,
   ) {}
 
@@ -90,8 +92,8 @@ export class TicketViewComponent implements OnInit {
         next : (reponse :ApiResponseCommentDto) => {
           this.messageService.add({ 
             severity: 'success', 
-            summary: 'Info', 
-            detail: 'Comment Added'
+            summary: this.translate.instant('ALERT.INFO'), 
+            detail: this.translate.instant('COMMENT.ADDED') 
           });
           this.loadTaskHistory(this.taskId || '');
           this.isAddingComment = false;
@@ -152,8 +154,8 @@ export class TicketViewComponent implements OnInit {
         this.historyLoading = false;
         this.messageService.add({ 
           severity: 'info', 
-          summary: 'Aucune donnée', 
-          detail: 'Aucune information disponible pour cette tâche.'
+          summary: this.translate.instant('ALERT.INFO'), 
+          detail: this.translate.instant('TASK.HISTORY.EMPTY') 
         });
       }
     });

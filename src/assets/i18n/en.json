@@ -3,7 +3,6 @@
     "title": "Welcome",
     "message": "Welcome to our application!"
   },
-  "task": {},
   "buttons": {
     "submit": "Submit",
     "cancel": "Cancel",
@@ -14,7 +13,7 @@
     "TASKPATH": "Tasks",
     "DASHBOARD": {
       "PAGE": {
-        "CREATETASK" : "Create Ticket"
+        "CREATETASK": "Create Ticket"
       },
       "TABLE": {
         "HEADER": {
@@ -30,7 +29,7 @@
         "FILEDS": {
           "ProcessDefinitionKey": "Process Definition Key",
           "TaskID": "Task ID",
-          "TaskName" : "Task Name",
+          "TaskName": "Task Name",
           "Assignee ID": "Assignee ID",
           "UserID": "User ID",
           "BusinessKey": "Business Key",
@@ -39,11 +38,61 @@
           "EndDate": "End Date"
         }
       }
+    },
+    "EDIT": {
+      "TITLE": "Edit Ticket No.",
+      "BASIC_INFO": "Basic Information",
+      "TECHNICAL_DETAILS": "Technical details (read-only)",
+      "SAVECHANGES": "Save Changes"
+    },
+     "HISTORY": {
+      "EMPTY": "No information available for this task."
+    },
+    "VIEW": {
+      "COMMENTS_HISTORY": "Comments and History",
+      "COMMENT": "Comment",
+      "ADD_COMMENT": "Add a comment",
+      "CONTACT_NAME": "Contact Name",
+      "CONTACT_INFO": "Contact Information",
+      "TICKET_DETAILS": "Ticket Details",
+      "COMPLETE_TASK": "Complete Task",
+      "CONVERSATION_HISTORY": "Conversation History",
+      "MAIN_CONTACT": "Main Contact",
+      "PHONE": "Phone:",
+      "ADDRESS": "Address:",
+      "EMAIL": "Email:"
+    },
+    "COMMON": {
+      "TASK_NAME": "Task Name *",
+      "TICKEYLIST": "Ticket List",
+      "ASSIGNEE": "Assigned to",
+      "CURRENT_ASSIGNEE": "Currently assigned to:",
+      "CHANGE_ASSIGNEE": "Change",
+      "NEW_ASSIGNEE": "New Assignee:",
+      "CATEGORY": "Category",
+      "CATEGORY_DESC": "Task Category",
+      "PRIORITY": "Priority",
+      "DESCRIPTION": "Description",
+      "DESCRIPTION_DETAILS": "Detailed description of the task",
+      "DESCRIPTION_PLACEHOLDER": "Describe the task details, objectives, and specific instructions...",
+      "TASK_ID": "Task ID",
+      "PROCESS_INSTANCE_ID": "Process Instance ID",
+      "TASK_DEFINITION_KEY": "Task Definition Key",
+      "TENANT_ID": "Tenant ID",
+      "CREATED_DATE": "Creation Date",
+      "PROCESS_DEFINITION_ID": "Process Definition ID",
+      "STATUS": "Status",
+      "CURRENT_STATUS": "Current Status",
+      "CURRENT_PRIORITY": "Current Priority",
+      "ASSIGNED_TO": "Assigned to",
+      "CLOSE_TICKET": "Close Ticket",
+      "NoDefined": "Undefined",
+      "DUE_DATE": "Due Date"
     }
   },
   "MENU": {
-    "ALERT" : {
-      "NODATA" : "Aucune information disponible"
+    "ALERT": {
+      "NODATA": "Aucune information disponible"
     }
   },
   "FOOTER": "© 2025 Dashy. All rights reserved.",
@@ -80,9 +129,9 @@
     "ENTER": "Enter",
     "CLEARFILTER": "Clear filter",
     "PRIORITY": {
-    "LOW": "Low",
-    "MEDIUM": "Medium",
-    "HIGH": "High"
+      "LOW": "Low",
+      "MEDIUM": "Medium",
+      "HIGH": "High"
     },
     "NOTASSIGN": "Unassigned",
     "NORESULTAT": "Aucun enregistrement trouvé !."
@@ -95,5 +144,13 @@
     "LAST_NAME": "Last name",
     "USERNAME": "Username",
     "EMAIL": "Email"
+  },
+  "ALERT": {
+    "INFO": "Information"
+  },
+  "COMMENT": {
+    "ADDED": "Comment added",
+        "PLACEHOLDER": "Enter your comment..."
+
   }
 }

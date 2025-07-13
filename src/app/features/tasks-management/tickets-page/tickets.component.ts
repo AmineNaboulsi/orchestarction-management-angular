@@ -14,6 +14,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { KeycloakProfileService } from '../../../shared/services/keycloak/keycloak.service';
 import { KeycloakProfile } from 'keycloak-js';
 import { HeaderService } from '../../../shared/interceptors/HeaderService';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-tickets-page',
@@ -51,7 +52,8 @@ export class TicketsComponentPage implements OnInit {
   constructor(
     private keycloakProfileService: KeycloakProfileService,
     private headerService: HeaderService,
-    private ticketsApi: TaskBpmApiService, 
+    private ticketsApi: TaskBpmApiService,
+    private messageService: MessageService,
     private router: Router) {}
 
   async ngOnInit() {
@@ -112,9 +114,15 @@ export class TicketsComponentPage implements OnInit {
           this.loading = false;
         },
         error: (err: any) => {
-          console.error('Error loading tasks', err);
+          console.error('Error loading tasks', err?.status);
           this.error = 'Failed to load tasks. Please try again.';
           this.loading = false;
+          this.messageService.add({
+            severity: 'info',
+            summary: 'Aucune donnée',
+            detail: 'Aucune information disponible pour cette tâche.',
+            life: 5000
+          });
         }
     });
   }
