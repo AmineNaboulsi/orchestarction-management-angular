@@ -117,12 +117,11 @@ export class TicketsComponentPage implements OnInit {
         },
         error: (err: any) => {
           console.error('Error loading tasks', err?.status);
-          this.error = 'Failed to load tasks. Please try again.';
           this.loading = false;
           this.messageService.add({
-            severity: 'info',
-            summary: 'Aucune donnée',
-            detail: 'Aucune information disponible pour cette tâche.',
+            severity: 'error',
+            summary: 'Eror',
+            detail: err,
             life: 5000 
           });
         }

@@ -11,6 +11,7 @@ import { ProcessFilterFormComponent } from "../../../components/process/process-
 import { PagedRequestProcessFilterDto, PagedResultProcessDto, ProcessBpmApiService, ProcessFilterDto } from '../../../services/generated/api-client';
 import { SimpleLoadingMiniComponent } from "../../../shared/component/loading/simple-loading-mini/simple-loading-mini.component";
 import { TranslateModule } from '@ngx-translate/core';
+import { MessageService } from 'primeng/api';
 
 
 @Component({
@@ -36,7 +37,9 @@ export class ProcessPageComponent {
   showFilters = true;
   filter: ProcessFilterDto = {};
   
-  constructor(private processService: ProcessBpmApiService, private router :Router) {}
+  constructor(private processService: ProcessBpmApiService,
+    private messageService: MessageService,
+    private router :Router) {}
   ngOnInit(): void { this.loadProcesses(); }
 
   /**
@@ -61,9 +64,14 @@ export class ProcessPageComponent {
         this.loading = false;
       },
       error: (err :any) => {
-        this.error = 'Failed to load processes. Please try again.';
         this.loading = false;
         console.error(err);
+         this.messageService.add({
+            severity: 'error',
+            summary: 'Eror',
+            detail: err,
+            life: 5000 
+          });
       }
     });
   }

@@ -8,11 +8,12 @@
             </svg>
             Process Instance ID
           </label>
-          <input
-            type="text"
-            placeholder="Enter process instance ID"
-            class="bg-white w-full px-6 py-2 border border-gray-300 rounded-3xl placeholder-gray-500 shadow-sm focus:outline-none focus:ring-teal-500 focus:border-teal-500"
-            [(ngModel)]="filter.processInstanceIds">
+           <input
+              type="text"
+              placeholder="Enter process instance IDs separated by commas: ID1, ID2, ID3"
+              class="bg-white w-full px-6 py-2 border border-gray-300 rounded-3xl placeholder-gray-500 shadow-sm focus:outline-none focus:ring-teal-500 focus:border-teal-500"
+              [(ngModel)]="processInstanceIdsInput"
+              (blur)="updateProcessInstanceIds()">
         </div>
 
         <!-- Business Key -->

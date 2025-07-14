@@ -55,7 +55,8 @@
       "TASK_REASSIGN": "The task will be reassigned to",
       "TASK_DATES": "Task Dates",
       "CREATED_AT": "Created At",
-      "DUE_DATE": "Due Date",
+      "OLD_DUE_DATE": "Due Date",
+      "NEW_DUE_DATE": "New Due Date",
       "SELECT_DATE": "Select Date",
       "CLEAR_DATE": "Clear Date",
       "TIME_REMAINING": "Time Remaining"
@@ -79,6 +80,15 @@
       "EMAIL": "Email:"
     },
     "COMMON": {
+       "PRIORITY": {
+        "TITLE": "Priority",
+        "VERY_HIGH": "Very High (100)",
+        "HIGH": "High (70)",
+        "NORMAL": "Normal (50)",
+        "LOW": "Low (20)",
+        "VERY_LOW": "Very Low (10)",
+        "LABEL": "Priority"
+      },
       "TASK_NAME": "Task Name *",
       "TICKEYLIST": "Ticket List",
       "ASSIGNEE": "Assigned to",
@@ -87,7 +97,6 @@
       "NEW_ASSIGNEE": "New Assignee:",
       "CATEGORY": "Category",
       "CATEGORY_DESC": "Task Category",
-      "PRIORITY": "Priority",
       "DESCRIPTION": "Description",
       "DESCRIPTION_DETAILS": "Detailed description of the task",
       "DESCRIPTION_PLACEHOLDER": "Describe the task details, objectives, and specific instructions...",

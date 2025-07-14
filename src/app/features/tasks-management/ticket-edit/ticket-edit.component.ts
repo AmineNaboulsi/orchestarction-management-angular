@@ -69,7 +69,8 @@ export class TicketEditComponent implements OnInit {
       priority: [50],
       category: [''],
       description: [''],
-      dueDate: [''] 
+      dueDate: [''] ,
+      dueTime: ['12:00']
     });
   }
   get dueDate(): Date | null {
@@ -258,6 +259,10 @@ export class TicketEditComponent implements OnInit {
   saveTask(): void {
     this.isSaving = true;
     const formData = this.editForm.value;
+    console.log({
+      formData : formData
+    })
+    const combinedDueDate = this.combineDateAndTime(formData.dueDate, formData.dueTime);
 
     const UpdatedTask: TaskUpdate = {
       ...this.task?.TaskInfo,
@@ -267,7 +272,7 @@ export class TicketEditComponent implements OnInit {
       assignee : formData.assignee,
       category: formData.category,
       description: formData.description,
-      dueDate: formData.dueDate || undefined
+      dueDate: combinedDueDate || undefined
     };
     this.isSaving = false;
     console.log({
@@ -298,6 +303,13 @@ export class TicketEditComponent implements OnInit {
     // if (this.editForm.get('assignee')?.value !== this.task?.TaskInfo?.assignee) {
     //   this.Assign()
     // }
+  }
+  combineDateAndTime(dueDate: any, dueTime: any) {
+    const timeValue = dueTime || '12:00';
+    const combinedDate = new Date(dueDate);
+    const [hours, minutes] = timeValue.split(':').map((num: string) => parseInt(num, 10));
+    combinedDate.setHours(hours, minutes, 0, 0);
+    return combinedDate.toISOString();
   }
 
   /**

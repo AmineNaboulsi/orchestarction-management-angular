@@ -184,15 +184,15 @@
                             <div>
                                 <label for="priority" class="block text-sm font-medium text-gray-700 mb-2">
                                     <mat-icon class="mr-1 text-sm text-gray-500">flag</mat-icon>
-                                    {{'TASK.COMMON.PRIORITY' | translate}}
+                                    {{'TASK.COMMON.PRIORITY.TITLE' | translate}}
                                 </label>
                                 <select id="priority" formControlName="priority"
                                     class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors">
-                                    <option value="10">Très élevée (10)</option>
-                                    <option value="20">Élevée (20)</option>
-                                    <option value="50">Normale (50)</option>
-                                    <option value="70">Faible (70)</option>
-                                    <option value="100">Très faible (100)</option>
+                                    <option value="10">{{ 'TASK.COMMON.PRIORITY.VERY_HIGH' | translate }}</option>
+                                    <option value="20">{{ 'TASK.COMMON.PRIORITY.HIGH' | translate }}</option>
+                                    <option value="50">{{ 'TASK.COMMON.PRIORITY.NORMAL' | translate }}</option>
+                                    <option value="70">{{ 'TASK.COMMON.PRIORITY.LOW' | translate }}</option>
+                                    <option value="100">{{ 'TASK.COMMON.PRIORITY.VERY_LOW' | translate }}</option>
                                 </select>
                             </div>
 
@@ -281,44 +281,52 @@
                             <span>{{ 'TASK.EDIT.TASK_DATES' | translate }}</span>
                         </h3>
 
-                        <div class="space-y-3">
-                            <!-- Created At -->
-                            <div
-                                class="flex items-center justify-between pt-1.5 px-3 ">
-                                <span class="text-sm font-medium text-gray-600 flex items-center">
-                                    <mat-icon class="mr-2 text-gray-500 text-base">access_time</mat-icon>
-                                    {{ 'TASK.EDIT.CREATED_AT' | translate }}
-                                </span>
-                                <span class="text-sm font-semibold text-gray-900">
-                                    {{ task.TaskInfo?.createTime | date:'dd/MM/yyyy HH:mm'}}
-                                </span>
-                            </div>
 
-                            <!-- Due Date -->
-                            <div
-                                class="flex flex-col rounded-lg px-3 ">
-                                <div class="flex items-center justify-between ">
-                                    <span class=" text-sm font-medium text-gray-600 flex items-center">
-                                        <mat-icon class="mr-2 text-orange-500 text-base">event</mat-icon>
-                                        {{ 'TASK.EDIT.DUE_DATE' | translate }}
-                                    </span>
-                                    <div class="pt-3">
-                                        <mat-form-field appearance="outline" class="w-40 ">
-                                            <input 
-                                                matInput 
-                                                [matDatepicker]="dueDatePicker"
-                                                name="dueDate"
-                                                formControlName="dueDate"
-                                                placeholder="{{ 'TASK.EDIT.SELECT_DATE' | translate }}"
-                                                class="text-sm">
-                                            <mat-datepicker-toggle matSuffix
-                                                [for]="dueDatePicker"></mat-datepicker-toggle>
-                                            <mat-datepicker #dueDatePicker></mat-datepicker>
-                                        </mat-form-field>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm font-medium text-gray-600 flex items-center">
+                                <mat-icon class="mr-2 text-gray-500 text-base">access_time</mat-icon>
+                                {{ 'TASK.EDIT.CREATED_AT' | translate }}
+                            </span>
+                            <span class="text-sm font-semibold text-gray-900">
+                                {{ task.TaskInfo?.createTime | date:'dd/MM/yyyy HH:mm' }}
+                            </span>
                         </div>
+
+                        <!-- Old Due Date -->
+                        <div *ngIf="task.TaskInfo?.dueDate" class="flex items-center justify-between">
+                            <span class="text-sm font-medium text-gray-600 flex items-center">
+                                <mat-icon class="mr-2 text-red-500 text-base">schedule</mat-icon>
+                                {{ 'TASK.EDIT.OLD_DUE_DATE' | translate }}
+                            </span>
+                            <span class="text-sm font-semibold text-red-700">
+                                {{ task.TaskInfo?.dueDate | date:'dd/MM/yyyy HH:mm' }}
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- New Due Date Selection -->
+                    <div class="space-y-2">
+                        <label class="text-sm font-medium text-gray-600 flex items-center">
+                            <mat-icon class="mr-2 text-green-500 text-base">event</mat-icon>
+                            {{ 'TASK.EDIT.NEW_DUE_DATE' | translate }}
+                        </label>
+
+                        <div class="flex space-x-2">
+                            <!-- Date Picker -->
+                            <mat-form-field appearance="outline" class="flex-1">
+                                <input matInput [matDatepicker]="DueDatePicker" formControlName="dueDate"
+                                    placeholder="{{ 'TASK.EDIT.SELECT_DATE' | translate }}" class="text-sm">
+                                <mat-datepicker-toggle matSuffix [for]="DueDatePicker"></mat-datepicker-toggle>
+                                <mat-datepicker #DueDatePicker></mat-datepicker>
+                            </mat-form-field>
+
+                            <!-- Time Picker -->
+                            <mat-form-field appearance="outline" class="w-32">
+                                <input matInput type="time" formControlName="dueTime" placeholder="HH:mm"
+                                    class="text-sm">
+                            </mat-form-field>
+                        </div>
+
                     </div>
 
                     <!-- Action Buttons -->
@@ -334,7 +342,7 @@
                             <mat-spinner diameter="20" class="mr-2" *ngIf="isSaving"></mat-spinner>
                             <mat-icon class="mr-2" *ngIf="!isSaving">save</mat-icon>
                             <div *ngIf="isSaving">
-                                <span class="text-center">{{'EDIT.SAVECHANGES' | translate}}</span>
+                                <span class="text-center">{{'TASK.EDIT.SAVECHANGES' | translate}}</span>
                             </div>
                             <div *ngIf="!isSaving">
                                 <span class="text-center">{{'APP_BUTTONS.SAVE' | translate}}</span>

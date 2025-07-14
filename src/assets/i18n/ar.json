@@ -55,7 +55,8 @@
       "TASK_REASSIGN": "سيتم إعادة تعيين المهمة إلى",
       "TASK_DATES": "تواريخ المهمة",
       "CREATED_AT": "تم الإنشاء في",
-      "DUE_DATE": "تاريخ الاستحقاق",
+      "OLD_DUE_DATE": "تاريخ الاستحقاق",
+      "NEW_DUE_DATE": "تاريخ الاستحقاق",
       "SELECT_DATE": "اختر تاريخاً",
       "CLEAR_DATE": "مسح التاريخ",
       "TIME_REMAINING": "الوقت المتبقي"
@@ -79,6 +80,15 @@
       "EMPTY": "لا توجد معلومات متاحة لهذه المهمة."
     },
     "COMMON": {
+      "PRIORITY": {
+        "TITLE": "الأولوية",
+        "VERY_HIGH": "مرتفعة جداً (100)",
+        "HIGH": "مرتفعة (80)",
+        "NORMAL": "عادية (50)",
+        "LOW": "منخفضة (20)",
+        "VERY_LOW": "منخفضة جداً (10)",
+        "LABEL": "الأولوية"
+      },
       "TASK_NAME": "اسم المهمة *",
       "ASSIGNEE": "مُسند إلى",
       "TICKEYLIST": "قائمة التذاكر",
@@ -87,7 +97,6 @@
       "NEW_ASSIGNEE": "المُسند الجديد:",
       "CATEGORY": "الفئة",
       "CATEGORY_DESC": "فئة المهمة",
-      "PRIORITY": "الأولوية",
       "DESCRIPTION": "الوصف",
       "DESCRIPTION_DETAILS": "وصف تفصيلي للمهمة",
       "DESCRIPTION_PLACEHOLDER": "قم بوصف تفاصيل المهمة والأهداف والتعليمات المحددة...",

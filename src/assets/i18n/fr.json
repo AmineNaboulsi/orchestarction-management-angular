@@ -56,7 +56,8 @@
       "TASK_REASSIGN": "La tâche sera réassignée à",
       "TASK_DATES": "Dates de la tâche",
       "CREATED_AT": "Créé le",
-      "DUE_DATE": "Date d'échéance",
+      "OLD_DUE_DATE": "Date d'échéance",
+      "NEW_DUE_DATE": "Nouvelle date d'échéance",
       "SELECT_DATE": "Sélectionner une date",
       "CLEAR_DATE": "Effacer la date",
       "TIME_REMAINING": "Temps restant"
@@ -80,6 +81,15 @@
       "EMAIL": "Email :"
     },
     "COMMON": {
+      "PRIORITY": {
+      "TITLE": "Priorité",
+        "VERY_HIGH": "Très élevée (100)",
+        "HIGH": "Élevée (70)",
+        "NORMAL": "Normale (50)",
+        "LOW": "Faible (20)",
+        "VERY_LOW": "Très faible (10)",
+        "LABEL": "Priorité"
+      },
       "TASK_NAME": "Nom de la tâche *",
       "TICKEYLIST": "Liste des tickets",
       "ASSIGNEE": "Assigné à",
@@ -88,7 +98,6 @@
       "NEW_ASSIGNEE": "Nouvel assigné :",
       "CATEGORY": "Catégorie",
       "CATEGORY_DESC": "Catégorie de la tâche",
-      "PRIORITY": "Priorité",
       "DESCRIPTION": "Description",
       "DESCRIPTION_DETAILS": "Description détaillée de la tâche",
       "DESCRIPTION_PLACEHOLDER": "Décrivez les détails de la tâche, les objectifs, et les instructions spécifiques...",
