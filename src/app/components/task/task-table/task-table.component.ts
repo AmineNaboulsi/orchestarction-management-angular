@@ -36,7 +36,7 @@ export class TaskTableComponent {
     
     if (priority >= 80) return 'bg-red-100 text-red-800';
     if (priority >= 50) return 'bg-orange-100 text-orange-800';
-    if (priority >= 25) return 'bg-yellow-100 text-yellow-800';
+    if (priority >= 20) return 'bg-yellow-100 text-yellow-800';
     return 'bg-blue-100 text-blue-800';
   }
 
@@ -50,7 +50,7 @@ export class TaskTableComponent {
     
     if (priority >= 80) return `Haute (${priority})`;
     if (priority >= 50) return `Moyenne (${priority})`;
-    if (priority >= 25) return `Basse (${priority})`;
+    if (priority >= 20) return `Basse (${priority})`;
     return `Très basse (${priority})`;
   }
 

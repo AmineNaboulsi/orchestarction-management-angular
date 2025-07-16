@@ -248,7 +248,19 @@ export class TicketEditComponent implements OnInit {
         size: 'small'
       },
       accept: () => {
-        this.saveTask();
+        this.isSaving = true;
+        try {
+          this.saveTask();
+        } catch (error:any) {
+          this.isSaving = false;
+          console.log(error)
+           this.messageService.add({
+            severity: 'error',
+            summary: 'Erreur',
+            detail: error || '',
+            life: 5000
+        });
+        }
       }
     });
   }
@@ -257,7 +269,6 @@ export class TicketEditComponent implements OnInit {
    * Save task modifications
    */
   saveTask(): void {
-    this.isSaving = true;
     const formData = this.editForm.value;
     console.log({
       formData : formData
@@ -305,8 +316,9 @@ export class TicketEditComponent implements OnInit {
     // }
   }
   combineDateAndTime(dueDate: any, dueTime: any) {
+    if (!dueDate) return null;
     const timeValue = dueTime || '12:00';
-    const combinedDate = new Date(dueDate);
+    const combinedDate = new Date(dueDate );
     const [hours, minutes] = timeValue.split(':').map((num: string) => parseInt(num, 10));
     combinedDate.setHours(hours, minutes, 0, 0);
     return combinedDate.toISOString();

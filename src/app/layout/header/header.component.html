@@ -3,21 +3,17 @@
     <!-- Left side: Menu and Logo -->
     <div class="flex items-center space-x-4">
       <!-- Menu Button -->
-      <button 
-      (click)="OpenMenu()"
-      class="p-2 rounded-md hover:bg-gray-100 ">
-        <mat-icon>menu</mat-icon>
+      <button (click)="OpenMenu()" name="sidebarButton" type="button"
+        class="px-2 text-gray-800 hover:bg-gray-200 hover:text-secondary rounded-lg text-sm p-1.5 inline-flex items-center">
+        <mat-icon>dehaze</mat-icon>
       </button>
-      
-     <div class="flex items-center space-x-4">
+      <div class="flex items-center space-x-4">
         <div class="flex items-center justify-between px-4 py-2">
           <div class="flex items-center gap-8">
             <div class="flex items-center">
               <img src="dashy-logo.png" alt="logo" class="max-h-12" />
             </div>
-            
             <div class="h-8 w-px bg-gray-300"></div>
-            
             <div>
               {{getCompanyId()}}
             </div>
@@ -26,66 +22,58 @@
       </div>
     </div>
 
-      <!-- Right side: Language and User -->
+    <!-- Right side: Language and User -->
     <div class="flex items-center space-x-4">
       <!-- Language Selector -->
       <div class="relative flex items-center gap-6">
-        <select class="appearance-none bg-transparent border-none text-sm text-gray-600 pr-6 focus:outline-none cursor-pointer"
-                [(ngModel)]="currentLanguage"
-                (change)="onLanguageChange($event)">
+        <select
+          class="appearance-none bg-transparent border-none text-sm text-gray-600 pr-6 focus:outline-none cursor-pointer"
+          [(ngModel)]="currentLanguage" (change)="onLanguageChange($event)">
           <option value="fr">Français</option>
           <option value="en">English</option>
           <option value="ar">العربية</option>
         </select>
-        <svg class="absolute right-0 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" 
-             fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg class="absolute right-0 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none"
+          fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
         </svg>
       </div>
       <div class="h-8 w-px bg-gray-300"></div>
       <header class="sticky top-0 z-20 w-full bg-white px-4 py-3">
-          <div class="relative" *ngIf="profile">
-            <button
-              id="user-menu-button"
-              aria-expanded="isDropdownOpen"
-              (click)="toggleDropdown()"
-              class="border border-teal-600 p-0.5 font-medium text-gray-600 rounded-full hover:text-teal-700 ">
-              <span class="sr-only">Open user menu</span>
-              <div class="flex items-center">
-                <div class="relative inline-flex items-center justify-center w-9 h-9 overflow-hidden bg-teal-600 rounded-full">
-                  <span class="font-medium text-white">{{ getUserInitial() }}</span>
-                </div>
-                <span class="ml-2 max-sm:hidden">{{ getUsername() }}</span>
-                <mat-icon aria-hidden="false" aria-label="menu icon" fontIcon="arrow_drop_down"></mat-icon>
+        <div class="relative" *ngIf="profile">
+          <button id="user-menu-button" aria-expanded="isDropdownOpen" (click)="toggleDropdown()"
+            class="border border-teal-600 p-0.5 font-medium text-gray-600 rounded-full hover:text-teal-700 ">
+            <span class="sr-only">Open user menu</span>
+            <div class="flex items-center">
+              <div
+                class="relative inline-flex items-center justify-center w-9 h-9 overflow-hidden bg-teal-600 rounded-full">
+                <span class="font-medium text-white">{{ getUserInitial() }}</span>
               </div>
-            </button>
-            <div
-              *ngIf="isDropdownOpen"
-              id="user-dropdown"
-              class="z-10 bg-white divide-y divide-gray-100 rounded-lg w-40 absolute top-full mt-2 right-0">
-              <div class="px-4 py-3 text-sm text-gray-600">
-                <div class="font-medium">{{ getUsername() }}</div>
-                <div class="truncate">{{ getUserEmail() }}</div>
-              </div>
-              <ul class="py-2 text-sm text-gray-700" aria-labelledby="user-menu-button">
-                <li>
-                  <a
-                    (click)="navigateToProfile()"
-                    class="cursor-pointer block px-4 py-2 hover:bg-gray-100">
-                    <i class="fa-regular fa-user mr-2"></i>{{ 'APP_USER.PROFILE' | translate }}
-                  </a>
-                </li>
-                <li>
-                  <a
-                    (click)="onLogout()"
-                    class="cursor-pointer block px-4 py-2 hover:bg-gray-100">
-                    <i class="fa-solid fa-arrow-right-from-bracket mr-2"></i>{{ 'APP_USER.LOGOUT' | translate }}
-                  </a>
-                </li>
-              </ul>
+              <span class="ml-2 max-sm:hidden">{{ getUsername() }}</span>
+              <mat-icon aria-hidden="false" aria-label="menu icon" fontIcon="arrow_drop_down"></mat-icon>
             </div>
+          </button>
+          <div *ngIf="isDropdownOpen" id="user-dropdown"
+            class="z-10 bg-white divide-y divide-gray-100 rounded-lg w-40 absolute top-full mt-2 right-0">
+            <div class="px-4 py-3 text-sm text-gray-600">
+              <div class="font-medium">{{ getUsername() }}</div>
+              <div class="truncate">{{ getUserEmail() }}</div>
+            </div>
+            <ul class="py-2 text-sm text-gray-700" aria-labelledby="user-menu-button">
+              <li>
+                <a (click)="navigateToProfile()" class="cursor-pointer block px-4 py-2 hover:bg-gray-100">
+                  <i class="fa-regular fa-user mr-2"></i>{{ 'APP_USER.PROFILE' | translate }}
+                </a>
+              </li>
+              <li>
+                <a (click)="onLogout()" class="cursor-pointer block px-4 py-2 hover:bg-gray-100">
+                  <i class="fa-solid fa-arrow-right-from-bracket mr-2"></i>{{ 'APP_USER.LOGOUT' | translate }}
+                </a>
+              </li>
+            </ul>
           </div>
-  </header>
+        </div>
+      </header>
     </div>
   </div>
 </header>

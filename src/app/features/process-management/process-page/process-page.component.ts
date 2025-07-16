@@ -8,10 +8,12 @@ import { PageEvent } from '@angular/material/paginator';
 import { ProcessTableComponent } from "../../../components/process/process-table/process-table.component";
 import { ButtonShowHideFilterComponent } from "../../../shared/component/filter/button-show-hide-filter/button-show-hide-filter.component";
 import { ProcessFilterFormComponent } from "../../../components/process/process-filter-form/process-filter-form.component";
-import { PagedRequestProcessFilterDto, PagedResultProcessDto, ProcessBpmApiService, ProcessFilterDto } from '../../../services/generated/api-client';
+import { AddCommentRequestDto, CommentDto, PagedRequestProcessFilterDto, PagedResultProcessDto, ProcessBpmApiService, ProcessFilterDto } from '../../../services/generated/api-client';
 import { SimpleLoadingMiniComponent } from "../../../shared/component/loading/simple-loading-mini/simple-loading-mini.component";
 import { TranslateModule } from '@ngx-translate/core';
 import { MessageService } from 'primeng/api';
+import { ProcessDeployComponent } from "../process-deploy/process-deploy.component";
+import { HeaderService } from '../../../shared/interceptors/HeaderService';
 
 
 @Component({
@@ -19,7 +21,7 @@ import { MessageService } from 'primeng/api';
   standalone: true,
   imports: [NgIf, FormsModule,
     BreadcrumbNavigationComponent,
-    PaginationComponent, ProcessTableComponent, 
+    PaginationComponent, ProcessTableComponent,
     ButtonShowHideFilterComponent, ProcessFilterFormComponent,
     SimpleLoadingMiniComponent, TranslateModule],
   templateUrl: './process-page.component.html',
@@ -36,15 +38,24 @@ export class ProcessPageComponent {
   sortOrder = 'ASC';
   showFilters = true;
   filter: ProcessFilterDto = {};
-  
+  comment: AddCommentRequestDto =  {
+            message : "" ,
+            userId : "" ,
+            type : "" ,
+          }
   constructor(private processService: ProcessBpmApiService,
     private messageService: MessageService,
+    private headerService: HeaderService,
     private router :Router) {}
   ngOnInit(): void { this.loadProcesses(); }
 
+
+  deploy(){
+
+  }
   /**
    * Load all Process instances current runing 
-   * 
+   *
    */
   loadProcesses(){
     this.loading = true;
@@ -57,7 +68,10 @@ export class ProcessPageComponent {
       page: this.currentPage,
       size: this.pageSize,
     };
-    this.processService.listProcessInstances("","",filterPayload).subscribe({
+    this.processService.listProcessInstances(
+      this.headerService.getRequestId(),
+      this.headerService.getCanalId() ,
+      filterPayload).subscribe({
       next: (response: any) => {
         this.processes = response.body;
         this.totalProcess = this.processes?.entities?.length || 0;

@@ -10,10 +10,15 @@
   <!-- Header Section -->
   <div class="flex justify-between items-center mb-6">
     <h1 class="text-2xl font-semibold text-gray-900">Process Management</h1>
-    <div class="flex items-center space-x-3">
+    <div class="flex items-center space-x-3 ">
       <app-button-show-hide-filter
         (toggleFilters)="toggleFilters($event)">
       </app-button-show-hide-filter>
+      <button 
+        (click)="deploy()"
+        class="cursor-pointer inline-flex items-center px-4 py-1 border border-gray-300 rounded-2xl shadow-sm text-sm font-medium text-[#094259] bg-[#F8F8F8] hover:bg-gray-50 hover:scale-105 transition-all">
+          spam
+      </button>
     </div>
   </div>
 

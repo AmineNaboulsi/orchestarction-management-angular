@@ -1,271 +1,274 @@
- <div class="min-h-screen bg-gray-50">
-      <!-- Header -->
-      <div class="pt-6 pl-6 pr-6 flex justify-between items-center">
-          <app-breadcrumb-navigation [items]="[
+<div class="min-h-screen bg-gray-50">
+  <!-- Header -->
+  <div class="pt-6 pl-6 pr-6 flex justify-between items-center">
+    <app-breadcrumb-navigation [items]="[
                       { label: 'Tasks', url: '/tasks', icon: 'home' },
                       { label: 'Ticket Details' }
                     ]">
-          </app-breadcrumb-navigation>
-          <div class="flex items-center space-x-2 text-sm text-gray-600 mb-6">
-            <button (click)="goBack()"
-              class="text-[#00908E] inline-flex items-s px-4 py-0.5 border border-gray-300 rounded-2xl shadow-sm text-sm font-semibold bg-[#F8F8F8] hover:bg-gray-50 hover:scale-105 transition-all">
-              {{ 'TASK.COMMON.TICKEYLIST' | translate}}
+    </app-breadcrumb-navigation>
+    <div class="flex items-center space-x-2 text-sm text-gray-600 mb-6">
+      <button (click)="goBack()"
+        class="text-[#00908E] inline-flex items-s px-4 py-0.5 border border-gray-300 rounded-2xl shadow-sm text-sm font-semibold bg-[#F8F8F8] hover:bg-gray-50 hover:scale-105 transition-all">
+        {{ 'TASK.COMMON.TICKEYLIST' | translate}}
+      </button>
+    </div>
+  </div>
+          <p-toast position="top-right" [life]="5000" [style]="{ 'z-index': '9999' }">
+          </p-toast>
+          <p-confirmdialog></p-confirmdialog>
+  <!-- Main Content -->
+  <div class="sm:px-6 lg:px-8 ">
+
+    <!-- Loading State -->
+    <div *ngIf="loading && !error" class="flex items-center justify-center py-20">
+      <div class="text-center">
+        <app-simple-loading-mini></app-simple-loading-mini>
+        <p class="text-gray-600 text-lg">
+          {{ 'TASK.COMMON.LOADING_TICKET_DETAILS' | translate}}
+        </p>
+      </div>
+    </div>
+
+    <!-- Error State -->
+    <div *ngIf="error" class="max-w-md mx-auto">
+      <div class="bg-red-50 border border-red-200 text-red-700 p-6 rounded-xl shadow-sm">
+        <div class="flex items-start">
+          <mat-icon class="text-red-400 mr-3 mt-1">error</mat-icon>
+          <div class="flex-1">
+            <h3 class="font-semibold mb-1">
+              {{ 'TASK.COMMON.COMMON.LOAD_ERROR' | translate}}
+            </h3>
+            <p class="text-sm mb-4">{{ error }}</p>
+            <button (click)="retry()"
+              class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition-colors flex items-center">
+              <mat-icon class="mr-2 text-sm">refresh</mat-icon>
+              {{ 'TASK.COMMON.COMMON.RELOAD' | translate}}
             </button>
           </div>
         </div>
-
-      <!-- Main Content -->
-      <div class="sm:px-6 lg:px-8 ">
-        
-        <!-- Loading State -->
-        <div *ngIf="loading && !error" class="flex items-center justify-center py-20">
-          <div class="text-center">
-            <app-simple-loading-mini></app-simple-loading-mini>
-            <p class="text-gray-600 text-lg">Chargement des détails du ticket...</p>
+      </div>
+    </div>
+    <!-- Error State -->
+    <div *ngIf="info">
+      <div class="p-6">
+        <div class="flex items-start">
+          <mat-icon class="text-yellow-400 mr-3 mt-1">info</mat-icon>
+          <div class="flex-1">
+            <h3 class="font-semibold mb-1">Info</h3>
+            <p class="text-sm mb-4">{{ info }}</p>
           </div>
         </div>
+      </div>
+    </div>
+    <!-- Task Details -->
+    <div *ngIf="task && !loading" class="grid grid-cols-1 lg:grid-cols-4 gap-4 py-1">
 
-        <!-- Error State -->
-        <div *ngIf="error" class="max-w-md mx-auto">
-          <div class="bg-red-50 border border-red-200 text-red-700 p-6 rounded-xl shadow-sm">
-            <div class="flex items-start">
-              <mat-icon class="text-red-400 mr-3 mt-1">error</mat-icon>
-              <div class="flex-1">
-                <h3 class="font-semibold mb-1">Erreur de chargement</h3>
-                <p class="text-sm mb-4">{{ error }}</p>
-                <button 
-                  (click)="retry()"
-                  class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition-colors flex items-center">
-                  <mat-icon class="mr-2 text-sm">refresh</mat-icon>
-                  Réessayer
-                </button>
+      <div class="px-6 pb-6 lg:col-span-1 bg-white rounded-xl shadow-sm border border-gray-200 h-lvh overflow-auto">
+        <h3 class="h-16 bg-white text-lg font-semibold text-gray-900 mb-6 flex items-center sticky top-0">
+          <mat-icon class="mr-2 text-teal-600">comment</mat-icon>
+          {{'TASK.VIEW.COMMENTS_HISTORY' | translate}}
+        </h3>
+        <!-- Comments -->
+        <div class="flex flex-col gap-2 overflow-auto">
+          <div *ngFor="let comment of taskHistory?.comments"
+            class="flex items-start space-x-3 bg-[#FDFDEA] px-4 py-6 rounded-2xl shadow-xs border border-gray-200 ">
+            <div class="flex-1 overflow-auto w-full">
+              <div class="flex items-center gap-2 sticky top-0 left-0">
+                <span class="text-xs font-medium text-teal-500">{{ '@' + comment.CommentInfo.userId }}</span>
+                <span class="text-xs font-medium text-gray-500">|</span>
+                <span class="text-xs text-gray-500">{{ (comment.CommentInfo.time | date: 'longDate') + ' at ' +
+                  (comment.CommentInfo.time | date:'shortTime') }}</span>
+              </div>
+              <p class="text-sm text-gray-700 mt-1 ">{{ comment.CommentInfo.fullMessage }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Main Content Column -->
+      <div class="lg:col-span-2 space-y-6">
+
+        <!-- Ticket Header -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+          <!-- Header Section -->
+          <div class="bg-gradient-to-r from-teal-50 to-blue-50 px-6 py-6 border-b border-gray-200">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center space-x-4">
+                <div class="w-12 h-12 bg-teal-600 rounded-lg flex items-center justify-center">
+                  <mat-icon class="text-white text-xl">confirmation_number</mat-icon>
+                </div>
+                <div>
+                  <span class="text-2xl font-bold text-gray-900">{{'TASK.VIEW.TITLE' | translate}}</span>
+                  <span class="text-2xl font-bold text-gray-900">{{ getShortTaskId(task.TaskID || '') }}</span>
+                  <p class="text-gray-600 text-sm">{{ task.TaskInfo?.name || 'Tâche sans titre' }}</p>
+                </div>
+              </div>
+
+              <!-- Status & Priority Badges -->
+              <div class="flex flex-col space-y-2">
+                <span
+                  class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800">
+                  <span class="w-2 h-2 bg-green-500 rounded-full mr-2 ml-2"></span>
+                  {{'TASK.COMMON.IN_PROGRESS' | translate}}
+                </span>
+                <span
+                  class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-yellow-100 text-yellow-800">
+                  <mat-icon class="mr-1 text-xs">flag</mat-icon>
+                  {{'TASK.COMMON.PRIORITY.TITLE' | translate }} {{ task.TaskInfo?.priority || 'Normale' }}
+                </span>
               </div>
             </div>
           </div>
-        </div>
-        <!-- Error State -->
-        <div *ngIf="info">
-            <div class="border-t-2 border-b-2 bg-gradient-to-br text-yellow-800 rounded-tl-2xl rounded-br-2xl p-6">
-                <div class="flex items-start">
-                    <mat-icon class="text-yellow-400 mr-3 mt-1">info</mat-icon>
-                    <div class="flex-1">
-                        <h3 class="font-semibold mb-1">Info</h3>
-                        <p class="text-sm mb-4">{{ info }}</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Task Details -->
-        <div *ngIf="task && !loading" class="grid grid-cols-1 lg:grid-cols-4 gap-4 py-1">
-          
-          <div class="px-6 pb-6 lg:col-span-1 bg-white rounded-xl shadow-sm border border-gray-200 h-lvh overflow-auto">
-            <h3 class="h-16 bg-white text-lg font-semibold text-gray-900 mb-6 flex items-center sticky top-0">
-                <mat-icon class="mr-2 text-teal-600">comment</mat-icon>
-                 {{'TASK.VIEW.COMMENTS_HISTORY' | translate}}
-              </h3> 
-            <!-- Comments -->
-                <div class="flex flex-col gap-2 overflow-auto">
-                    <div *ngFor="let comment of taskHistory?.comments" class="flex items-start space-x-3 bg-[#FDFDEA] px-4 py-6 rounded-2xl shadow-xs border border-gray-200 ">
-                    <div class="flex-1 overflow-auto w-full">
-                      <div class="flex items-center gap-2 sticky top-0 left-0">
-                        <span class="text-xs font-medium text-teal-500">{{ '@' + comment.CommentInfo.userId }}</span>
-                        <span class="text-xs font-medium text-gray-500">|</span>
-                        <span class="text-xs text-gray-500">{{ (comment.CommentInfo.time | date: 'longDate') + ' at ' +  (comment.CommentInfo.time | date:'shortTime') }}</span>
-                      </div>
-                      <p class="text-sm text-gray-700 mt-1 ">{{ comment.CommentInfo.fullMessage }}</p>
-                    </div>
-                    </div>
-                </div>
-          </div>
-          <!-- Main Content Column -->
-          <div class="lg:col-span-2 space-y-6">
-            
-            <!-- Ticket Header -->
-            <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-              <!-- Header Section -->
-              <div class="bg-gradient-to-r from-teal-50 to-blue-50 px-6 py-6 border-b border-gray-200">
-                <div class="flex items-center justify-between">
-                  <div class="flex items-center space-x-4">
-                    <div class="w-12 h-12 bg-teal-600 rounded-lg flex items-center justify-center">
-                      <mat-icon class="text-white text-xl">confirmation_number</mat-icon>
+
+          <!-- Contact Information -->
+          <div class="p-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <h3 class="text-lg font-semibold text-gray-900 mb-4">
+                  {{'' |translate}}
+                </h3>
+                <div class="space-y-3">
+                  <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-teal-600 rounded-full flex items-center justify-center">
+                      <mat-icon class="text-white text-sm">person</mat-icon>
                     </div>
                     <div>
-                      <span class="text-2xl font-bold text-gray-900">{{'TASK.VIEW.TITLE' | translate}}</span>
-                       <span class="text-2xl font-bold text-gray-900">{{ getShortTaskId(task.TaskID || '') }}</span>
-                      <p class="text-gray-600 text-sm">{{ task.TaskInfo?.name || 'Tâche sans titre' }}</p>
+                      <p class="text-sm font-medium text-gray-500">
+                        {{'TASK.VIEW.CONTACT_NAME' |translate}}</p>
+                      <p class="text-gray-900 font-semibold">{{ task.TaskInfo?.assignee || 'Non assigné' }}</p>
                     </div>
                   </div>
-                  
-                  <!-- Status & Priority Badges -->
-                  <div class="flex flex-col space-y-2">
-                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800">
-                      <span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
-                      En cours
-                    </span>
-                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-yellow-100 text-yellow-800">
-                      <mat-icon class="mr-1 text-xs">flag</mat-icon>
-                      Priorité {{ task.TaskInfo?.priority || 'Normale' }}
-                    </span>
+                  <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center">
+                      <mat-icon class="text-white text-sm">phone</mat-icon>
+                    </div>
+                    <div>
+                      <p class="text-sm font-medium text-gray-500">
+                        {{'TASK.VIEW.PHONE' |translate}}</p>
+                      <p class="text-gray-900 font-semibold">N/A</p>
+                    </div>
                   </div>
                 </div>
               </div>
 
-              <!-- Contact Information -->
-              <div class="p-6">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <h3 class="text-lg font-semibold text-gray-900 mb-4">
-                      {{'' |translate}}
-                    </h3>
-                    <div class="space-y-3">
-                      <div class="flex items-center space-x-3">
-                        <div class="w-10 h-10 bg-teal-600 rounded-full flex items-center justify-center">
-                          <mat-icon class="text-white text-sm">person</mat-icon>
-                        </div>
-                        <div>
-                          <p class="text-sm font-medium text-gray-500">
-                            {{'TASK.VIEW.CONTACT_NAME' |translate}}</p>
-                          <p class="text-gray-900 font-semibold">{{ task.TaskInfo?.assignee || 'Non assigné' }}</p>
-                        </div>
-                      </div>
-                      <div class="flex items-center space-x-3">
-                        <div class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center">
-                          <mat-icon class="text-white text-sm">phone</mat-icon>
-                        </div>
-                        <div>
-                          <p class="text-sm font-medium text-gray-500">
-                            {{'TASK.VIEW.PHONE' |translate}}</p>
-                          <p class="text-gray-900 font-semibold">N/A</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div>
-                    <h3 class="text-lg font-semibold text-gray-900 mb-4">
-                      {{'TASK.VIEW.TICKET_DETAILS' |translate}}
-                    </h3>
-                    <div class="space-y-3">
-                      <div class="flex justify-between">
-                        <span class="text-sm font-medium text-gray-500">
-                           {{'TASK.COMMON.CATEGORY' |translate}} :
-                        </span>
-                        <span class="text-sm text-gray-900">{{ task.TaskInfo?.category || 'Commande' }}</span>
-                      </div>
-                      <div class="flex justify-between">
-                        <span class="text-sm font-medium text-gray-500">
-                         {{'TASK.COMMON.CREATED_DATE' |translate}} :
-                        </span>
-                        <span class="text-sm text-gray-900">{{ task.TaskInfo?.createTime | date:'short' }}</span>
-                      </div>
-                      <div class="flex justify-between">
-                        <span class="text-sm font-medium text-gray-500">
-                         {{'TASK.COMMON.DUE_DATE' |translate}} :
-                        </span>
-                        <span class="text-sm text-gray-900">{{ task.TaskInfo?.dueDate ? (task.TaskInfo?.dueDate | date:'short') : 'N/A' }}</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="mt-5 flex flex-col gap-2">
-                  <p *ngIf="task.TaskInfo?.description" class="bg-gray-100 px-3 pt-4 pb-10 rounded-2xl border border-gray-300">
-                    <strong>
-                      {{
-                        'TASK.COMMON.DESCRIPTION' | translate
-                      }} : 
-                    </strong>
-                    <span>
-                      {{task.TaskInfo?.description || 'No description'}}
+              <div>
+                <h3 class="text-lg font-semibold text-gray-900 mb-4">
+                  {{'TASK.VIEW.TICKET_DETAILS' |translate}}
+                </h3>
+                <div class="space-y-3">
+                  <div class="flex justify-between">
+                    <span class="text-sm font-medium text-gray-500">
+                      {{'TASK.COMMON.CATEGORY' |translate}} :
                     </span>
-                  </p>
-                  <div class="flex justify-end">
-                    <button 
-                    (click)="completeTask()"
-                    [disabled]="isLoading"
-                    class="cursor-pointer inline-flex items-center px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-all hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed font-semibold">
-                    <mat-spinner diameter="20" class="mr-2" *ngIf="isLoading"></mat-spinner>
-                    <mat-icon class="mr-2" *ngIf="!isLoading">check</mat-icon>
-                      {{
-                        'TASK.VIEW.COMPLETE_TASK' | translate
-                      }}
-                  </button>
+                    <span class="text-sm text-gray-900">{{ task.TaskInfo?.category || 'Commande' }}</span>
+                  </div>
+                  <div class="flex justify-between">
+                    <span class="text-sm font-medium text-gray-500">
+                      {{'TASK.COMMON.CREATED_DATE' |translate}} :
+                    </span>
+                    <span class="text-sm text-gray-900">{{ task.TaskInfo?.createTime | date:'short' }}</span>
+                  </div>
+                  <div class="flex justify-between">
+                    <span class="text-sm font-medium text-gray-500">
+                      {{'TASK.COMMON.DUE_DATE' |translate}} :
+                    </span>
+                    <span class="text-sm text-gray-900">{{ task.TaskInfo?.dueDate ? (task.TaskInfo?.dueDate |
+                      date:'short') : 'N/A' }}</span>
+                  </div>
                 </div>
-               
-               </div>
               </div>
             </div>
+            <div class="mt-5 flex flex-col gap-2">
+              <p *ngIf="task.TaskInfo?.description"
+                class="bg-gray-100 px-3 pt-4 pb-10 rounded-2xl border border-gray-300">
+                <strong>
+                  {{
+                  'TASK.COMMON.DESCRIPTION' | translate
+                  }} :
+                </strong>
+                <span>
+                  {{task.TaskInfo?.description || 'No description'}}
+                </span>
+              </p>
+              <div class="flex justify-end">
+                <button (click)="completeTask()" [disabled]="isLoading"
+                  class="cursor-pointer inline-flex items-center px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-all hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed font-semibold">
+                  <mat-spinner diameter="20" class="mr-2" *ngIf="isLoading"></mat-spinner>
+                  <mat-icon class="mr-2" *ngIf="!isLoading">check</mat-icon>
+                  {{
+                  'TASK.VIEW.COMPLETE_TASK' | translate
+                  }}
+                </button>
+              </div>
 
-            <!-- Comments Section -->
-            <div *ngIf="showCommentSection" class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-          
-              <!-- Add Comment -->
-              <div class="mb-6">
-                <label for="newComment" class="block text-sm font-medium text-gray-700 mb-2">
-                  {{'TASK.VIEW.COMMENT' | translate}} :
-                </label>
-                <div class="relative">
-                  <textarea 
-                    id="newComment" 
-                    [(ngModel)]="newComment" 
-                    [placeholder]="'COMMENT.PLACEHOLDER' | translate" 
-                    rows="4"
-                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition-colors resize-none text-gray-900 placeholder-gray-400">
+            </div>
+          </div>
+        </div>
+
+        <!-- Comments Section -->
+        <div *ngIf="showCommentSection" class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+
+          <!-- Add Comment -->
+          <div class="mb-6">
+            <label for="newComment" class="block text-sm font-medium text-gray-700 mb-2">
+              {{'TASK.VIEW.COMMENT' | translate}} :
+            </label>
+            <div class="relative">
+              <textarea id="newComment" [(ngModel)]="newComment" [placeholder]="'COMMENT.PLACEHOLDER' | translate"
+                rows="4"
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition-colors resize-none text-gray-900 placeholder-gray-400">
                   </textarea>
-                  <div class="absolute bottom-3 right-3 text-xs text-gray-400">
-                    {{ newComment.length || 0 }}/500
-                  </div>
-                </div>
-                <div class="flex justify-end mt-3">
-                  <button 
-                    (click)="addComment()" 
-                    [disabled]="isAddingComment"
-                    class="inline-flex items-center px-6 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-all hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed font-semibold text-sm">
-                    <mat-spinner diameter="16" class="mr-2" *ngIf="isAddingComment"></mat-spinner>
-                    <mat-icon class="mr-2 text-sm" *ngIf="!isAddingComment">add</mat-icon>
-                    {{'TASK.VIEW.ADD_COMMENT' | translate}} :
-                  </button>
-                </div>
+              <div class="absolute bottom-3 right-3 text-xs text-gray-400">
+                {{ newComment.length || 0 }}/500
+              </div>
+            </div>
+            <div class="flex justify-end mt-3">
+              <button (click)="addComment()" [disabled]="isAddingComment"
+                class="inline-flex items-center px-6 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-all hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed font-semibold text-sm">
+                <mat-spinner diameter="16" class="mr-2" *ngIf="isAddingComment"></mat-spinner>
+                <mat-icon class="mr-2 text-sm" *ngIf="!isAddingComment">add</mat-icon>
+                {{'TASK.VIEW.ADD_COMMENT' | translate}} :
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sidebar -->
+      <div class="space-y-6">
+
+        <!-- Contact Profile -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+          <div class="text-center">
+            <div class="w-20 h-20 bg-teal-600 rounded-full flex items-center justify-center mx-auto mb-4">
+              <mat-icon class="text-white text-2xl">person</mat-icon>
+            </div>
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">{{ task.TaskInfo?.assignee ||
+              ( 'APP_BUTTONS.NOTASSIGN' | translate ) }}</h3>
+            <p class="text-sm text-gray-600 mb-4">
+              {{ 'TASK.VIEW.MAIN_CONTACT' | translate}}
+            </p>
+            <div class="space-y-2 text-sm">
+              <div class="flex items-center justify-between">
+                <span class="text-gray-500">
+                  {{ 'TASK.VIEW.PHONE' | translate }}
+                </span>
+                <span class="text-gray-900">N/A</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-gray-500">
+                  {{ 'TASK.VIEW.ADDRESS' | translate }}
+                </span>
+                <span class="text-gray-900">N/A</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-gray-500">
+                  {{ 'TASK.VIEW.EMAIL' | translate }}
+                </span>
+                <span class="text-gray-900">N/A</span>
               </div>
             </div>
           </div>
-
-          <!-- Sidebar -->
-          <div class="space-y-6">
-            
-            <!-- Contact Profile -->
-            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-              <div class="text-center">
-                <div class="w-20 h-20 bg-teal-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <mat-icon class="text-white text-2xl">person</mat-icon>
-                </div>
-                <h3 class="text-lg font-semibold text-gray-900 mb-2">{{ task.TaskInfo?.assignee || 
-                ( 'APP_BUTTONS.NOTASSIGN' | translate ) }}</h3>
-                <p class="text-sm text-gray-600 mb-4">
-                  {{ 'TASK.VIEW.MAIN_CONTACT' | translate}}
-                </p>
-                <div class="space-y-2 text-sm">
-                  <div class="flex items-center justify-between">
-                    <span class="text-gray-500">
-                      {{ 'TASK.VIEW.PHONE' | translate }}
-                    </span>
-                    <span class="text-gray-900">N/A</span>
-                  </div>
-                  <div class="flex items-center justify-between">
-                    <span class="text-gray-500">
-                       {{ 'TASK.VIEW.ADDRESS' | translate }}
-                      </span>
-                    <span class="text-gray-900">N/A</span>
-                  </div>
-                  <div class="flex items-center justify-between">
-                    <span class="text-gray-500">
-                       {{ 'TASK.VIEW.EMAIL' | translate }}
-                       </span>
-                    <span class="text-gray-900">N/A</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
+        </div>
             <!-- Activity Timeline -->
             <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
               <h3 class="text-lg font-semibold text-gray-900 mb-6 flex items-center">
@@ -280,7 +283,7 @@
               </div>
 
               <!-- History Content -->
-              <div *ngIf="!historyLoading && taskHistory" class="space-y-4 h-64 overflow-auto">
+              <div *ngIf="!historyLoading && taskHistory" class="space-y-4 h-80 overflow-auto">
                 <div *ngFor="let event of taskHistory.auditEvents" class="flex items-start space-x-3">
                   <div class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0">
                     <mat-icon class="text-white text-xs">{{ getEventIcon(event.eventType) }}</mat-icon>
@@ -301,10 +304,149 @@
                 </div>
               </div>
             </div>
+        <!-- NEW Activity Timeline -->
+        <!-- <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+          <h3 class="text-lg font-semibold text-gray-900 mb-6 flex items-center">
+            <mat-icon class="mr-2 text-teal-600">timeline</mat-icon>
+            {{ 'TASK.VIEW.CONVERSATION_HISTORY' | translate}}
+          </h3>
+
+          Loading State 
+          <div *ngIf="historyLoading" class="flex items-center justify-center py-8">
+            <mat-spinner diameter="30"></mat-spinner>
+            <span class="ml-3 text-gray-500 text-sm">Chargement...</span>
           </div>
-          <p-toast position="top-right" [life]="5000" [style]="{ 'z-index': '9999' }">
-          </p-toast>
-          <p-confirmdialog></p-confirmdialog>
-        </div>
+          <div *ngIf="!historyLoading && taskHistory" class="relative">
+
+            Horizontal Timeline Container 
+            <div class="overflow-x-auto pb-4">
+              <div class="flex items-center space-x-4 min-w-max px-4">
+
+                Timeline Line 
+                <div
+                  class="absolute top-8 left-0 right-0 h-0.5 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 z-0">
+                </div>
+
+                Timeline Events 
+                <div *ngFor="let event of taskHistory.auditEvents; let i = index; trackBy: trackByEvent"
+                  class="relative flex flex-col items-center min-w-max z-10"
+                  [class.opacity-75]="i > 0 && taskHistory.auditEvents[i-1].eventType === event.eventType">
+
+                  Event Circle with Animation 
+                  <div class="relative group">
+                    Pulsing Ring for Recent Events 
+                    <div *ngIf="isRecentEvent(event.timestamp)" class="absolute inset-0 rounded-full animate-ping"
+                      [ngClass]="getEventClasses(event.eventType).avatar + ' opacity-20'"></div>
+
+                    Main Circle 
+                    <div
+                      class="w-12 h-12 rounded-full flex items-center justify-center shadow-lg transform transition-all duration-300 group-hover:scale-110 group-hover:shadow-xl relative z-10"
+                      [ngClass]="getEventClasses(event.eventType).avatar">
+                      <mat-icon class="text-white text-sm">{{ getEventIcon(event.eventType) }}</mat-icon>
+                    </div>
+
+                    Connection Line to Next Event 
+                    <div *ngIf="i < taskHistory.auditEvents.length - 1"
+                      class="absolute top-6 left-12 w-16 h-0.5 bg-gray-300 z-0"></div>
+                  </div>
+
+                  Event Content Card 
+                  <div class="mt-4 w-64 group">
+                    <div
+                      class="rounded-lg border shadow-sm p-4 transition-all duration-300 group-hover:shadow-md group-hover:border-gray-300 cursor-pointer"
+                      [ngClass]="getEventClasses(event.eventType).container">
+
+                      Event Header 
+                      <div class="flex items-center justify-between mb-2">
+                        <div class="flex items-center space-x-2">
+                          <span class="text-xs font-medium px-2 py-1 rounded-full"
+                            [ngClass]="getEventClasses(event.eventType).badge + ' bg-white/80'">
+                            {{ getEventTypeLabel(event.eventType) }}
+                          </span>
+                        </div>
+                        <span class="text-xs text-gray-500">
+                          {{ event.timestamp | date:'HH:mm' }}
+                        </span>
+                      </div>
+
+                      Event Description 
+                      <p class="text-sm text-gray-700 mb-2 line-clamp-2">
+                        {{ event.description }}
+                      </p>
+
+                       User Info 
+                      <div class="flex items-center space-x-2">
+                        <div class="w-6 h-6 rounded-full bg-gray-300 flex items-center justify-center">
+                          <mat-icon class="text-gray-600 text-xs">person</mat-icon>
+                        </div>
+                        <span class="text-xs font-medium text-gray-600">
+                          {{ event.userId || event.userDisplayName || 'Système' }}
+                        </span>
+                        <span class="text-xs text-gray-400">
+                          {{ event.timestamp | date:'dd/MM' }}
+                        </span>
+                      </div>
+
+                       Event Status Indicator 
+                      <div class="mt-2 flex items-center justify-between">
+                        <div class="flex items-center space-x-1">
+                          <div class="w-2 h-2 rounded-full" [ngClass]="getEventClasses(event.eventType).avatar"></div>
+                          <span class="text-xs text-gray-500">
+                            {{ getEventStatus(event.eventType) }}
+                          </span>
+                        </div>
+
+                         Event Number 
+                        <span class="text-xs font-mono text-gray-400 bg-gray-100 px-2 py-1 rounded">
+                          #{{ i + 1 }}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                 End Marker 
+                <div class="relative flex flex-col items-center min-w-max z-10">
+                  <div class="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center shadow-sm">
+                    <mat-icon class="text-gray-600 text-sm">flag</mat-icon>
+                  </div>
+                  <div class="mt-4 text-xs text-gray-500 text-center">
+                    <div class="font-medium">Current</div>
+                    <div>{{ getCurrentTime() | date:'HH:mm' }}</div>
+                  </div>
+                </div>
+              </div>
+            </div> 
+
+             Timeline Summary 
+            <div class="mt-6 bg-gray-50 rounded-lg p-4">
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+                <div class="bg-white rounded-lg p-3 shadow-sm">
+                  <div class="text-2xl font-bold text-blue-600">{{ taskHistory.totalEvents }}</div>
+                  <div class="text-sm text-gray-600">Total Events</div>
+                </div>
+                <div class="bg-white rounded-lg p-3 shadow-sm">
+                  <div class="text-2xl font-bold text-green-600">{{ getUniqueUsers() }}</div>
+                  <div class="text-sm text-gray-600">Active Users</div>
+                </div>
+                <div class="bg-white rounded-lg p-3 shadow-sm">
+                  <div class="text-2xl font-bold text-purple-600">{{ getDuration() }}</div>
+                  <div class="text-sm text-gray-600">Duration</div>
+                </div>
+              </div>
+            </div>
+
+             Empty state 
+            <div *ngIf="!taskHistory.auditEvents?.length" class="text-center py-12 text-gray-500">
+              <div class="w-16 h-16 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
+                <mat-icon class="text-gray-400 text-2xl">history</mat-icon>
+              </div>
+              <p class="text-sm font-medium">Aucun historique disponible</p>
+              <p class="text-xs text-gray-400 mt-1">Les événements de la tâche apparaîtront ici</p>
+            </div>
+          </div>
+        </div> -->
       </div>
     </div>
+  </div>
+</div>

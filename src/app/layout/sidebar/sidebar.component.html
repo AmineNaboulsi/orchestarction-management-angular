@@ -1,4 +1,6 @@
-<div class="fixed inset-0 transition-all ease-in bg-gradient-to-b from-gray-900/50 to-gray-900/70 w-full z-[999]">
+<div 
+ (click)="Close()"
+  class="fixed inset-0 transition-all ease-in bg-gradient-to-b from-gray-900/50 to-gray-900/70 w-full z-[999]">
   <aside
      *ngIf="sidebarVisible"
       @slideInOut
@@ -38,5 +40,5 @@
 
   </div>
 </aside>
-
+  
 </div>

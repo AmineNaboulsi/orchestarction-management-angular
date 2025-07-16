@@ -41,7 +41,7 @@ sidebarVisible = true;
       routelink: '/process',
       icon: 'settings',
       label: 'Process',
-    },
+    }
   ];
 
   Close(){
